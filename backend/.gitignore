@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.env
+chroma_db/
+data/documents/*
+!data/documents/.gitkeep
+.venv/
+venv/

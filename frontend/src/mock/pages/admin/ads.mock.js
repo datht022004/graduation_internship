@@ -1,0 +1,26 @@
+export const ADMIN_ADS_MOCK = {
+    metrics: [
+        { id: 1, value: '-28%', label: 'Giảm CPL sau tối ưu' },
+        { id: 2, value: '3.6x', label: 'ROAS trung bình campaign chủ lực' },
+        { id: 3, value: '72h', label: 'Chu kỳ tối ưu creative' },
+        { id: 4, value: '+41%', label: 'Tăng CTR ở nhóm quảng cáo thương hiệu' },
+        { id: 5, value: '18%', label: 'Tỉ lệ lead đủ điều kiện từ landing page' },
+        { id: 6, value: '1.9x', label: 'Hiệu suất remarketing so với traffic lạnh' },
+        { id: 7, value: '-22%', label: 'Giảm CPC ở nhóm từ khóa dịch vụ chính' },
+        { id: 8, value: '5.4 ngày', label: 'Chu kỳ ra quyết định tối ưu ngân sách' },
+        { id: 9, value: '64%', label: 'Tỉ lệ creative đạt chuẩn sau vòng test 1' },
+        { id: 10, value: '126', label: 'Số lead trung bình mỗi tuần từ ads' },
+    ],
+    channels: [
+        { id: 1, name: 'Google Ads', kpi: 'Lead quality', desc: 'Tập trung Search + PMax theo dịch vụ ưu tiên.' },
+        { id: 2, name: 'Meta Ads', kpi: 'CPL', desc: 'Xây phễu 3 tầng: nhận diện, quan tâm, chuyển đổi.' },
+        { id: 3, name: 'TikTok Ads', kpi: 'Reach to lead', desc: 'Creative ngắn, test nhanh theo cụm thông điệp.' },
+        { id: 4, name: 'YouTube Ads', kpi: 'View to visit', desc: 'Video case study ngắn để kéo truy cập về landing page tư vấn.' },
+        { id: 5, name: 'Zalo Ads', kpi: 'Inbox volume', desc: 'Ưu tiên chiến dịch địa phương cho nhóm doanh nghiệp SME.' },
+        { id: 6, name: 'LinkedIn Ads', kpi: 'B2B lead', desc: 'Nhắm mục tiêu quản lý, chủ doanh nghiệp và marketing lead.' },
+        { id: 7, name: 'Coc Coc Ads', kpi: 'Search impression', desc: 'Bổ sung độ phủ trên nhóm từ khóa giá cạnh tranh cao.' },
+        { id: 8, name: 'GDN Remarketing', kpi: 'Return visit', desc: 'Bám đuổi người dùng đã xem bảng giá hoặc gửi form dở dang.' },
+        { id: 9, name: 'Email Retargeting', kpi: 'Re-open lead', desc: 'Nuôi dưỡng lại lead cũ bằng chuỗi nội dung ưu đãi theo ngành.' },
+        { id: 10, name: 'Affiliate Ads', kpi: 'Cost per meeting', desc: 'Kết hợp đối tác media để tạo lịch hẹn tư vấn nhanh hơn.' },
+    ],
+}

@@ -1,0 +1,106 @@
+services:
+  mongodb:
+    image: mongo:8
+    container_name: rag-mongodb
+    hostname: mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rag_admin
+      MONGO_INITDB_ROOT_PASSWORD: rag_password
+      MONGO_INITDB_DATABASE: rag_chatbot
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --username $$MONGO_INITDB_ROOT_USERNAME --password $$MONGO_INITDB_ROOT_PASSWORD --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 })' --quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  mongodb-vector:
+    image: mongodb/mongodb-atlas-local:8.0
+    container_name: rag-mongodb-vector
+    hostname: mongodb-vector
+    restart: unless-stopped
+    environment:
+      MONGODB_INITDB_ROOT_USERNAME: rag_vector_admin
+      MONGODB_INITDB_ROOT_PASSWORD: rag_vector_password
+      MONGODB_INITDB_DATABASE: rag_chatbot
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_vector_data:/data/db
+      - mongodb_vector_config:/data/configdb
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --username $$MONGODB_INITDB_ROOT_USERNAME --password $$MONGODB_INITDB_ROOT_PASSWORD --authenticationDatabase admin --eval 'db.runCommand({ ping: 1 })' --quiet"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: rag-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      mongodb-vector:
+        condition: service_healthy
+    env_file:
+      - ./backend/.env
+    environment:
+      - APP_MONGODB_URI=mongodb://rag_admin:rag_password@mongodb:27017/?directConnection=true&authSource=admin
+      - VECTOR_MONGODB_URI=mongodb://rag_vector_admin:rag_vector_password@mongodb-vector:27017/?directConnection=true&authSource=admin
+    volumes:
+      - ./backend/app:/app/app
+      - backend_uploads:/app/data/documents
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=5)\""]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE_URL: /api
+        VITE_GOOGLE_CLIENT_ID: ${VITE_GOOGLE_CLIENT_ID:-}
+    container_name: rag-frontend
+    restart: unless-stopped
+    ports:
+      - "5174:80"
+    depends_on:
+      backend:
+        condition: service_healthy
+    volumes:
+      - ./frontend/nginx:/etc/nginx/conf.d:ro
+
+  mongo-express:
+    image: mongo-express:1.0.2-20
+    container_name: rag-mongo-express
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://rag_vector_admin:rag_vector_password@mongodb-vector:27017/?directConnection=true&authSource=admin
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: password
+    depends_on:
+      mongodb-vector:
+        condition: service_healthy
+
+volumes:
+  mongodb_data:
+  mongodb_vector_data:
+  mongodb_vector_config:
+  backend_uploads:

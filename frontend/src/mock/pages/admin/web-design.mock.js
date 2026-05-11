@@ -1,0 +1,26 @@
+export const ADMIN_WEB_DESIGN_MOCK = {
+    phases: [
+        { id: 1, title: 'Discovery', desc: 'Phân tích người dùng, hành vi và mục tiêu kinh doanh.' },
+        { id: 2, title: 'UX/UI System', desc: 'Thiết kế wireframe và giao diện nhất quán theo brand.' },
+        { id: 3, title: 'Build & SEO', desc: 'Phát triển giao diện, tối ưu tốc độ và setup SEO căn bản.' },
+        { id: 4, title: 'Launch', desc: 'QA đa thiết bị, go-live và theo dõi hiệu suất 30 ngày.' },
+        { id: 5, title: 'Stakeholder Workshop', desc: 'Chốt mục tiêu dự án, đối tượng người dùng và ràng buộc triển khai.' },
+        { id: 6, title: 'Information Architecture', desc: 'Sắp xếp sitemap, nhóm nội dung và hành trình truy cập chính.' },
+        { id: 7, title: 'Prototype Testing', desc: 'Kiểm thử nhanh luồng chính trước khi chốt UI chi tiết.' },
+        { id: 8, title: 'Content Integration', desc: 'Lắp nội dung thật để kiểm tra bố cục và CTA theo ngữ cảnh.' },
+        { id: 9, title: 'Performance Tuning', desc: 'Tối ưu asset, script và trải nghiệm tải trang đa thiết bị.' },
+        { id: 10, title: 'Post-launch Iteration', desc: 'Theo dõi heatmap, form và chỉ số chuyển đổi để tinh chỉnh tiếp.' },
+    ],
+    highlights: [
+        { id: 1, content: 'Tối ưu Core Web Vitals từ đầu' },
+        { id: 2, content: 'Cấu trúc thông tin để tìm kiếm hiểu đúng' },
+        { id: 3, content: 'Mẫu trang đích để chốt lead nhanh hơn' },
+        { id: 4, content: 'Thiết kế ưu tiên hành vi người dùng trên mobile' },
+        { id: 5, content: 'CTA rõ ràng theo từng giai đoạn ra quyết định' },
+        { id: 6, content: 'Thiết kế component tái sử dụng giúp scale nhanh' },
+        { id: 7, content: 'Form ngắn gọn nhưng vẫn đủ dữ liệu cho sales' },
+        { id: 8, content: 'Hỗ trợ đồng bộ brand guideline vào giao diện' },
+        { id: 9, content: 'Setup tracking sự kiện quan trọng ngay từ lúc build' },
+        { id: 10, content: 'Bàn giao tài liệu vận hành và checklist QA rõ ràng' },
+    ],
+}
