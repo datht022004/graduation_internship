@@ -1,4 +1,5 @@
 from app.core.database import get_db
+import re
 
 CATEGORIES_COLLECTION = "categories"
 BLOG_POSTS_COLLECTION = "blog_posts"
@@ -20,8 +21,28 @@ class CategoryRepository:
         categories = list(self.get_collection().find({}).sort("name", 1))
         return [self._normalize(category) for category in categories]
 
+    def list_categories(self, name: str = "", skip: int = 0, limit: int = 10) -> list[dict]:
+        query = self._build_search_query(name)
+        categories = list(
+            self.get_collection()
+            .find(query)
+            .sort("name", 1)
+            .skip(skip)
+            .limit(limit)
+        )
+        return [self._normalize(category) for category in categories]
+
+    def count_matching_categories(self, name: str = "") -> int:
+        return self.get_collection().count_documents(self._build_search_query(name))
+
     def get_category_by_id(self, category_id: str) -> dict | None:
         category = self.get_collection().find_one({"id": category_id})
+        if not category:
+            return None
+        return self._normalize(category)
+
+    def get_category_by_name(self, name: str) -> dict | None:
+        category = self.get_collection().find_one({"name": name})
         if not category:
             return None
         return self._normalize(category)
@@ -50,6 +71,12 @@ class CategoryRepository:
     def count_posts_by_category(self, category_name: str) -> int:
         return self.get_blog_collection().count_documents({"category": category_name})
 
+    def rename_posts_category(self, old_name: str, new_name: str):
+        self.get_blog_collection().update_many(
+            {"category": old_name},
+            {"$set": {"category": new_name}},
+        )
+
     def insert_many(self, categories: list[dict]):
         if categories:
             self.get_collection().insert_many(categories)
@@ -57,6 +84,12 @@ class CategoryRepository:
     def _normalize(self, category: dict) -> dict:
         category["_id"] = str(category["_id"])
         return category
+
+    def _build_search_query(self, name: str = "") -> dict:
+        cleaned = name.strip()
+        if not cleaned:
+            return {}
+        return {"name": {"$regex": re.escape(cleaned), "$options": "i"}}
 
 
 category_repository = CategoryRepository()

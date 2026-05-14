@@ -1,16 +1,21 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 
 from app.manager.auth.interface import UserInfo
 from app.manager.auth.usecase import require_admin
-from app.manager.category.interface import Category, CategoryCreate, CategoryUpdate
+from app.manager.category.interface import Category, CategoryCreate, CategoryListResponse, CategoryUpdate
 from app.manager.category.usecase import category_usecase
 
 router = APIRouter(prefix="/admin/categories", tags=["Admin - Categories"])
 
 
-@router.get("", response_model=list[Category])
-async def list_categories(admin: UserInfo = Depends(require_admin)):
-    return category_usecase.get_all_categories()
+@router.get("", response_model=CategoryListResponse)
+async def list_categories(
+    name: str = "",
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=10, alias="pageSize", ge=1, le=100),
+    admin: UserInfo = Depends(require_admin),
+):
+    return category_usecase.list_categories(name=name, page=page, page_size=page_size)
 
 
 @router.post("", response_model=Category, status_code=status.HTTP_201_CREATED)

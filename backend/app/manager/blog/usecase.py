@@ -65,7 +65,7 @@ class BlogUseCase:
         defaults = [
             {
                 "title": "Checklist SEO 2026 cho website dịch vụ",
-                "category": "SEO Foundation",
+                "category": "Dịch vụ SEO",
                 "readTime": "7 phút đọc",
                 "excerpt": "Danh sách 25 hạng mục quan trọng để cải thiện thứ hạng và tỉ lệ chuyển đổi ngay trong quý này.",
                 "content": "<h2>Checklist nền tảng</h2><p>Bắt đầu từ technical SEO, cấu trúc nội dung, internal link và đo lường chuyển đổi. Mỗi hạng mục nên có người phụ trách, deadline và chỉ số theo dõi rõ ràng.</p><ul><li>Audit tốc độ và Core Web Vitals.</li><li>Chuẩn hóa title, meta description và heading.</li><li>Gắn CTA phù hợp theo từng nhóm intent.</li></ul>",
@@ -76,7 +76,7 @@ class BlogUseCase:
             },
             {
                 "title": "Thiết kế landing page tăng lead B2B",
-                "category": "Website CRO",
+                "category": "Thiết kế website",
                 "readTime": "9 phút đọc",
                 "excerpt": "Mô hình cấu trúc landing page theo hành vi khách hàng doanh nghiệp, kèm ví dụ CTA hiệu quả.",
                 "content": "<h2>Landing page cần làm rõ lời hứa</h2><p>Một landing page B2B hiệu quả nên trình bày nhanh vấn đề, bằng chứng năng lực, quy trình triển khai và lời kêu gọi hành động dễ hiểu.</p>",
@@ -87,7 +87,7 @@ class BlogUseCase:
             },
             {
                 "title": "5 lỗi khiến quảng cáo đốt ngân sách",
-                "category": "Ads Optimization",
+                "category": "Quảng cáo +",
                 "readTime": "6 phút đọc",
                 "excerpt": "Phân tích các lỗi phổ biến trong target, creative và đo lường khiến chi phí tăng nhưng lead giảm.",
                 "content": "<h2>Đừng tối ưu khi dữ liệu chưa sạch</h2><p>Trước khi tăng ngân sách, hãy kiểm tra tracking, chất lượng lead và thông điệp creative. Nhiều campaign thất thoát vì đo sai mục tiêu ngay từ đầu.</p>",

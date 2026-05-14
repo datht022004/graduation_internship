@@ -63,11 +63,11 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
     const sidebarContent = (
         <div className="flex h-full flex-col">
             {/* Logo */}
-            <div className="border-b border-slate-200/80 px-5 py-5">
+            <div className="border-b border-slate-300 px-5 py-5">
                 <p className="text-2xl font-bold uppercase leading-none tracking-tight text-[#f2682a]">
                     SEO<span className="text-slate-900">vip</span>
                 </p>
-                <p className="mt-1 text-xs text-slate-400">Quản trị nội dung</p>
+                <p className="mt-1 text-sm text-slate-400">Quản trị nội dung</p>
             </div>
 
             {/* Nav items */}
@@ -79,7 +79,7 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
                             <li key={item.key}>
                                 <button
                                     onClick={() => handleNav(item.key)}
-                                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+                                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-base font-medium transition-colors ${
                                         isActive
                                             ? 'border-l-3 border-blue-600 bg-blue-50 text-blue-700'
                                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-800'
@@ -95,28 +95,28 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
             </nav>
 
             {/* Footer */}
-            <div className="border-t border-slate-200/80 px-4 py-4">
+            <div className="border-t border-slate-300 px-4 py-4">
                 {user && (
                     <div className="mb-3 flex items-center gap-2.5">
                         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-100 text-xs font-bold text-blue-600">
                             {user.name?.charAt(0)?.toUpperCase() || 'A'}
                         </div>
                         <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-medium text-slate-700">{user.name || user.email}</p>
-                            <p className="text-xs text-slate-400">Admin</p>
+                            <p className="truncate text-base font-medium text-slate-700">{user.name || user.email}</p>
+                            <p className="text-sm text-slate-400">Admin</p>
                         </div>
                     </div>
                 )}
                 <div className="flex flex-col gap-1.5">
                     <button
                         onClick={onSwitchToUserZone}
-                        className="w-full rounded-lg px-3 py-2 text-left text-xs font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
+                        className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
                     >
                         ← Về giao diện user
                     </button>
                     <button
                         onClick={onLogout}
-                        className="w-full rounded-lg px-3 py-2 text-left text-xs font-medium text-rose-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
+                        className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-rose-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
                     >
                         Đăng xuất
                     </button>
@@ -146,7 +146,7 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
             )}
 
             {/* Desktop sidebar */}
-            <div className="fixed top-0 left-0 hidden h-full w-64 border-r border-slate-200/80 bg-white lg:block">
+            <div className="fixed top-0 left-0 hidden h-full w-64 border-r border-slate-300 bg-white lg:block">
                 {sidebarContent}
             </div>
         </>

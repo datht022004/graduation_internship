@@ -95,22 +95,22 @@ export default function AdminCategoriesPage() {
                 title="Danh mục"
                 subtitle="Nhóm bài viết blog theo chủ đề"
                 actions={
-                    <button onClick={handleAdd} className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-blue-700">
+                    <button onClick={handleAdd} className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
                         + Danh mục mới
                     </button>
                 }
             />
-            <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
-                <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
-                    <div className="mb-4 flex items-center gap-2">
-                        <h3 className="text-base font-bold text-slate-800">Danh sách danh mục</h3>
-                        <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">{categories.length}</span>
+            <div className="w-full px-6 py-6 lg:px-8">
+                <div className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm">
+                    <div className="mb-5 flex items-center gap-2">
+                        <h3 className="text-xl font-bold text-slate-800">Danh sách danh mục</h3>
+                        <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold text-slate-600">{categories.length}</span>
                     </div>
                     <AdminDataTable
                         columns={[
                             { key: 'name', label: 'Tên danh mục' },
                             { key: 'description', label: 'Mô tả', render: (value) => value || <span className="text-slate-400">Chưa có mô tả</span> },
-                            { key: 'postCount', label: 'Số bài', render: (value) => <span className="rounded-full bg-blue-50 px-2 py-0.5 text-xs font-bold text-blue-700">{value}</span> },
+                            { key: 'postCount', label: 'Số bài', render: (value) => <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-sm font-bold text-blue-700">{value}</span> },
                         ]}
                         data={categories}
                         loading={loading}

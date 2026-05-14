@@ -51,36 +51,36 @@ export default function DocumentList({ documents, onDocumentDeleted }) {
 
     if (!documents || documents.length === 0) {
         return (
-            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 py-12">
-                <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100">
-                    <svg className="h-7 w-7 text-slate-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+            <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-slate-300 py-14">
+                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100">
+                    <svg className="h-8 w-8 text-slate-400" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                     </svg>
                 </div>
-                <p className="mt-3 text-sm font-medium text-slate-500">Chưa có tài liệu nào</p>
-                <p className="mt-1 text-xs text-slate-400">Upload tài liệu để bắt đầu sử dụng chatbot</p>
+                <p className="mt-4 text-base font-medium text-slate-500">Chưa có tài liệu nào</p>
+                <p className="mt-1 text-sm text-slate-400">Upload tài liệu để bắt đầu sử dụng chatbot</p>
             </div>
         )
     }
 
     return (
-        <div className="space-y-2">
+        <div className="space-y-3">
             {documents.map((doc) => {
                 const typeStyle = FILE_TYPE_ICONS[doc.file_type] || FILE_TYPE_ICONS.txt
                 const isDeleting = deletingId === doc.id
 
                 return (
                     <div
-                        className={`flex items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 transition-all hover:border-slate-300 hover:shadow-sm ${isDeleting ? 'opacity-50' : ''}`}
+                        className={`flex items-center gap-4 rounded-xl border border-slate-300 bg-white px-5 py-4 transition-all hover:border-slate-300 hover:shadow-sm ${isDeleting ? 'opacity-50' : ''}`}
                         key={doc.id}
                     >
-                        <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${typeStyle.bg}`}>
-                            <span className={`text-xs font-bold ${typeStyle.text}`}>{typeStyle.label}</span>
+                        <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${typeStyle.bg}`}>
+                            <span className={`text-sm font-bold ${typeStyle.text}`}>{typeStyle.label}</span>
                         </div>
 
                         <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold text-slate-800">{doc.filename}</p>
-                            <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-slate-500">
+                            <p className="truncate text-base font-semibold text-slate-800">{doc.filename}</p>
+                            <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-sm text-slate-500">
                                 <span>{formatFileSize(doc.file_size)}</span>
                                 <span>•</span>
                                 <span>{doc.chunk_count} chunks</span>

@@ -27,3 +27,11 @@ class Category(CategoryBase):
     postCount: int = 0
     created_at: datetime
     updated_at: datetime
+
+
+class CategoryListResponse(BaseModel):
+    items: list[Category]
+    total: int
+    page: int
+    pageSize: int
+    totalPages: int

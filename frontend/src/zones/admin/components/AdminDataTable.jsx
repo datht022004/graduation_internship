@@ -19,28 +19,28 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
     return (
         <>
             {/* Desktop table */}
-            <div className="hidden overflow-hidden rounded-xl border border-slate-200/80 sm:block">
+            <div className="hidden overflow-hidden rounded-xl border border-slate-300 sm:block">
                 <table className="w-full">
                     <thead>
                         <tr className="bg-slate-50">
                             {columns.map((col) => (
                                 <th
                                     key={col.key}
-                                    className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+                                    className="px-4 py-3 text-left text-sm font-semibold uppercase tracking-wide text-slate-500"
                                 >
                                     {col.label}
                                 </th>
                             ))}
-                            <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            <th className="px-4 py-3 text-right text-sm font-semibold uppercase tracking-wide text-slate-500">
                                 Thao tác
                             </th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100">
+                    <tbody className="divide-y divide-slate-200">
                         {data.map((item) => (
                             <tr key={item.id} className="transition-colors hover:bg-slate-50/50">
                                 {columns.map((col) => (
-                                    <td key={col.key} className="px-4 py-3 text-sm text-slate-700">
+                                    <td key={col.key} className="px-4 py-3 text-base text-slate-700">
                                         {col.render ? col.render(item[col.key], item) : item[col.key]}
                                     </td>
                                 ))}
@@ -48,10 +48,10 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                                     <div className="flex items-center justify-end gap-1">
                                         <button
                                             onClick={() => onEdit(item)}
-                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600"
+                                            className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-blue-50 hover:text-blue-600"
                                             title="Sửa"
                                         >
-                                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
@@ -61,10 +61,10 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                                         </button>
                                         <button
                                             onClick={() => onDelete(item)}
-                                            className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-500"
+                                            className="rounded-lg p-2 text-slate-400 transition-colors hover:bg-rose-50 hover:text-rose-500"
                                             title="Xóa"
                                         >
-                                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                                 <path
                                                     strokeLinecap="round"
                                                     strokeLinejoin="round"
@@ -83,27 +83,27 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
             {/* Mobile cards */}
             <div className="flex flex-col gap-3 sm:hidden">
                 {data.map((item) => (
-                    <div key={item.id} className="rounded-xl border border-slate-200/80 bg-white p-4">
+                    <div key={item.id} className="rounded-xl border border-slate-300 bg-white p-4">
                         <dl className="space-y-2">
                             {columns.map((col) => (
                                 <div key={col.key}>
-                                    <dt className="text-xs font-semibold uppercase tracking-wider text-slate-400">{col.label}</dt>
-                                    <dd className="mt-0.5 text-sm text-slate-700">
+                                    <dt className="text-sm font-semibold uppercase tracking-wide text-slate-400">{col.label}</dt>
+                                    <dd className="mt-0.5 text-base text-slate-700">
                                         {col.render ? col.render(item[col.key], item) : item[col.key]}
                                     </dd>
                                 </div>
                             ))}
                         </dl>
-                        <div className="mt-3 flex gap-2 border-t border-slate-100 pt-3">
+                        <div className="mt-3 flex gap-2 border-t border-slate-300 pt-3">
                             <button
                                 onClick={() => onEdit(item)}
-                                className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-blue-600 transition-colors hover:bg-blue-50"
+                                className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50"
                             >
                                 Sửa
                             </button>
                             <button
                                 onClick={() => onDelete(item)}
-                                className="flex-1 rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-rose-500 transition-colors hover:bg-rose-50"
+                                className="flex-1 rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium text-rose-500 transition-colors hover:bg-rose-50"
                             >
                                 Xóa
                             </button>

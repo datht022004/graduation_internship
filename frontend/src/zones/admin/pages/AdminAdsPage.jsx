@@ -57,7 +57,7 @@ function CrudSection({ title, columns, fetchFn, createFn, updateFn, deleteFn, fo
     }
 
     return (
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
+        <div className="rounded-2xl border border-slate-300 bg-white p-5 shadow-sm sm:p-6">
             <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <h3 className="text-base font-bold text-slate-800">{title}</h3>
@@ -86,7 +86,7 @@ export default function AdminAdsPage() {
     return (
         <>
             <AdminPageHeader title="Quản lý Quảng cáo" subtitle="Nội dung hiển thị trên tab Quảng cáo của khách hàng" />
-            <div className="mx-auto max-w-5xl space-y-6 px-4 py-6 sm:px-6">
+            <div className="w-full space-y-6 px-6 py-6 lg:px-8">
                 <CrudSection
                     title="Chỉ số hiệu suất"
                     columns={[

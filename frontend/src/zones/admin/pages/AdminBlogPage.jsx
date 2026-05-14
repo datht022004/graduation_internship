@@ -4,7 +4,8 @@ import AdminDataTable from '../components/AdminDataTable'
 import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
-import { getBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost, getCategories } from '../../../config/api'
+import { getBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost } from '../../../config/api'
+import { USER_LANDING_TABS_MOCK } from '../../../mock/pages/user/user-landing.mock'
 
 const EMPTY_BLOG_POST = {
     title: '',
@@ -18,9 +19,13 @@ const EMPTY_BLOG_POST = {
     isFeatured: false,
 }
 
+const SITE_CATEGORY_OPTIONS = USER_LANDING_TABS_MOCK.map((tab) => ({
+    label: tab.label,
+    value: tab.label,
+}))
+
 export default function AdminBlogPage() {
     const [posts, setPosts] = useState([])
-    const [categoryRecords, setCategoryRecords] = useState([])
     const [loading, setLoading] = useState(true)
     const [modalOpen, setModalOpen] = useState(false)
     const [editingItem, setEditingItem] = useState(null)
@@ -33,9 +38,7 @@ export default function AdminBlogPage() {
     const fetchData = useCallback(async () => {
         setLoading(true)
         try {
-            const [blogPosts, categories] = await Promise.all([getBlogPosts(), getCategories()])
-            setPosts(blogPosts)
-            setCategoryRecords(categories)
+            setPosts(await getBlogPosts())
         } finally {
             setLoading(false)
         }
@@ -44,12 +47,7 @@ export default function AdminBlogPage() {
     useEffect(() => { fetchData() }, [fetchData])
 
     const categories = [...new Set(posts.map((p) => p.category).filter(Boolean))]
-    const categoryOptions = [
-        ...new Set([
-            ...categoryRecords.map((category) => category.name).filter(Boolean),
-            ...categories,
-        ]),
-    ].map((category) => ({ label: category, value: category }))
+    const categoryOptions = SITE_CATEGORY_OPTIONS
     const filtered = filterCategory ? posts.filter((p) => p.category === filterCategory) : posts
 
     function updateField(name, value) {
@@ -124,23 +122,23 @@ export default function AdminBlogPage() {
                 title="Quản lý Blog"
                 subtitle="Nội dung hiển thị trên tab Blog của khách hàng"
                 actions={
-                    <button onClick={handleAdd} className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white transition-colors hover:bg-blue-700">
+                    <button onClick={handleAdd} className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-700">
                         + Bài viết mới
                     </button>
                 }
             />
-            <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
-                <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm sm:p-6">
-                    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+            <div className="w-full px-6 py-6 lg:px-8">
+                <div className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm">
+                    <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
-                            <h3 className="text-base font-bold text-slate-800">Bài viết</h3>
-                            <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">{filtered.length}</span>
+                            <h3 className="text-xl font-bold text-slate-800">Bài viết</h3>
+                            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold text-slate-600">{filtered.length}</span>
                         </div>
                         {categories.length > 0 && (
                             <select
                                 value={filterCategory}
                                 onChange={(e) => setFilterCategory(e.target.value)}
-                                className="rounded-lg border border-slate-300 px-3 py-1.5 text-xs text-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
+                                className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                             >
                                 <option value="">Tất cả danh mục</option>
                                 {categories.map((cat) => (
@@ -153,7 +151,7 @@ export default function AdminBlogPage() {
                     <AdminDataTable
                         columns={[
                             { key: 'title', label: 'Tiêu đề' },
-                            { key: 'category', label: 'Danh mục', render: (v) => <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">{v}</span> },
+                            { key: 'category', label: 'Danh mục', render: (v) => <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-medium text-slate-600">{v}</span> },
                             { key: 'readTime', label: 'Thời gian đọc' },
                             {
                                 key: 'isFeatured',
@@ -161,7 +159,7 @@ export default function AdminBlogPage() {
                                 render: (v, item) => (
                                     <button
                                         onClick={(e) => { e.stopPropagation(); handleToggleFeatured(item) }}
-                                        className={`rounded-full px-2 py-0.5 text-xs font-semibold transition-colors ${v ? 'bg-amber-50 text-amber-700 hover:bg-amber-100' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+                                        className={`rounded-full px-2.5 py-0.5 text-sm font-semibold transition-colors ${v ? 'bg-amber-50 text-amber-700 hover:bg-amber-100' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
                                     >
                                         {v ? 'Nổi bật' : 'Thường'}
                                     </button>
@@ -234,7 +232,7 @@ export default function AdminBlogPage() {
                                     />
                                 </div>
                             </div>
-                            <div className="overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+                            <div className="overflow-hidden rounded-xl border border-slate-300 bg-slate-50">
                                 {formData.imageUrl ? (
                                     <img src={formData.imageUrl} alt="" className="h-full min-h-56 w-full object-cover" />
                                 ) : (
@@ -252,7 +250,7 @@ export default function AdminBlogPage() {
                         onChange={(val) => updateField('content', val)}
                     />
 
-                    <div className="sticky bottom-0 -mx-6 -mb-5 flex gap-3 border-t border-slate-200 bg-white/95 px-6 py-4 backdrop-blur">
+                    <div className="sticky bottom-0 -mx-6 -mb-5 flex gap-3 border-t border-slate-300 bg-white/95 px-6 py-4 backdrop-blur">
                         <button type="button" onClick={() => setModalOpen(false)} className="flex-1 rounded-xl border border-slate-300 px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">Hủy</button>
                         <button type="submit" className="flex-1 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-700">{editingItem ? 'Cập nhật' : 'Đăng bài'}</button>
                     </div>
@@ -266,7 +264,7 @@ export default function AdminBlogPage() {
 
 function EditorSection({ title, children }) {
     return (
-        <section className="space-y-4 rounded-2xl border border-slate-200 bg-slate-50/40 p-4">
+        <section className="space-y-4 rounded-2xl border border-slate-300 bg-slate-50/40 p-4">
             <h4 className="text-sm font-black uppercase tracking-wide text-slate-700">{title}</h4>
             {children}
         </section>
@@ -344,7 +342,7 @@ function BlogContentEditor({ value, onChange }) {
     return (
         <EditorSection title="Nội dung chi tiết">
             <div className="overflow-hidden rounded-xl border border-slate-300 bg-white">
-                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 bg-slate-50 px-3 py-2">
                     <div className="flex flex-wrap items-center gap-1">
                         <EditorButton title="Soạn thảo" active={mode === 'write'} onClick={() => setMode('write')}>Soạn</EditorButton>
                         <EditorButton title="Xem trước" active={mode === 'preview'} onClick={() => setMode('preview')}>Preview</EditorButton>
@@ -359,7 +357,7 @@ function BlogContentEditor({ value, onChange }) {
 
                 {mode === 'write' && (
                     <>
-                        <div className="flex flex-wrap items-center gap-1 border-b border-slate-200 bg-white px-2 py-2">
+                        <div className="flex flex-wrap items-center gap-1 border-b border-slate-300 bg-white px-2 py-2">
                             <EditorButton title="Hoàn tác" onClick={() => runCommand('undo')}>↶</EditorButton>
                             <EditorButton title="Làm lại" onClick={() => runCommand('redo')}>↷</EditorButton>
                             <EditorDivider />
@@ -371,11 +369,11 @@ function BlogContentEditor({ value, onChange }) {
                             <EditorButton title="In nghiêng" className="italic" onClick={() => runCommand('italic')}>I</EditorButton>
                             <EditorButton title="Gạch chân" className="underline" onClick={() => runCommand('underline')}>U</EditorButton>
                             <EditorButton title="Gạch ngang" className="line-through" onClick={() => runCommand('strikeThrough')}>S</EditorButton>
-                            <label className="flex min-h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 text-xs font-semibold text-slate-700">
+                            <label className="flex min-h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-2 text-xs font-semibold text-slate-700">
                                 Màu
                                 <input type="color" className="h-5 w-6 cursor-pointer border-0 bg-transparent p-0" onChange={(e) => runCommand('foreColor', e.target.value)} />
                             </label>
-                            <label className="flex min-h-9 items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 text-xs font-semibold text-slate-700">
+                            <label className="flex min-h-9 items-center gap-2 rounded-lg border border-slate-300 bg-white px-2 text-xs font-semibold text-slate-700">
                                 Nền
                                 <input type="color" className="h-5 w-6 cursor-pointer border-0 bg-transparent p-0" onChange={(e) => runCommand('hiliteColor', e.target.value)} />
                             </label>
@@ -411,7 +409,7 @@ function BlogContentEditor({ value, onChange }) {
                             <EditorButton title="Xóa định dạng" onClick={() => runCommand('removeFormat')}>Clear</EditorButton>
                         </div>
 
-                        <div className="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2">
+                        <div className="flex flex-wrap gap-2 border-b border-slate-300 bg-slate-50 px-3 py-2">
                             <EditorButton title="Chèn dàn ý SEO" onClick={() => applyTemplate('outline')}>Dàn ý SEO</EditorButton>
                             <EditorButton title="Chèn checklist" onClick={() => applyTemplate('checklist')}>Checklist</EditorButton>
                             <EditorButton title="Chèn case study" onClick={() => applyTemplate('caseStudy')}>Case study</EditorButton>
@@ -456,7 +454,7 @@ function EditorButton({ title, className = '', active = false, onClick, children
             title={title}
             onMouseDown={(e) => e.preventDefault()}
             onClick={onClick}
-            className={`min-h-9 rounded-lg border px-3 text-xs font-semibold transition-colors ${active ? 'border-blue-200 bg-blue-600 text-white' : 'border-slate-200 bg-white text-slate-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700'} ${className}`}
+            className={`min-h-9 rounded-lg border px-3 text-xs font-semibold transition-colors ${active ? 'border-blue-200 bg-blue-600 text-white' : 'border-slate-300 bg-white text-slate-700 hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700'} ${className}`}
         >
             {children}
         </button>

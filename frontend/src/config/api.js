@@ -1,6 +1,4 @@
 import axios from 'axios'
-import { createAuthSessionStruct } from '../core/domain/auth'
-import { createDocumentStruct } from '../core/domain/document'
 
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api'
 
@@ -118,6 +116,32 @@ apiClient.interceptors.request.use((config) => {
 })
 
 export default apiClient
+
+function createUserStruct(input = {}) {
+    return {
+        email: input.email ?? '',
+        name: input.name ?? '',
+        role: input.role ?? 'user',
+    }
+}
+
+function createAuthSessionStruct(input = {}) {
+    return {
+        accessToken: input.access_token ?? input.accessToken ?? '',
+        user: createUserStruct(input.user),
+    }
+}
+
+function createDocumentStruct(input = {}) {
+    return {
+        id: input.id ?? '',
+        filename: input.filename ?? '',
+        file_type: input.file_type ?? '',
+        file_size: input.file_size ?? 0,
+        chunk_count: input.chunk_count ?? 0,
+        uploaded_at: input.uploaded_at ?? '',
+    }
+}
 
 async function postAuth(path, payload) {
     try {

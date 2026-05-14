@@ -22,7 +22,7 @@ export default function AdminModal({ isOpen, onClose, title, children, size = 'm
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
             <div className="modal-overlay-enter fixed inset-0 bg-slate-900/50 backdrop-blur-sm" onClick={onClose} />
             <div className={`modal-content-enter relative flex max-h-[92vh] w-full flex-col ${sizeClass} rounded-2xl bg-white shadow-xl`}>
-                <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4">
+                <div className="flex items-center justify-between border-b border-slate-300 px-6 py-4">
                     <h3 className="text-lg font-bold text-slate-800">{title}</h3>
                     <button
                         onClick={onClose}

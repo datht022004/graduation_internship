@@ -1,12 +1,48 @@
 import re
 import unicodedata
 import uuid
+from math import ceil
 from datetime import datetime, timezone
 
-from app.manager.blog.repository import blog_repository
-from app.manager.category.interface import Category, CategoryCreate, CategoryUpdate
+from app.manager.category.interface import Category, CategoryCreate, CategoryListResponse, CategoryUpdate
 from app.manager.category.repository import category_repository
 from app.models import CategoryDocument
+
+DEFAULT_SITE_CATEGORIES = [
+    {
+        "name": "Home",
+        "description": "Nội dung tổng quan và giới thiệu chính trên trang chủ.",
+    },
+    {
+        "name": "Dịch vụ SEO",
+        "description": "Bài viết liên quan tới dịch vụ SEO, audit, content và tăng trưởng organic.",
+    },
+    {
+        "name": "Thiết kế website",
+        "description": "Bài viết về thiết kế website, landing page, UX/UI và tối ưu chuyển đổi.",
+    },
+    {
+        "name": "Quảng cáo +",
+        "description": "Bài viết về quảng cáo đa kênh, performance marketing và tối ưu ngân sách.",
+    },
+    {
+        "name": "Blog",
+        "description": "Tin tức, playbook và kiến thức chung cho doanh nghiệp.",
+    },
+]
+
+LEGACY_CATEGORY_RENAMES = {
+    "SEO Foundation": "Dịch vụ SEO",
+    "SEO Local": "Dịch vụ SEO",
+    "SEO Audit": "Dịch vụ SEO",
+    "SEO Content": "Dịch vụ SEO",
+    "Content Strategy": "Dịch vụ SEO",
+    "Website CRO": "Thiết kế website",
+    "CRO": "Thiết kế website",
+    "Ads Optimization": "Quảng cáo +",
+    "Analytics": "Quảng cáo +",
+    "Social Content": "Quảng cáo +",
+}
 
 
 class CategoryUseCase:
@@ -14,6 +50,24 @@ class CategoryUseCase:
         category_repository.ensure_indexes()
         categories = category_repository.get_all_categories()
         return [self._with_post_count(category) for category in categories]
+
+    def list_categories(self, name: str = "", page: int = 1, page_size: int = 10) -> CategoryListResponse:
+        category_repository.ensure_indexes()
+        page = max(page, 1)
+        page_size = min(max(page_size, 1), 100)
+        total = category_repository.count_matching_categories(name)
+        total_pages = ceil(total / page_size) if total else 1
+        safe_page = min(page, total_pages)
+        skip = (safe_page - 1) * page_size
+        categories = category_repository.list_categories(name=name, skip=skip, limit=page_size)
+
+        return CategoryListResponse(
+            items=[self._with_post_count(category) for category in categories],
+            total=total,
+            page=safe_page,
+            pageSize=page_size,
+            totalPages=total_pages,
+        )
 
     def create_category(self, payload: CategoryCreate) -> Category:
         category_repository.ensure_indexes()
@@ -61,31 +115,54 @@ class CategoryUseCase:
 
     def seed_default_categories(self):
         category_repository.ensure_indexes()
-        if category_repository.count_categories() > 0:
-            return
-
-        names = []
-        for post in blog_repository.get_all_posts():
-            category = post.get("category")
-            if category and category not in names:
-                names.append(category)
-
-        if not names:
-            names = ["SEO Foundation", "Website CRO", "Ads Optimization"]
+        self._migrate_legacy_categories()
 
         now = self._now()
         categories = []
-        for name in names:
+        existing_names = {category["name"] for category in category_repository.get_all_categories()}
+
+        for category in DEFAULT_SITE_CATEGORIES:
+            if category["name"] in existing_names:
+                continue
+
             category_doc = CategoryDocument(
                 id=str(uuid.uuid4())[:8],
-                name=name,
-                slug=self._unique_slug(name),
-                description="",
+                name=category["name"],
+                slug=self._unique_slug(category["name"]),
+                description=category["description"],
                 created_at=now,
                 updated_at=now,
             )
             categories.append(category_doc.model_dump(by_alias=True, exclude_none=True))
         category_repository.insert_many(categories)
+
+    def _migrate_legacy_categories(self):
+        now = self._now()
+        descriptions = {
+            category["name"]: category["description"]
+            for category in DEFAULT_SITE_CATEGORIES
+        }
+
+        for old_name, new_name in LEGACY_CATEGORY_RENAMES.items():
+            category_repository.rename_posts_category(old_name, new_name)
+            legacy_category = category_repository.get_category_by_name(old_name)
+            if not legacy_category:
+                continue
+
+            existing_target = category_repository.get_category_by_name(new_name)
+            if existing_target:
+                category_repository.delete_category(legacy_category["id"])
+                continue
+
+            category_repository.update_category(
+                legacy_category["id"],
+                {
+                    "name": new_name,
+                    "slug": self._unique_slug(new_name, exclude_id=legacy_category["id"]),
+                    "description": descriptions.get(new_name, legacy_category.get("description", "")),
+                    "updated_at": now,
+                },
+            )
 
     def _with_post_count(self, category: dict) -> Category:
         return Category(

@@ -10,12 +10,12 @@ export default function AdminStatCard({ label, value, icon, color = 'blue' }) {
     const c = COLOR_MAP[color] || COLOR_MAP.blue
 
     return (
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
-            <div className="flex items-center gap-3">
-                <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${c.icon} ${c.text}`}>{icon}</div>
+        <div className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm">
+            <div className="flex items-center gap-4">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl ${c.icon} ${c.text}`}>{icon}</div>
                 <div>
-                    <p className={`text-2xl font-bold ${c.text}`}>{value}</p>
-                    <p className="text-xs text-slate-500">{label}</p>
+                    <p className={`text-3xl font-bold ${c.text}`}>{value}</p>
+                    <p className="text-sm text-slate-500">{label}</p>
                 </div>
             </div>
         </div>
