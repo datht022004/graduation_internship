@@ -14,6 +14,11 @@ export const ADMIN_NAVIGATION = {
         label: 'Danh mục',
         icon: 'tag',
     },
+    users: {
+        key: 'users',
+        label: 'Người dùng',
+        icon: 'users',
+    },
     documents: {
         key: 'documents',
         label: 'Tài liệu RAG',

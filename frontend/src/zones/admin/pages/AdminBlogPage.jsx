@@ -18,7 +18,7 @@ const EMPTY_BLOG_POST = {
     isFeatured: false,
 }
 
-const PAGE_SIZE = 5
+const PAGE_SIZE = 10
 
 export default function AdminBlogPage({ categoryShortcut }) {
     const [posts, setPosts] = useState([])
@@ -32,6 +32,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
     const [deleteTarget, setDeleteTarget] = useState(null)
     const [deleting, setDeleting] = useState(false)
     const [filterCategory, setFilterCategory] = useState('')
+    const [searchInput, setSearchInput] = useState('')
     const [searchTerm, setSearchTerm] = useState('')
     const coverInputRef = useRef(null)
 
@@ -58,8 +59,18 @@ export default function AdminBlogPage({ categoryShortcut }) {
     useEffect(() => { fetchData() }, [fetchData])
 
     useEffect(() => {
+        const timeoutId = window.setTimeout(() => {
+            setSearchTerm(searchInput.trim())
+            setPage(1)
+        }, 500)
+
+        return () => window.clearTimeout(timeoutId)
+    }, [searchInput])
+
+    useEffect(() => {
         if (categoryShortcut?.category) {
             setFilterCategory(categoryShortcut.category)
+            setSearchInput('')
             setSearchTerm('')
             setPage(1)
         }
@@ -78,11 +89,6 @@ export default function AdminBlogPage({ categoryShortcut }) {
 
     function handleCategoryFilterChange(value) {
         setFilterCategory(value)
-        setPage(1)
-    }
-
-    function handleSearchChange(value) {
-        setSearchTerm(value)
         setPage(1)
     }
 
@@ -170,8 +176,8 @@ export default function AdminBlogPage({ categoryShortcut }) {
                                 </svg>
                                 <input
                                     type="search"
-                                    value={searchTerm}
-                                    onChange={(e) => handleSearchChange(e.target.value)}
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
                                     placeholder="Tìm theo title hoặc slug"
                                     className="w-full rounded-lg border border-slate-300 py-2 pl-9 pr-3 text-sm text-slate-700 transition-colors placeholder:text-slate-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                                 />
@@ -220,7 +226,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
                         </p>
                         <div className="flex items-center gap-2">
                             <button
-                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-600 hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-600"
                                 disabled={pagination.page <= 1 || loading}
                                 onClick={() => setPage((value) => Math.max(value - 1, 1))}
                                 type="button"
@@ -228,7 +234,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
                                 Trước
                             </button>
                             <button
-                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-600 hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-600"
                                 disabled={pagination.page >= pagination.totalPages || loading}
                                 onClick={() => setPage((value) => value + 1)}
                                 type="button"

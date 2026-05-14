@@ -30,6 +30,8 @@ export const API_ENDPOINTS = {
         blogPosts: '/admin/blog/posts',
         blogPostById: (id) => `/admin/blog/posts/${id}`,
         blogPostToggleFeatured: (id) => `/admin/blog/posts/${id}/toggle-featured`,
+        users: '/admin/users',
+        userByEmail: (email) => `/admin/users/${encodeURIComponent(email)}`,
         categories: '/admin/categories',
         categoryById: (id) => `/admin/categories/${id}`,
         homeServiceCards: '/admin/home/service-cards',
@@ -331,6 +333,34 @@ export async function deleteBlogPost(id) {
 export async function toggleFeaturedPost(id) {
     const { data } = await apiClient.patch(API_ENDPOINTS.admin.blogPostToggleFeatured(id))
     return data
+}
+
+export async function getUserPage(params = {}) {
+    const { data } = await apiClient.get(API_ENDPOINTS.admin.users, { params })
+    if (Array.isArray(data)) {
+        return {
+            items: data,
+            total: data.length,
+            page: 1,
+            pageSize: data.length || params.pageSize || 10,
+            totalPages: 1,
+        }
+    }
+    return data
+}
+
+export async function createManagedUser(payload) {
+    const { data } = await apiClient.post(API_ENDPOINTS.admin.users, payload)
+    return data
+}
+
+export async function updateManagedUser(email, payload) {
+    const { data } = await apiClient.put(API_ENDPOINTS.admin.userByEmail(email), payload)
+    return data
+}
+
+export async function deleteManagedUser(email) {
+    await apiClient.delete(API_ENDPOINTS.admin.userByEmail(email))
 }
 
 export async function getCategoryPage(params = {}) {

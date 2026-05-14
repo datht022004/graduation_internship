@@ -5,6 +5,7 @@ import AdminOverviewPage from './AdminOverviewPage'
 import AdminBlogPage from './AdminBlogPage'
 import AdminCategoriesPage from './AdminCategoriesPage'
 import AdminDocumentsPage from './AdminDocumentsPage'
+import AdminUsersPage from './AdminUsersPage'
 
 function AdminZonePage({ authUser, onLogout, onSwitchToUserZone }) {
     const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
@@ -33,6 +34,8 @@ function AdminZonePage({ authUser, onLogout, onSwitchToUserZone }) {
                 return <AdminBlogPage categoryShortcut={blogCategoryShortcut} />
             case 'categories':
                 return <AdminCategoriesPage />
+            case 'users':
+                return <AdminUsersPage />
             case 'documents':
                 return <AdminDocumentsPage />
             default:

@@ -50,6 +50,11 @@ const ICONS = {
             <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
         </svg>
     ),
+    users: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128a9.37 9.37 0 01-5.25 0m4.464-3.073a4.125 4.125 0 00-7.928 0M9.75 19.125v.003A9.37 9.37 0 014.5 19.125a4.125 4.125 0 017.928-3.07m0 0A4.125 4.125 0 0112 9.75a4.125 4.125 0 00-4.125 4.125m8.25 0A4.125 4.125 0 0112 9.75m0 0A3.375 3.375 0 108.625 6.375 3.375 3.375 0 0012 9.75zm6.375 0a3 3 0 10-2.23-5.006" />
+        </svg>
+    ),
 }
 
 export default function AdminSidebar({ activePage, onPageChange, user, onLogout, onSwitchToUserZone }) {

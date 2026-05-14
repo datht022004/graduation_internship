@@ -101,7 +101,7 @@ export default function AdminDocumentsPage() {
                         </p>
                         <div className="flex items-center gap-2">
                             <button
-                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-600 hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-600"
                                 disabled={pagination.page <= 1 || loading}
                                 onClick={() => setPage((value) => Math.max(value - 1, 1))}
                                 type="button"
@@ -109,7 +109,7 @@ export default function AdminDocumentsPage() {
                                 Trước
                             </button>
                             <button
-                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-600 hover:bg-blue-600 hover:text-white disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:border-slate-300 disabled:hover:bg-white disabled:hover:text-slate-600"
                                 disabled={pagination.page >= pagination.totalPages || loading}
                                 onClick={() => setPage((value) => value + 1)}
                                 type="button"

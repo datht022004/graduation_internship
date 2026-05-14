@@ -27,7 +27,7 @@ class AuthUseCase:
                 UserDocument(
                     email=admin_email,
                     password=hash_password(settings.ADMIN_PASSWORD),
-                    name="System Administrator",
+                    name="Quản trị viên hệ thống",
                     role="admin",
                     auth_providers=["password"],
                     created_at=datetime.now(timezone.utc),
@@ -40,7 +40,7 @@ class AuthUseCase:
                 UserDocument(
                     email=user_email,
                     password=hash_password(settings.USER_PASSWORD),
-                    name="Enterprise Client",
+                    name="Khách hàng doanh nghiệp",
                     role="user",
                     auth_providers=["password"],
                     created_at=datetime.now(timezone.utc),
