@@ -61,7 +61,6 @@ function App() {
       <AdminZonePage
         authUser={authUser}
         onLogout={handleLogout}
-        onSwitchToUserZone={() => setActiveZone('user')}
       />
     )
   }

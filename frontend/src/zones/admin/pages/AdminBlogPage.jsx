@@ -4,6 +4,7 @@ import AdminDataTable from '../components/AdminDataTable'
 import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
+import BlogPostPreviewModal from '../components/BlogPostPreviewModal'
 import { getBlogPostPage, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost, getCategories } from '../../../config/api'
 
 const EMPTY_BLOG_POST = {
@@ -28,6 +29,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
     const [loading, setLoading] = useState(true)
     const [modalOpen, setModalOpen] = useState(false)
     const [editingItem, setEditingItem] = useState(null)
+    const [selectedPost, setSelectedPost] = useState(null)
     const [formData, setFormData] = useState(EMPTY_BLOG_POST)
     const [deleteTarget, setDeleteTarget] = useState(null)
     const [deleting, setDeleting] = useState(false)
@@ -216,6 +218,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
                         ]}
                         data={filtered}
                         loading={loading}
+                        onView={setSelectedPost}
                         onEdit={handleEdit}
                         onDelete={setDeleteTarget}
                         emptyMessage="Chưa có bài viết nào"
@@ -321,6 +324,9 @@ export default function AdminBlogPage({ categoryShortcut }) {
             </AdminModal>
 
             <AdminDeleteConfirm isOpen={!!deleteTarget} onClose={() => setDeleteTarget(null)} onConfirm={handleDelete} itemName={deleteTarget?.title || ''} loading={deleting} />
+            {selectedPost && (
+                <BlogPostPreviewModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+            )}
         </>
     )
 }

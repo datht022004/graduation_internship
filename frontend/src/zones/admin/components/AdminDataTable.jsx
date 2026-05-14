@@ -1,6 +1,6 @@
 import AdminEmptyState from './AdminEmptyState'
 
-export default function AdminDataTable({ columns, data, onEdit, onDelete, loading, emptyMessage }) {
+export default function AdminDataTable({ columns, data, onView, showViewAction = true, onEdit, onDelete, loading, emptyMessage }) {
     if (loading) {
         return (
             <div className="flex items-center justify-center py-12">
@@ -38,7 +38,11 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                     </thead>
                     <tbody className="divide-y divide-slate-200">
                         {data.map((item) => (
-                            <tr key={item.id} className="transition-all hover:bg-blue-100 hover:shadow-[inset_4px_0_0_#2563eb]">
+                            <tr
+                                key={item.id}
+                                onClick={onView ? () => onView(item) : undefined}
+                                className={`transition-all hover:bg-blue-100 hover:shadow-[inset_4px_0_0_#2563eb] ${onView ? 'cursor-pointer' : ''}`}
+                            >
                                 {columns.map((col) => (
                                     <td key={col.key} className="px-4 py-3 text-base text-slate-700">
                                         {col.render ? col.render(item[col.key], item) : item[col.key]}
@@ -46,8 +50,21 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                                 ))}
                                 <td className="px-4 py-3 text-right">
                                     <div className="flex items-center justify-end gap-2">
+                                        {onView && showViewAction && (
+                                            <button
+                                                onClick={(e) => { e.stopPropagation(); onView(item) }}
+                                                className="inline-flex items-center gap-1.5 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
+                                                title="Xem chi tiết"
+                                            >
+                                                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12s-3.75 6.75-9.75 6.75S2.25 12 2.25 12z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                <span>Xem</span>
+                                            </button>
+                                        )}
                                         <button
-                                            onClick={() => onEdit(item)}
+                                            onClick={(e) => { e.stopPropagation(); onEdit(item) }}
                                             className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
                                             title="Sửa"
                                         >
@@ -61,7 +78,7 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                                             <span>Sửa</span>
                                         </button>
                                         <button
-                                            onClick={() => onDelete(item)}
+                                            onClick={(e) => { e.stopPropagation(); onDelete(item) }}
                                             className="inline-flex items-center gap-1.5 rounded-lg border border-rose-200 bg-rose-50 px-3 py-2 text-sm font-semibold text-rose-600 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
                                             title="Xóa"
                                         >
@@ -85,7 +102,11 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
             {/* Mobile cards */}
             <div className="flex flex-col gap-3 sm:hidden">
                 {data.map((item) => (
-                    <div key={item.id} className="rounded-xl border border-slate-300 bg-white p-4">
+                    <div
+                        key={item.id}
+                        onClick={onView ? () => onView(item) : undefined}
+                        className={`rounded-xl border border-slate-300 bg-white p-4 ${onView ? 'cursor-pointer transition-colors hover:border-blue-300 hover:bg-blue-50' : ''}`}
+                    >
                         <dl className="space-y-2">
                             {columns.map((col) => (
                                 <div key={col.key}>
@@ -97,14 +118,22 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                             ))}
                         </dl>
                         <div className="mt-3 flex gap-2 border-t border-slate-300 pt-3">
+                            {onView && showViewAction && (
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); onView(item) }}
+                                    className="flex-1 rounded-lg border border-blue-100 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
+                                >
+                                    Xem
+                                </button>
+                            )}
                             <button
-                                onClick={() => onEdit(item)}
+                                onClick={(e) => { e.stopPropagation(); onEdit(item) }}
                                 className="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-semibold text-slate-600 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
                             >
                                 Sửa
                             </button>
                             <button
-                                onClick={() => onDelete(item)}
+                                onClick={(e) => { e.stopPropagation(); onDelete(item) }}
                                 className="flex-1 rounded-lg border border-rose-200 bg-rose-50 px-3 py-1.5 text-sm font-semibold text-rose-600 transition-colors hover:border-blue-600 hover:bg-blue-600 hover:text-white"
                             >
                                 Xóa

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ADMIN_NAVIGATION } from '../config/navigation'
+import AdminConfirmDialog from './AdminConfirmDialog'
 
 const NAV_ITEMS = Object.values(ADMIN_NAVIGATION)
 
@@ -57,8 +58,9 @@ const ICONS = {
     ),
 }
 
-export default function AdminSidebar({ activePage, onPageChange, user, onLogout, onSwitchToUserZone }) {
+export default function AdminSidebar({ activePage, onPageChange, user, onLogout }) {
     const [mobileOpen, setMobileOpen] = useState(false)
+    const [logoutConfirmOpen, setLogoutConfirmOpen] = useState(false)
 
     function handleNav(key) {
         onPageChange(key)
@@ -114,13 +116,7 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
                 )}
                 <div className="flex flex-col gap-1.5">
                     <button
-                        onClick={onSwitchToUserZone}
-                        className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-slate-500 transition-colors hover:bg-slate-50 hover:text-slate-700"
-                    >
-                        ← Về giao diện user
-                    </button>
-                    <button
-                        onClick={onLogout}
+                        onClick={() => setLogoutConfirmOpen(true)}
                         className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-rose-500 transition-colors hover:bg-rose-50 hover:text-rose-600"
                     >
                         Đăng xuất
@@ -154,6 +150,18 @@ export default function AdminSidebar({ activePage, onPageChange, user, onLogout,
             <div className="fixed top-0 left-0 hidden h-full w-64 border-r border-slate-300 bg-white lg:block">
                 {sidebarContent}
             </div>
+            <AdminConfirmDialog
+                isOpen={logoutConfirmOpen}
+                onClose={() => setLogoutConfirmOpen(false)}
+                onConfirm={() => {
+                    setLogoutConfirmOpen(false)
+                    onLogout()
+                }}
+                title="Xác nhận đăng xuất"
+                message={`Bạn có chắc chắn muốn đăng xuất khỏi tài khoản ${user?.name || user?.email || 'này'}?`}
+                confirmLabel="Đăng xuất"
+                tone="danger"
+            />
         </>
     )
 }

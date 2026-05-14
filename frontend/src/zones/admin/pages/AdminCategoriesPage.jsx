@@ -13,7 +13,7 @@ const EMPTY_CATEGORY = {
 
 const PAGE_SIZE = 5
 
-export default function AdminCategoriesPage() {
+export default function AdminCategoriesPage({ onOpenBlogCategory }) {
     const [categories, setCategories] = useState([])
     const [pagination, setPagination] = useState({ total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 1 })
     const [searchInput, setSearchInput] = useState('')
@@ -157,6 +157,8 @@ export default function AdminCategoriesPage() {
                         ]}
                         data={categories}
                         loading={loading}
+                        onView={(item) => onOpenBlogCategory?.(item.name)}
+                        showViewAction={false}
                         onEdit={handleEdit}
                         onDelete={setDeleteTarget}
                         emptyMessage="Chưa có danh mục nào"
