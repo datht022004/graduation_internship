@@ -94,10 +94,6 @@ export default function AdminBlogPage() {
         setModalOpen(true)
     }
 
-    function handleEstimateReadTime() {
-        updateField('readTime', estimateReadTime(formData.content || formData.excerpt || ''))
-    }
-
     function handleCoverImageFile(file) {
         if (!file) return
 
@@ -170,7 +166,6 @@ export default function AdminBlogPage() {
                         columns={[
                             { key: 'title', label: 'Tiêu đề' },
                             { key: 'category', label: 'Danh mục', render: (v) => <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-medium text-slate-600">{v}</span> },
-                            { key: 'readTime', label: 'Thời gian đọc' },
                             {
                                 key: 'isFeatured',
                                 label: 'Nổi bật',
@@ -232,14 +227,6 @@ export default function AdminBlogPage() {
                                 onChange={(val) => updateField('category', val)}
                             />
                             <AdminFormField name="author" label="Tác giả" placeholder="VD: DataZone Editorial" value={formData.author} onChange={(val) => updateField('author', val)} />
-                            <div className="flex gap-2">
-                                <div className="flex-1">
-                                    <AdminFormField name="readTime" label="Thời gian đọc" required placeholder="VD: 7 phút đọc" value={formData.readTime} onChange={(val) => updateField('readTime', val)} />
-                                </div>
-                                <button type="button" onClick={handleEstimateReadTime} className="mt-6 h-11 rounded-xl border border-blue-200 bg-blue-50 px-3 text-xs font-bold text-blue-700 transition-colors hover:bg-blue-100">
-                                    Tự tính
-                                </button>
-                            </div>
                         </div>
                         <AdminFormField name="excerpt" label="Tóm tắt" type="textarea" required placeholder="Mô tả ngắn về nội dung bài viết" rows={4} value={formData.excerpt} onChange={(val) => updateField('excerpt', val)} />
                         <AdminFormField name="tags" label="Tags" placeholder="VD: SEO, Checklist, Website" value={formData.tags} onChange={(val) => updateField('tags', val)} />
@@ -320,8 +307,7 @@ function BlogContentEditor({ value, onChange }) {
     const stats = useMemo(() => ({
         words: plainText ? plainText.split(/\s+/).filter(Boolean).length : 0,
         chars: plainText.length,
-        readTime: estimateReadTime(value),
-    }), [plainText, value])
+    }), [plainText])
 
     useEffect(() => {
         if (mode !== 'write') return
@@ -392,7 +378,6 @@ function BlogContentEditor({ value, onChange }) {
                     <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500">
                         <span>{stats.words} từ</span>
                         <span>{stats.chars} ký tự</span>
-                        <span>{stats.readTime}</span>
                     </div>
                 </div>
 

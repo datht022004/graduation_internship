@@ -200,7 +200,6 @@ function BlogPostDetail({ post, onClose }) {
                     <div className="px-6 py-8 md:px-10 md:py-10">
                         <div className="mb-5 flex flex-wrap items-center gap-3">
                             <span className="inline-flex items-center rounded-full bg-[#fff1e7] px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#f2682a]">{post.category}</span>
-                            <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{post.readTime}</span>
                             {post.author && <span className="text-xs font-bold uppercase tracking-widest text-slate-400">{post.author}</span>}
                         </div>
                         <h2 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">{post.title}</h2>

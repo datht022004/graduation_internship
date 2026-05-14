@@ -9,10 +9,14 @@ import AdminDocumentsPage from './AdminDocumentsPage'
 function AdminZonePage({ authUser, onLogout, onSwitchToUserZone }) {
     const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
 
+    function handlePageChange(page) {
+        setActivePage(page)
+    }
+
     function renderContent() {
         switch (activePage) {
             case 'dashboard':
-                return <AdminOverviewPage />
+                return <AdminOverviewPage onOpenBlogPage={() => handlePageChange('blog')} />
             case 'blog':
                 return <AdminBlogPage />
             case 'categories':
@@ -28,7 +32,7 @@ function AdminZonePage({ authUser, onLogout, onSwitchToUserZone }) {
         <div className="flex min-h-screen bg-linear-to-br from-slate-50 via-blue-50/30 to-slate-50">
             <AdminSidebar
                 activePage={activePage}
-                onPageChange={setActivePage}
+                onPageChange={handlePageChange}
                 user={authUser}
                 onLogout={onLogout}
                 onSwitchToUserZone={onSwitchToUserZone}

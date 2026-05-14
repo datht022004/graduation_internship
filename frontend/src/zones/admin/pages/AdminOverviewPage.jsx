@@ -3,10 +3,11 @@ import AdminPageHeader from '../components/AdminPageHeader'
 import AdminStatCard from '../components/AdminStatCard'
 import { getAdminDocumentPage, getBlogPostPage, getCategoryPage } from '../../../config/api'
 
-export default function AdminOverviewPage() {
+export default function AdminOverviewPage({ onOpenBlogPage }) {
     const [stats, setStats] = useState({ blogs: 0, categories: 0, documents: 0 })
     const [recentBlogs, setRecentBlogs] = useState([])
     const [recentCategories, setRecentCategories] = useState([])
+    const [selectedPost, setSelectedPost] = useState(null)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -83,25 +84,42 @@ export default function AdminOverviewPage() {
 
                         <div className="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
                             <div className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm">
-                                <h2 className="mb-5 text-xl font-bold text-slate-800">Bài viết gần đây</h2>
+                                <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+                                    <h2 className="text-xl font-bold text-slate-800">Bài viết gần đây</h2>
+                                    <button
+                                        type="button"
+                                        onClick={onOpenBlogPage}
+                                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
+                                    >
+                                        Quản lý tất cả
+                                    </button>
+                                </div>
                                 {recentBlogs.length === 0 ? (
                                     <p className="text-base text-slate-400">Chưa có bài viết nào</p>
                                 ) : (
-                                    <div className="divide-y divide-slate-200">
+                                    <div className="space-y-2">
                                         {recentBlogs.map((post) => (
-                                            <div key={post.id} className="flex items-center justify-between py-4">
+                                            <button
+                                                key={post.id}
+                                                type="button"
+                                                onClick={() => setSelectedPost(post)}
+                                                className="group flex w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-3 text-left transition-colors hover:border-blue-300 hover:bg-blue-600/50 hover:shadow-sm"
+                                            >
                                                 <div className="min-w-0 flex-1">
-                                                    <p className="truncate text-base font-semibold text-slate-700">{post.title}</p>
-                                                    <p className="mt-1 text-sm text-slate-400">
-                                                        {post.category} · {post.readTime}
-                                                    </p>
+                                                    <p className="truncate text-base font-semibold text-slate-700 transition-colors group-hover:text-blue-950">{post.title}</p>
+                                                    <p className="mt-1 text-sm text-slate-400 transition-colors group-hover:text-blue-900/80">{post.category}</p>
                                                 </div>
-                                                {post.isFeatured && (
-                                                    <span className="ml-3 shrink-0 rounded-full bg-amber-50 px-2.5 py-1 text-sm font-semibold text-amber-700">
-                                                        Nổi bật
+                                                <div className="ml-3 flex shrink-0 items-center gap-2">
+                                                    {post.isFeatured && (
+                                                        <span className="rounded-full bg-amber-50 px-2.5 py-1 text-sm font-semibold text-amber-700 transition-colors group-hover:bg-amber-100 group-hover:text-amber-800">
+                                                            Nổi bật
+                                                        </span>
+                                                    )}
+                                                    <span className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 transition-colors group-hover:border-blue-200 group-hover:bg-white/70 group-hover:text-blue-800">
+                                                        Xem chi tiết
                                                     </span>
-                                                )}
-                                            </div>
+                                                </div>
+                                            </button>
                                         ))}
                                     </div>
                                 )}
@@ -113,12 +131,15 @@ export default function AdminOverviewPage() {
                                     <p className="text-base text-slate-400">Chưa có danh mục nào</p>
                                 ) : (
                                     <div className="space-y-3">
-                                        {recentCategories.map((category) => (
-                                            <div key={category.id} className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3">
-                                                <span className="truncate text-base font-semibold text-slate-700">{category.name}</span>
-                                                <span className="rounded-full bg-white px-2.5 py-1 text-sm font-bold text-slate-500">{category.postCount}</span>
+                                        {recentCategories.map((category, index) => {
+                                            const tone = CATEGORY_TONES[index % CATEGORY_TONES.length]
+                                            return (
+                                            <div key={category.id} className={`flex items-center justify-between rounded-xl border px-4 py-3 ${tone.item}`}>
+                                                <span className={`truncate text-base font-semibold ${tone.text}`}>{category.name}</span>
+                                                <span className={`rounded-full px-2.5 py-1 text-sm font-bold ${tone.badge}`}>{category.postCount}</span>
                                             </div>
-                                        ))}
+                                            )
+                                        })}
                                     </div>
                                 )}
                             </div>
@@ -126,6 +147,111 @@ export default function AdminOverviewPage() {
                     </>
                 )}
             </div>
+            {selectedPost && (
+                <BlogPostPreviewModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+            )}
         </>
     )
 }
+
+function BlogPostPreviewModal({ post, onClose }) {
+    const content = sanitizeBlogHtml(post.content || `<p>${escapeHtml(post.excerpt || '')}</p>`)
+    const tags = (post.tags || '').split(',').map((tag) => tag.trim()).filter(Boolean)
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={onClose} />
+            <article className="relative max-h-[92vh] w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl">
+                <button
+                    type="button"
+                    onClick={onClose}
+                    className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-lg transition-colors hover:bg-white hover:text-slate-900"
+                    aria-label="Đóng bài viết"
+                >
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <div className="max-h-[92vh] overflow-y-auto">
+                    {post.imageUrl && (
+                        <img src={post.imageUrl} alt="" className="h-64 w-full object-cover md:h-80" />
+                    )}
+                    <div className="px-6 py-8 md:px-10 md:py-10">
+                        <div className="mb-5 flex flex-wrap items-center gap-3">
+                            <span className="inline-flex items-center rounded-full bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-700">{post.category}</span>
+                            {post.author && <span className="text-xs font-bold uppercase tracking-wide text-slate-400">{post.author}</span>}
+                        </div>
+                        <h2 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">{post.title}</h2>
+                        {post.excerpt && <p className="mt-5 text-lg leading-8 text-slate-600">{post.excerpt}</p>}
+                        {tags.length > 0 && (
+                            <div className="mt-5 flex flex-wrap gap-2">
+                                {tags.map((tag) => (
+                                    <span key={tag} className="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
+                        <div className="blog-content mt-8 border-t border-slate-200 pt-8" dangerouslySetInnerHTML={{ __html: content }} />
+                    </div>
+                </div>
+            </article>
+        </div>
+    )
+}
+
+function escapeHtml(value) {
+    return value
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+}
+
+function sanitizeBlogHtml(html) {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+
+    doc.querySelectorAll('script, style, iframe, object, embed').forEach((node) => node.remove())
+    doc.body.querySelectorAll('*').forEach((node) => {
+        Array.from(node.attributes).forEach((attr) => {
+            const name = attr.name.toLowerCase()
+            const value = attr.value.trim().toLowerCase()
+
+            if (name.startsWith('on') || value.startsWith('javascript:')) {
+                node.removeAttribute(attr.name)
+            }
+        })
+    })
+
+    return doc.body.innerHTML
+}
+
+const CATEGORY_TONES = [
+    {
+        item: 'border-blue-200 bg-blue-50/80',
+        text: 'text-blue-900',
+        badge: 'bg-white text-blue-700 ring-1 ring-blue-100',
+    },
+    {
+        item: 'border-emerald-200 bg-emerald-50/80',
+        text: 'text-emerald-900',
+        badge: 'bg-white text-emerald-700 ring-1 ring-emerald-100',
+    },
+    {
+        item: 'border-amber-200 bg-amber-50/80',
+        text: 'text-amber-900',
+        badge: 'bg-white text-amber-700 ring-1 ring-amber-100',
+    },
+    {
+        item: 'border-rose-200 bg-rose-50/80',
+        text: 'text-rose-900',
+        badge: 'bg-white text-rose-700 ring-1 ring-rose-100',
+    },
+    {
+        item: 'border-violet-200 bg-violet-50/80',
+        text: 'text-violet-900',
+        badge: 'bg-white text-violet-700 ring-1 ring-violet-100',
+    },
+]
