@@ -2,23 +2,28 @@ import { useCallback, useEffect, useState } from 'react'
 import DocumentUploader from '../components/DocumentUploader'
 import DocumentList from '../components/DocumentList'
 import AdminPageHeader from '../components/AdminPageHeader'
-import { getAdminDocuments } from '../../../config/api'
+import { getAdminDocumentPage } from '../../../config/api'
+
+const PAGE_SIZE = 5
 
 export default function AdminDocumentsPage() {
     const [documents, setDocuments] = useState([])
+    const [pagination, setPagination] = useState({ total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 1 })
+    const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(true)
 
-    const fetchDocuments = useCallback(async () => {
+    const fetchDocuments = useCallback(async (targetPage = page) => {
         setLoading(true)
         try {
-            const data = await getAdminDocuments()
-            setDocuments(data)
+            const data = await getAdminDocumentPage({ page: targetPage, pageSize: PAGE_SIZE })
+            setDocuments(data.documents)
+            setPagination(data)
         } catch (error) {
             console.error('Lỗi tải danh sách tài liệu:', error)
         } finally {
             setLoading(false)
         }
-    }, [])
+    }, [page])
 
     useEffect(() => {
         fetchDocuments()
@@ -50,7 +55,12 @@ export default function AdminDocumentsPage() {
                         </div>
                         <h2 className="text-xl font-bold text-slate-900">Upload tài liệu</h2>
                     </div>
-                    <DocumentUploader onUploadSuccess={fetchDocuments} />
+                    <DocumentUploader
+                        onUploadSuccess={() => {
+                            setPage(1)
+                            fetchDocuments(1)
+                        }}
+                    />
                 </div>
 
                 <div className="rounded-2xl border border-slate-300 bg-white p-6 shadow-sm">
@@ -62,7 +72,7 @@ export default function AdminDocumentsPage() {
                         </div>
                         <h2 className="text-xl font-bold text-slate-900">Tài liệu đã nạp</h2>
                         <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold text-slate-600">
-                            {documents.length}
+                            {pagination.total}
                         </span>
                     </div>
 
@@ -74,8 +84,40 @@ export default function AdminDocumentsPage() {
                             </svg>
                         </div>
                     ) : (
-                        <DocumentList documents={documents} onDocumentDeleted={(id) => setDocuments((prev) => prev.filter((d) => d.id !== id))} />
+                        <DocumentList
+                            documents={documents}
+                            onDocumentDeleted={() => {
+                                if (documents.length === 1 && page > 1) {
+                                    setPage((value) => Math.max(value - 1, 1))
+                                    return
+                                }
+                                fetchDocuments()
+                            }}
+                        />
                     )}
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+                        <p className="text-sm font-medium text-slate-500">
+                            Trang {pagination.page} / {pagination.totalPages} · Tổng {pagination.total} tài liệu
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <button
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                disabled={pagination.page <= 1 || loading}
+                                onClick={() => setPage((value) => Math.max(value - 1, 1))}
+                                type="button"
+                            >
+                                Trước
+                            </button>
+                            <button
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                disabled={pagination.page >= pagination.totalPages || loading}
+                                onClick={() => setPage((value) => value + 1)}
+                                type="button"
+                            >
+                                Sau
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

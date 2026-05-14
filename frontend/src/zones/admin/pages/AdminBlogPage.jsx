@@ -4,8 +4,7 @@ import AdminDataTable from '../components/AdminDataTable'
 import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
-import { getBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost } from '../../../config/api'
-import { USER_LANDING_TABS_MOCK } from '../../../mock/pages/user/user-landing.mock'
+import { getBlogPostPage, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost, getCategories } from '../../../config/api'
 
 const EMPTY_BLOG_POST = {
     title: '',
@@ -19,13 +18,13 @@ const EMPTY_BLOG_POST = {
     isFeatured: false,
 }
 
-const SITE_CATEGORY_OPTIONS = USER_LANDING_TABS_MOCK.map((tab) => ({
-    label: tab.label,
-    value: tab.label,
-}))
+const PAGE_SIZE = 5
 
 export default function AdminBlogPage() {
     const [posts, setPosts] = useState([])
+    const [categoryRecords, setCategoryRecords] = useState([])
+    const [pagination, setPagination] = useState({ total: 0, page: 1, pageSize: PAGE_SIZE, totalPages: 1 })
+    const [page, setPage] = useState(1)
     const [loading, setLoading] = useState(true)
     const [modalOpen, setModalOpen] = useState(false)
     const [editingItem, setEditingItem] = useState(null)
@@ -38,20 +37,38 @@ export default function AdminBlogPage() {
     const fetchData = useCallback(async () => {
         setLoading(true)
         try {
-            setPosts(await getBlogPosts())
+            const [blogPage, categories] = await Promise.all([
+                getBlogPostPage({
+                    category: filterCategory,
+                    page,
+                    pageSize: PAGE_SIZE,
+                }),
+                getCategories({ pageSize: 100 }),
+            ])
+            setPosts(blogPage.items || [])
+            setPagination(blogPage)
+            setCategoryRecords(categories)
         } finally {
             setLoading(false)
         }
-    }, [])
+    }, [filterCategory, page])
 
     useEffect(() => { fetchData() }, [fetchData])
 
-    const categories = [...new Set(posts.map((p) => p.category).filter(Boolean))]
-    const categoryOptions = SITE_CATEGORY_OPTIONS
-    const filtered = filterCategory ? posts.filter((p) => p.category === filterCategory) : posts
+    const categories = categoryRecords.map((category) => category.name).filter(Boolean)
+    const categoryOptions = categoryRecords.map((category) => ({
+        label: category.name,
+        value: category.name,
+    }))
+    const filtered = posts
 
     function updateField(name, value) {
         setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+
+    function handleCategoryFilterChange(value) {
+        setFilterCategory(value)
+        setPage(1)
     }
 
     function handleAdd() {
@@ -100,6 +117,7 @@ export default function AdminBlogPage() {
 
         if (editingItem) { await updateBlogPost(editingItem.id, payload) } else { await createBlogPost(payload) }
         setModalOpen(false)
+        setPage(1)
         fetchData()
     }
 
@@ -132,12 +150,12 @@ export default function AdminBlogPage() {
                     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
                             <h3 className="text-xl font-bold text-slate-800">Bài viết</h3>
-                            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold text-slate-600">{filtered.length}</span>
+                            <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-sm font-semibold text-slate-600">{pagination.total}</span>
                         </div>
                         {categories.length > 0 && (
                             <select
                                 value={filterCategory}
-                                onChange={(e) => setFilterCategory(e.target.value)}
+                                onChange={(e) => handleCategoryFilterChange(e.target.value)}
                                 className="rounded-lg border border-slate-300 px-4 py-2 text-sm text-slate-600 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 focus:outline-none"
                             >
                                 <option value="">Tất cả danh mục</option>
@@ -172,6 +190,29 @@ export default function AdminBlogPage() {
                         onDelete={setDeleteTarget}
                         emptyMessage="Chưa có bài viết nào"
                     />
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-4">
+                        <p className="text-sm font-medium text-slate-500">
+                            Trang {pagination.page} / {pagination.totalPages} · Tổng {pagination.total} bài viết
+                        </p>
+                        <div className="flex items-center gap-2">
+                            <button
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                disabled={pagination.page <= 1 || loading}
+                                onClick={() => setPage((value) => Math.max(value - 1, 1))}
+                                type="button"
+                            >
+                                Trước
+                            </button>
+                            <button
+                                className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-50"
+                                disabled={pagination.page >= pagination.totalPages || loading}
+                                onClick={() => setPage((value) => value + 1)}
+                                type="button"
+                            >
+                                Sau
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 

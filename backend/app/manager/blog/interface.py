@@ -37,3 +37,11 @@ class BlogPost(BlogPostBase):
     id: str
     createdAt: str
     updatedAt: str
+
+
+class BlogPostListResponse(BaseModel):
+    items: list[BlogPost]
+    total: int
+    page: int
+    pageSize: int
+    totalPages: int

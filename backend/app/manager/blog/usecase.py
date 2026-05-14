@@ -1,7 +1,8 @@
 import uuid
+from math import ceil
 from datetime import datetime, timezone
 
-from app.manager.blog.interface import BlogPost, BlogPostCreate, BlogPostUpdate
+from app.manager.blog.interface import BlogPost, BlogPostCreate, BlogPostListResponse, BlogPostUpdate
 from app.manager.blog.repository import blog_repository
 from app.models import BlogPostDocument
 
@@ -10,6 +11,24 @@ class BlogUseCase:
     def get_all_posts(self) -> list[BlogPost]:
         posts = blog_repository.get_all_posts()
         return [BlogPost(**post) for post in posts]
+
+    def list_posts(self, category: str = "", page: int = 1, page_size: int = 10) -> BlogPostListResponse:
+        blog_repository.ensure_indexes()
+        page = max(page, 1)
+        page_size = min(max(page_size, 1), 100)
+        total = blog_repository.count_matching_posts(category)
+        total_pages = ceil(total / page_size) if total else 1
+        safe_page = min(page, total_pages)
+        skip = (safe_page - 1) * page_size
+        posts = blog_repository.list_posts(category=category, skip=skip, limit=page_size)
+
+        return BlogPostListResponse(
+            items=[BlogPost(**post) for post in posts],
+            total=total,
+            page=safe_page,
+            pageSize=page_size,
+            totalPages=total_pages,
+        )
 
     def get_public_posts(self) -> list[BlogPost]:
         return self.get_all_posts()

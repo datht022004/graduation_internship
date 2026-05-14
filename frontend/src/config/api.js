@@ -264,9 +264,21 @@ export async function getUserBlog() {
     return data
 }
 
-export async function getAdminDocuments() {
-    const { data } = await apiClient.get(API_ENDPOINTS.documents.list)
-    return (data.documents || []).map(createDocumentStruct)
+export async function getAdminDocumentPage(params = {}) {
+    const { data } = await apiClient.get(API_ENDPOINTS.documents.list, { params })
+    const documents = (data.documents || []).map(createDocumentStruct)
+    return {
+        documents,
+        total: data.total ?? documents.length,
+        page: data.page ?? 1,
+        pageSize: data.pageSize ?? (documents.length || params.pageSize || 10),
+        totalPages: data.totalPages ?? 1,
+    }
+}
+
+export async function getAdminDocuments(params = {}) {
+    const data = await getAdminDocumentPage(params)
+    return data.documents
 }
 
 export async function uploadAdminDocument(file) {
@@ -283,9 +295,23 @@ export async function deleteAdminDocument(docId) {
     await apiClient.delete(API_ENDPOINTS.documents.byId(docId))
 }
 
-export async function getBlogPosts() {
-    const { data } = await apiClient.get(API_ENDPOINTS.admin.blogPosts)
+export async function getBlogPostPage(params = {}) {
+    const { data } = await apiClient.get(API_ENDPOINTS.admin.blogPosts, { params })
+    if (Array.isArray(data)) {
+        return {
+            items: data,
+            total: data.length,
+            page: 1,
+            pageSize: data.length || params.pageSize || 10,
+            totalPages: 1,
+        }
+    }
     return data
+}
+
+export async function getBlogPosts(params = {}) {
+    const data = await getBlogPostPage({ pageSize: 100, ...params })
+    return data.items || []
 }
 
 export async function createBlogPost(payload) {
@@ -307,9 +333,23 @@ export async function toggleFeaturedPost(id) {
     return data
 }
 
-export async function getCategories() {
-    const { data } = await apiClient.get(API_ENDPOINTS.admin.categories)
+export async function getCategoryPage(params = {}) {
+    const { data } = await apiClient.get(API_ENDPOINTS.admin.categories, { params })
+    if (Array.isArray(data)) {
+        return {
+            items: data,
+            total: data.length,
+            page: 1,
+            pageSize: data.length || params.pageSize || 10,
+            totalPages: 1,
+        }
+    }
     return data
+}
+
+export async function getCategories(params = {}) {
+    const data = await getCategoryPage(params)
+    return data.items || []
 }
 
 export async function createCategory(payload) {

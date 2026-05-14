@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AdminPageHeader from '../components/AdminPageHeader'
 import AdminStatCard from '../components/AdminStatCard'
-import { getAdminDocuments, getBlogPosts, getCategories } from '../../../config/api'
+import { getAdminDocumentPage, getBlogPostPage, getCategoryPage } from '../../../config/api'
 
 export default function AdminOverviewPage() {
     const [stats, setStats] = useState({ blogs: 0, categories: 0, documents: 0 })
@@ -13,18 +13,18 @@ export default function AdminOverviewPage() {
         async function fetchStats() {
             setLoading(true)
             try {
-                const [blogs, categories, documents] = await Promise.all([
-                    getBlogPosts(),
-                    getCategories(),
-                    getAdminDocuments(),
+                const [blogPage, categoryPage, documentPage] = await Promise.all([
+                    getBlogPostPage({ pageSize: 3 }),
+                    getCategoryPage({ pageSize: 5 }),
+                    getAdminDocumentPage({ pageSize: 1 }),
                 ])
                 setStats({
-                    blogs: blogs.length,
-                    categories: categories.length,
-                    documents: documents.length,
+                    blogs: blogPage.total,
+                    categories: categoryPage.total,
+                    documents: documentPage.total,
                 })
-                setRecentBlogs(blogs.slice(0, 3))
-                setRecentCategories(categories.slice(0, 5))
+                setRecentBlogs(blogPage.items || [])
+                setRecentCategories(categoryPage.items || [])
             } catch (error) {
                 console.error('Lỗi tải thống kê:', error)
             } finally {

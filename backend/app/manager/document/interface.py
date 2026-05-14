@@ -11,6 +11,9 @@ class DocumentInfo(BaseModel):
 class DocumentListResponse(BaseModel):
     documents: list[DocumentInfo]
     total: int
+    page: int = 1
+    pageSize: int = 10
+    totalPages: int = 1
 
 class UploadResponse(BaseModel):
     message: str

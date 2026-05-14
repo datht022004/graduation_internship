@@ -1,5 +1,6 @@
-from app.core.database import get_db
 import re
+
+from app.core.database import get_db
 
 CATEGORIES_COLLECTION = "categories"
 BLOG_POSTS_COLLECTION = "blog_posts"

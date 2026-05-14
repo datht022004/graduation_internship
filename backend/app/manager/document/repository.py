@@ -9,10 +9,25 @@ class DocumentRepository:
         return get_db()[DOCUMENTS_COLLECTION]
 
     def get_all_documents(self) -> list[dict]:
-        docs = list(self.get_collection().find({}))
+        docs = list(self.get_collection().find({}).sort("uploaded_at", -1))
         for doc in docs:
             doc["_id"] = str(doc["_id"])
         return docs
+
+    def list_documents(self, skip: int = 0, limit: int = 10) -> list[dict]:
+        docs = list(
+            self.get_collection()
+            .find({})
+            .sort("uploaded_at", -1)
+            .skip(skip)
+            .limit(limit)
+        )
+        for doc in docs:
+            doc["_id"] = str(doc["_id"])
+        return docs
+
+    def count_documents(self) -> int:
+        return self.get_collection().count_documents({})
 
     def get_document_by_id(self, doc_id: str) -> dict | None:
         doc = self.get_collection().find_one({"id": doc_id})

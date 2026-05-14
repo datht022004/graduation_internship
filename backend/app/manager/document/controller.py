@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
 
 from app.config import settings
 from app.manager.document.interface import (
@@ -60,10 +60,11 @@ async def upload_document(
 
 @router.get("", response_model=DocumentListResponse)
 async def list_documents(
+    page: int = Query(default=1, ge=1),
+    page_size: int = Query(default=10, alias="pageSize", ge=1, le=100),
     admin: UserInfo = Depends(require_admin),
 ):
-    documents = document_usecase.get_all_documents()
-    return DocumentListResponse(documents=documents, total=len(documents))
+    return document_usecase.list_documents(page=page, page_size=page_size)
 
 
 @router.delete("/{doc_id}", response_model=DeleteResponse)

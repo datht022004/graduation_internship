@@ -38,7 +38,7 @@ export default function AdminDataTable({ columns, data, onEdit, onDelete, loadin
                     </thead>
                     <tbody className="divide-y divide-slate-200">
                         {data.map((item) => (
-                            <tr key={item.id} className="transition-colors hover:bg-slate-50/50">
+                            <tr key={item.id} className="transition-all hover:bg-blue-100 hover:shadow-[inset_4px_0_0_#2563eb]">
                                 {columns.map((col) => (
                                     <td key={col.key} className="px-4 py-3 text-base text-slate-700">
                                         {col.render ? col.render(item[col.key], item) : item[col.key]}

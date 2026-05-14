@@ -1,5 +1,6 @@
 import uuid
 import os
+from math import ceil
 from datetime import datetime, timezone
 
 from langchain_community.document_loaders import (
@@ -11,7 +12,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from app.config import settings
 from app.core.vector_store import add_documents_to_store, delete_documents_from_store
-from app.manager.document.interface import DocumentInfo
+from app.manager.document.interface import DocumentInfo, DocumentListResponse
 from app.manager.document.repository import document_repository
 from app.models import DocumentDocument
 
@@ -20,6 +21,22 @@ class DocumentUseCase:
     def get_all_documents(self) -> list[DocumentInfo]:
         docs = document_repository.get_all_documents()
         return [DocumentInfo(**doc) for doc in docs]
+
+    def list_documents(self, page: int = 1, page_size: int = 10) -> DocumentListResponse:
+        page = max(page, 1)
+        page_size = min(max(page_size, 1), 100)
+        total = document_repository.count_documents()
+        total_pages = ceil(total / page_size) if total else 1
+        safe_page = min(page, total_pages)
+        skip = (safe_page - 1) * page_size
+        docs = document_repository.list_documents(skip=skip, limit=page_size)
+        return DocumentListResponse(
+            documents=[DocumentInfo(**doc) for doc in docs],
+            total=total,
+            page=safe_page,
+            pageSize=page_size,
+            totalPages=total_pages,
+        )
 
     def _get_loader(self, file_path: str, file_type: str):
         if file_type == "pdf":
