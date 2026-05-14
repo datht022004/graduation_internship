@@ -5,6 +5,7 @@ class BlogPostBase(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
     title: str = Field(..., min_length=1)
+    slug: str = ""
     category: str = Field(..., min_length=1)
     readTime: str = Field(..., min_length=1)
     excerpt: str = Field(..., min_length=1)
@@ -23,6 +24,7 @@ class BlogPostUpdate(BaseModel):
     model_config = ConfigDict(str_strip_whitespace=True)
 
     title: str | None = Field(default=None, min_length=1)
+    slug: str | None = None
     category: str | None = Field(default=None, min_length=1)
     readTime: str | None = Field(default=None, min_length=1)
     excerpt: str | None = Field(default=None, min_length=1)

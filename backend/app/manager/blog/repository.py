@@ -1,3 +1,6 @@
+import re
+import unicodedata
+
 from app.core.database import get_db
 
 BLOG_POSTS_COLLECTION = "blog_posts"
@@ -19,19 +22,26 @@ class BlogRepository:
         )
         return [self._normalize(post) for post in posts]
 
-    def list_posts(self, category: str = "", skip: int = 0, limit: int = 10) -> list[dict]:
+    def list_posts(self, category: str = "", search: str = "", skip: int = 0, limit: int = 10) -> list[dict]:
         query = self._build_list_query(category)
         posts = list(
             self.get_collection()
             .find(query)
             .sort([("isFeatured", -1), ("createdAt", -1)])
-            .skip(skip)
-            .limit(limit)
         )
-        return [self._normalize(post) for post in posts]
+        matched_posts = self._filter_by_search([self._normalize(post) for post in posts], search)
+        return matched_posts[skip : skip + limit]
 
-    def count_matching_posts(self, category: str = "") -> int:
-        return self.get_collection().count_documents(self._build_list_query(category))
+    def count_matching_posts(self, category: str = "", search: str = "") -> int:
+        query = self._build_list_query(category)
+        if not search.strip():
+            return self.get_collection().count_documents(query)
+        posts = list(
+            self.get_collection()
+            .find(query)
+            .sort([("isFeatured", -1), ("createdAt", -1)])
+        )
+        return len(self._filter_by_search([self._normalize(post) for post in posts], search))
 
     def get_post_by_id(self, post_id: str) -> dict | None:
         post = self.get_collection().find_one({"id": post_id})
@@ -67,6 +77,27 @@ class BlogRepository:
         if not cleaned_category:
             return {}
         return {"category": cleaned_category}
+
+    def _filter_by_search(self, posts: list[dict], search: str = "") -> list[dict]:
+        cleaned_search = search.strip().lower()
+        if not cleaned_search:
+            return posts
+
+        slug_search = self._create_slug(cleaned_search)
+        filtered = []
+        for post in posts:
+            title = post.get("title", "").lower()
+            slug = (post.get("slug") or self._create_slug(post.get("title", ""))).lower()
+            if cleaned_search in title or cleaned_search in slug or slug_search in slug:
+                filtered.append(post)
+        return filtered
+
+    def _create_slug(self, value: str) -> str:
+        slug = unicodedata.normalize("NFD", value.strip().lower())
+        slug = "".join(char for char in slug if unicodedata.category(char) != "Mn")
+        slug = slug.replace("đ", "d")
+        slug = re.sub(r"[^a-z0-9]+", "-", slug)
+        return slug.strip("-")
 
 
 blog_repository = BlogRepository()

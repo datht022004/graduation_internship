@@ -11,11 +11,12 @@ router = APIRouter(prefix="/admin/blog", tags=["Admin - Blog"])
 @router.get("/posts", response_model=BlogPostListResponse)
 async def list_blog_posts(
     category: str = "",
+    q: str = "",
     page: int = Query(default=1, ge=1),
     page_size: int = Query(default=10, alias="pageSize", ge=1, le=100),
     admin: UserInfo = Depends(require_admin),
 ):
-    return blog_usecase.list_posts(category=category, page=page, page_size=page_size)
+    return blog_usecase.list_posts(category=category, search=q, page=page, page_size=page_size)
 
 
 @router.post("/posts", response_model=BlogPost, status_code=status.HTTP_201_CREATED)

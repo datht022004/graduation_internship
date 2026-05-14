@@ -6,6 +6,7 @@ from .base import MongoDocument
 class BlogPostDocument(MongoDocument):
     id: str
     title: str
+    slug: str = ""
     category: str
     readTime: str
     excerpt: str

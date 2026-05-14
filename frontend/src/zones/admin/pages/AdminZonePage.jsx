@@ -8,17 +8,29 @@ import AdminDocumentsPage from './AdminDocumentsPage'
 
 function AdminZonePage({ authUser, onLogout, onSwitchToUserZone }) {
     const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
+    const [blogCategoryShortcut, setBlogCategoryShortcut] = useState(null)
 
     function handlePageChange(page) {
+        if (page !== 'blog') {
+            setBlogCategoryShortcut(null)
+        }
         setActivePage(page)
+    }
+
+    function openBlogCategory(categoryName) {
+        setBlogCategoryShortcut({
+            category: categoryName,
+            requestKey: `${categoryName}-${Date.now()}`,
+        })
+        setActivePage('blog')
     }
 
     function renderContent() {
         switch (activePage) {
             case 'dashboard':
-                return <AdminOverviewPage onOpenBlogPage={() => handlePageChange('blog')} />
+                return <AdminOverviewPage onOpenBlogPage={() => handlePageChange('blog')} onOpenBlogCategory={openBlogCategory} />
             case 'blog':
-                return <AdminBlogPage />
+                return <AdminBlogPage categoryShortcut={blogCategoryShortcut} />
             case 'categories':
                 return <AdminCategoriesPage />
             case 'documents':

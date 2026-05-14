@@ -1,4 +1,6 @@
 import uuid
+import re
+import unicodedata
 from math import ceil
 from datetime import datetime, timezone
 
@@ -12,15 +14,15 @@ class BlogUseCase:
         posts = blog_repository.get_all_posts()
         return [BlogPost(**post) for post in posts]
 
-    def list_posts(self, category: str = "", page: int = 1, page_size: int = 10) -> BlogPostListResponse:
+    def list_posts(self, category: str = "", search: str = "", page: int = 1, page_size: int = 10) -> BlogPostListResponse:
         blog_repository.ensure_indexes()
         page = max(page, 1)
         page_size = min(max(page_size, 1), 100)
-        total = blog_repository.count_matching_posts(category)
+        total = blog_repository.count_matching_posts(category, search)
         total_pages = ceil(total / page_size) if total else 1
         safe_page = min(page, total_pages)
         skip = (safe_page - 1) * page_size
-        posts = blog_repository.list_posts(category=category, skip=skip, limit=page_size)
+        posts = blog_repository.list_posts(category=category, search=search, skip=skip, limit=page_size)
 
         return BlogPostListResponse(
             items=[BlogPost(**post) for post in posts],
@@ -134,7 +136,16 @@ class BlogUseCase:
                 cleaned[key] = value.strip()
             else:
                 cleaned[key] = value
+        if cleaned.get("title"):
+            cleaned["slug"] = cleaned.get("slug") or self._create_slug(cleaned["title"])
         return cleaned
+
+    def _create_slug(self, value: str) -> str:
+        slug = unicodedata.normalize("NFD", value.strip().lower())
+        slug = "".join(char for char in slug if unicodedata.category(char) != "Mn")
+        slug = slug.replace("đ", "d")
+        slug = re.sub(r"[^a-z0-9]+", "-", slug)
+        return slug.strip("-") or "bai-viet"
 
     def _now(self) -> str:
         return datetime.now(timezone.utc).isoformat()

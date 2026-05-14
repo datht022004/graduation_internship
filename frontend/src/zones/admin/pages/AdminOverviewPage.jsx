@@ -3,7 +3,7 @@ import AdminPageHeader from '../components/AdminPageHeader'
 import AdminStatCard from '../components/AdminStatCard'
 import { getAdminDocumentPage, getBlogPostPage, getCategoryPage } from '../../../config/api'
 
-export default function AdminOverviewPage({ onOpenBlogPage }) {
+export default function AdminOverviewPage({ onOpenBlogPage, onOpenBlogCategory }) {
     const [stats, setStats] = useState({ blogs: 0, categories: 0, documents: 0 })
     const [recentBlogs, setRecentBlogs] = useState([])
     const [recentCategories, setRecentCategories] = useState([])
@@ -134,10 +134,16 @@ export default function AdminOverviewPage({ onOpenBlogPage }) {
                                         {recentCategories.map((category, index) => {
                                             const tone = CATEGORY_TONES[index % CATEGORY_TONES.length]
                                             return (
-                                            <div key={category.id} className={`flex items-center justify-between rounded-xl border px-4 py-3 ${tone.item}`}>
+                                            <button
+                                                key={category.id}
+                                                type="button"
+                                                onClick={() => onOpenBlogCategory(category.name)}
+                                                className={`flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition-all hover:-translate-y-0.5 hover:shadow-sm ${tone.item}`}
+                                                title={`Xem bài viết thuộc danh mục ${category.name}`}
+                                            >
                                                 <span className={`truncate text-base font-semibold ${tone.text}`}>{category.name}</span>
                                                 <span className={`rounded-full px-2.5 py-1 text-sm font-bold ${tone.badge}`}>{category.postCount}</span>
-                                            </div>
+                                            </button>
                                             )
                                         })}
                                     </div>
