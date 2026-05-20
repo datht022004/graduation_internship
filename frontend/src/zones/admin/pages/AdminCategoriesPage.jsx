@@ -4,7 +4,7 @@ import AdminDataTable from '../components/AdminDataTable'
 import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
-import { createCategory, deleteCategory, getCategoryPage, updateCategory } from '../../../config/api'
+import { adminCategoryCreate, adminCategoryDeleteById, adminCategoryGetPage, adminCategoryUpdateById } from '../../../services/apiService'
 
 const EMPTY_CATEGORY = {
     name: '',
@@ -30,7 +30,7 @@ export default function AdminCategoriesPage({ onOpenBlogCategory }) {
     const fetchData = useCallback(async () => {
         setLoading(true)
         try {
-            const data = await getCategoryPage({
+            const data = await adminCategoryGetPage({
                 name: searchName,
                 page,
                 pageSize: PAGE_SIZE,
@@ -91,9 +91,9 @@ export default function AdminCategoriesPage({ onOpenBlogCategory }) {
         }
 
         if (editingItem) {
-            await updateCategory(editingItem.id, payload)
+            await adminCategoryUpdateById(editingItem.id, payload)
         } else {
-            await createCategory(payload)
+            await adminCategoryCreate(payload)
         }
         setModalOpen(false)
         fetchData()
@@ -102,7 +102,7 @@ export default function AdminCategoriesPage({ onOpenBlogCategory }) {
     async function handleDelete() {
         setDeleting(true)
         try {
-            await deleteCategory(deleteTarget.id)
+            await adminCategoryDeleteById(deleteTarget.id)
             setDeleteTarget(null)
             fetchData()
         } catch (err) {

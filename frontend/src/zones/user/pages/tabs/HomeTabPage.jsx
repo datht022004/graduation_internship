@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserHome } from '../../../../config/api'
+import { userGetHomeContent } from '../../../../services/apiService'
 import { HOME_TAB_MOCK } from '../../../../mock/pages/user/home-tab.mock'
 
 function hasHomeContent(data) {
@@ -14,7 +14,7 @@ export default function HomeTabPage() {
         let cancelled = false
         async function load() {
             try {
-                const result = await getUserHome()
+                const result = await userGetHomeContent()
                 if (!cancelled) setData(hasHomeContent(result) ? result : HOME_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu trang chủ:', err)

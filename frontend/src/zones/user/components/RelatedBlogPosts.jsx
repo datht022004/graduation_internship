@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserBlog } from '../../../config/api'
+import { userGetBlogContent } from '../../../services/apiService'
 
 export default function RelatedBlogPosts({ category, tone = 'orange' }) {
     const [posts, setPosts] = useState([])
@@ -10,7 +10,7 @@ export default function RelatedBlogPosts({ category, tone = 'orange' }) {
 
         async function loadPosts() {
             try {
-                const result = await getUserBlog()
+                const result = await userGetBlogContent()
                 const relatedPosts = (result || [])
                     .map((post) => ({
                         ...post,

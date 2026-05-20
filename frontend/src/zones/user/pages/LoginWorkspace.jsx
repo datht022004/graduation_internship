@@ -1,8 +1,12 @@
 import { useMemo, useState } from 'react'
 import { loginWithEmailPassword, registerWithEmailPassword } from '../../../helpers/authUseCases'
 import { AUTH_ROLES, getRoleLabel } from '../../../helpers/authRoles'
-import { authApi } from '../../../config/api'
+import { authApi } from '../../../services/apiService'
 import GoogleToneLoginCard from '../components/GoogleToneLoginCard'
+
+function getErrorMessage(error, fallback) {
+    return error.response?.data?.detail || error.message || fallback
+}
 
 export default function LoginWorkspace({ onLoginSuccess, onClose, hideHint = false }) {
     const [mode, setMode] = useState('login')
@@ -33,12 +37,12 @@ export default function LoginWorkspace({ onLoginSuccess, onClose, hideHint = fal
                     : `Đăng nhập thành công ${activeRole}: ${result.user.name}`,
             })
             if (onLoginSuccess) {
-                onLoginSuccess(result.user, result.accessToken)
+                onLoginSuccess(result.user, result.access_token)
             }
         } catch (error) {
             setStatus({
                 type: 'error',
-                message: error.message,
+                message: getErrorMessage(error, 'Đăng nhập thất bại.'),
             })
         } finally {
             setLoading(false)
@@ -59,13 +63,12 @@ export default function LoginWorkspace({ onLoginSuccess, onClose, hideHint = fal
                 message: `Đăng nhập Google thành công: ${result.user.name}`,
             })
             if (onLoginSuccess) {
-                onLoginSuccess(result.user, result.accessToken)
+                onLoginSuccess(result.user, result.access_token)
             }
         } catch (error) {
-            const message = error.response?.data?.detail || error.message || 'Đăng nhập Google thất bại.'
             setStatus({
                 type: 'error',
-                message,
+                message: getErrorMessage(error, 'Đăng nhập Google thất bại.'),
             })
         } finally {
             setLoading(false)

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserBlog } from '../../../../config/api'
+import { userGetBlogContent } from '../../../../services/apiService'
 
 const BLOG_CATEGORY_ORDER = ['Dịch vụ SEO', 'Thiết kế website', 'Quảng cáo +', 'Blog']
 
@@ -18,7 +18,7 @@ export default function BlogTabPage() {
         let cancelled = false
         async function load() {
             try {
-                const result = await getUserBlog()
+                const result = await userGetBlogContent()
                 if (!cancelled) {
                     setPosts((result || []).map((post) => ({
                         ...post,

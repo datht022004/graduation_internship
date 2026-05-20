@@ -4,7 +4,7 @@ import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
 import AdminFormField from '../components/AdminFormField'
 import AdminModal from '../components/AdminModal'
 import AdminPageHeader from '../components/AdminPageHeader'
-import { createManagedUser, deleteManagedUser, getUserPage, updateManagedUser } from '../../../config/api'
+import { adminUserCreate, adminUserDeleteByEmail, adminUserGetPage, adminUserUpdateByEmail } from '../../../services/apiService'
 
 const EMPTY_USER = {
     name: '',
@@ -38,7 +38,7 @@ export default function AdminUsersPage() {
     const fetchData = useCallback(async () => {
         setLoading(true)
         try {
-            const data = await getUserPage({
+            const data = await adminUserGetPage({
                 q: searchTerm,
                 role: roleFilter,
                 page,
@@ -120,7 +120,7 @@ export default function AdminUsersPage() {
                 }
                 payload.password = formData.password.trim()
             }
-            await saveUser(() => updateManagedUser(editingItem.email, payload))
+            await saveUser(() => adminUserUpdateByEmail(editingItem.email, payload))
         } else {
             payload.email = formData.email.trim().toLowerCase()
             payload.password = formData.password.trim()
@@ -132,7 +132,7 @@ export default function AdminUsersPage() {
                 setError('Mật khẩu phải có ít nhất 6 ký tự.')
                 return
             }
-            await saveUser(() => createManagedUser(payload))
+            await saveUser(() => adminUserCreate(payload))
         }
     }
 
@@ -150,7 +150,7 @@ export default function AdminUsersPage() {
     async function handleDelete() {
         setDeleting(true)
         try {
-            await deleteManagedUser(deleteTarget.email)
+            await adminUserDeleteByEmail(deleteTarget.email)
             setDeleteTarget(null)
             fetchData()
         } catch (err) {

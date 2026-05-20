@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserWebDesign } from '../../../../config/api'
+import { userGetWebDesignContent } from '../../../../services/apiService'
 import { WEB_DESIGN_TAB_MOCK } from '../../../../mock/pages/user/web-design-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 
@@ -15,7 +15,7 @@ export default function WebDesignTabPage({ onChatClick }) {
         let cancelled = false
         async function load() {
             try {
-                const result = await getUserWebDesign()
+                const result = await userGetWebDesignContent()
                 if (!cancelled) setData(hasWebDesignContent(result) ? result : WEB_DESIGN_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu Web Design:', err)

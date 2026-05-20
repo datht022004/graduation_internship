@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { getChatSession, streamChatMessage } from '../../../config/api'
+import { chatGetSessionById, chatStreamMessage } from '../../../services/apiService'
 
 function buildInitialMessages(userName) {
     return [
@@ -23,6 +23,82 @@ function mapStoredMessages(messages = []) {
         text: message.content || '',
         sources: [],
     })).filter((message) => message.text)
+}
+
+function parseSources(value) {
+    try {
+        return JSON.parse(value)
+    } catch {
+        return []
+    }
+}
+
+async function readChatStream(response, { sessionId, onSessionChange, onTextChange }) {
+    if (!response.ok) {
+        throw new Error(response.status === 401 ? 'Phiên đăng nhập hết hạn' : `Lỗi server: ${response.status}`)
+    }
+
+    const reader = response.body.getReader()
+    const decoder = new TextDecoder()
+    let fullText = ''
+    let sources = []
+    let buffer = ''
+    let nextIsSessionId = false
+    let nextIsSources = false
+    let activeSessionId = sessionId
+
+    while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+
+        buffer += decoder.decode(value, { stream: true })
+        const lines = buffer.split('\n')
+        buffer = lines.pop()
+
+        for (const line of lines) {
+            if (line.startsWith('event: session')) {
+                nextIsSessionId = true
+                continue
+            }
+
+            if (line.startsWith('event: sources')) {
+                nextIsSources = true
+                continue
+            }
+
+            if (line.startsWith('event: done') || !line.startsWith('data: ')) {
+                continue
+            }
+
+            const payload = line.slice(6)
+
+            if (!payload || payload === '[DONE]') {
+                continue
+            }
+
+            if (nextIsSessionId) {
+                nextIsSessionId = false
+                activeSessionId = payload
+                onSessionChange?.(payload)
+                continue
+            }
+
+            if (nextIsSources) {
+                nextIsSources = false
+                sources = parseSources(payload)
+                continue
+            }
+
+            fullText += payload
+            onTextChange?.(fullText)
+        }
+    }
+
+    return {
+        text: fullText || 'Xin lỗi, tôi không thể trả lời lúc này.',
+        sources,
+        sessionId: activeSessionId,
+    }
 }
 
 function RobotIcon({ className = 'h-5 w-5' }) {
@@ -80,7 +156,7 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
         let ignore = false
         setSessionId(storedSessionId)
 
-        getChatSession(storedSessionId)
+        chatGetSessionById(storedSessionId)
             .then((session) => {
                 if (ignore) return
                 const historyMessages = mapStoredMessages(session.messages)
@@ -130,10 +206,14 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
             const abortController = new AbortController()
             abortRef.current = abortController
 
-            const response = await streamChatMessage({
+            const response = await chatStreamMessage({
                 message: trimmed,
                 sessionId,
                 signal: abortController.signal,
+            })
+
+            const chatResult = await readChatStream(response, {
+                sessionId,
                 onSessionChange: setSessionId,
                 onTextChange: (text) => {
                     setMessages((prev) =>
@@ -144,15 +224,15 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
                 },
             })
 
-            if (response.sessionId) {
-                setSessionId(response.sessionId)
-                localStorage.setItem(getChatStorageKey(user), response.sessionId)
+            if (chatResult.sessionId) {
+                setSessionId(chatResult.sessionId)
+                localStorage.setItem(getChatStorageKey(user), chatResult.sessionId)
             }
 
             setMessages((prev) =>
                 prev.map((msg) =>
                     msg.id === botMsgId
-                        ? { ...msg, text: response.text, sources: response.sources, isStreaming: false }
+                        ? { ...msg, text: chatResult.text, sources: chatResult.sources, isStreaming: false }
                         : msg
                 )
             )

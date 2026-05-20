@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserSeoService } from '../../../../config/api'
+import { userGetSeoServiceContent } from '../../../../services/apiService'
 import { SEO_SERVICE_TAB_MOCK } from '../../../../mock/pages/user/seo-service-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 
@@ -15,7 +15,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
         let cancelled = false
         async function load() {
             try {
-                const result = await getUserSeoService()
+                const result = await userGetSeoServiceContent()
                 if (!cancelled) setData(hasSeoContent(result) ? result : SEO_SERVICE_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu SEO Service:', err)

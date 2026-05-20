@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import DocumentUploader from '../components/DocumentUploader'
 import DocumentList from '../components/DocumentList'
 import AdminPageHeader from '../components/AdminPageHeader'
-import { getAdminDocumentPage } from '../../../config/api'
+import { documentGetAdminPage } from '../../../services/apiService'
 
 const PAGE_SIZE = 5
 
@@ -15,7 +15,7 @@ export default function AdminDocumentsPage() {
     const fetchDocuments = useCallback(async (targetPage = page) => {
         setLoading(true)
         try {
-            const data = await getAdminDocumentPage({ page: targetPage, pageSize: PAGE_SIZE })
+            const data = await documentGetAdminPage({ page: targetPage, pageSize: PAGE_SIZE })
             setDocuments(data.documents)
             setPagination(data)
         } catch (error) {

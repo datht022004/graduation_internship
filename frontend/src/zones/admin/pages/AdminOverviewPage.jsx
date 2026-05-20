@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import AdminPageHeader from '../components/AdminPageHeader'
 import AdminStatCard from '../components/AdminStatCard'
 import BlogPostPreviewModal from '../components/BlogPostPreviewModal'
-import { getAdminDocumentPage, getBlogPostPage, getCategoryPage } from '../../../config/api'
+import { documentGetAdminPage, adminBlogGetPostPage, adminCategoryGetPage } from '../../../services/apiService'
 
 export default function AdminOverviewPage({ onOpenBlogPage, onOpenBlogCategory }) {
     const [stats, setStats] = useState({ blogs: 0, categories: 0, documents: 0 })
@@ -16,9 +16,9 @@ export default function AdminOverviewPage({ onOpenBlogPage, onOpenBlogCategory }
             setLoading(true)
             try {
                 const [blogPage, categoryPage, documentPage] = await Promise.all([
-                    getBlogPostPage({ pageSize: 3 }),
-                    getCategoryPage({ pageSize: 5 }),
-                    getAdminDocumentPage({ pageSize: 1 }),
+                    adminBlogGetPostPage({ pageSize: 3 }),
+                    adminCategoryGetPage({ pageSize: 5 }),
+                    documentGetAdminPage({ pageSize: 1 }),
                 ])
                 setStats({
                     blogs: blogPage.total,

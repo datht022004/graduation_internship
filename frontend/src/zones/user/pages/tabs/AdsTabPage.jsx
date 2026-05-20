@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getUserAds } from '../../../../config/api'
+import { userGetAdsContent } from '../../../../services/apiService'
 import { ADS_TAB_MOCK } from '../../../../mock/pages/user/ads-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 
@@ -15,7 +15,7 @@ export default function AdsTabPage({ onChatClick }) {
         let cancelled = false
         async function load() {
             try {
-                const result = await getUserAds()
+                const result = await userGetAdsContent()
                 if (!cancelled) setData(hasAdsContent(result) ? result : ADS_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu Ads:', err)

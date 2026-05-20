@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { uploadAdminDocument } from '../../../config/api'
+import { documentUploadAdminFile } from '../../../services/apiService'
 
 export default function DocumentUploader({ onUploadSuccess }) {
     const [dragActive, setDragActive] = useState(false)
@@ -37,20 +37,20 @@ export default function DocumentUploader({ onUploadSuccess }) {
         setUploadProgress(`Đang upload: ${file.name}...`)
 
         try {
-            const createdDocument = await uploadAdminDocument(file)
+            const result = await documentUploadAdminFile(file)
 
             setResult({
                 type: 'success',
-                message: '✅ Upload tài liệu thành công.',
+                message: 'Upload tài liệu thành công.',
             })
 
             if (onUploadSuccess) {
-                onUploadSuccess(createdDocument)
+                onUploadSuccess(result.document)
             }
         } catch (error) {
             setResult({
                 type: 'error',
-                message: `❌ ${error.message}`,
+                message: error.message,
             })
         } finally {
             setUploading(false)

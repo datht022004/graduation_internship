@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { deleteAdminDocument } from '../../../config/api'
+import { documentDeleteById } from '../../../services/apiService'
 import AdminDeleteConfirm from './AdminDeleteConfirm'
 
 function formatFileSize(bytes) {
@@ -39,7 +39,7 @@ export default function DocumentList({ documents, onDocumentDeleted }) {
 
         setDeletingId(deleteTarget.id)
         try {
-            await deleteAdminDocument(deleteTarget.id)
+            await documentDeleteById(deleteTarget.id)
 
             if (onDocumentDeleted) {
                 onDocumentDeleted(deleteTarget.id)

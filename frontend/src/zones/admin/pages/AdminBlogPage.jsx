@@ -5,7 +5,7 @@ import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
 import BlogPostPreviewModal from '../components/BlogPostPreviewModal'
-import { getBlogPostPage, createBlogPost, updateBlogPost, deleteBlogPost, toggleFeaturedPost, getCategories } from '../../../config/api'
+import { adminBlogGetPostPage, adminBlogCreatePost, adminBlogUpdatePost, adminBlogDeletePost, adminBlogToggleFeaturedPost, adminCategoryGetList } from '../../../services/apiService'
 
 const EMPTY_BLOG_POST = {
     title: '',
@@ -42,13 +42,13 @@ export default function AdminBlogPage({ categoryShortcut }) {
         setLoading(true)
         try {
             const [blogPage, categories] = await Promise.all([
-                getBlogPostPage({
+                adminBlogGetPostPage({
                     category: filterCategory,
                     q: searchTerm,
                     page,
                     pageSize: PAGE_SIZE,
                 }),
-                getCategories({ pageSize: 100 }),
+                adminCategoryGetList({ pageSize: 100 }),
             ])
             setPosts(blogPage.items || [])
             setPagination(blogPage)
@@ -134,7 +134,7 @@ export default function AdminBlogPage({ categoryShortcut }) {
             return
         }
 
-        if (editingItem) { await updateBlogPost(editingItem.id, payload) } else { await createBlogPost(payload) }
+        if (editingItem) { await adminBlogUpdatePost(editingItem.id, payload) } else { await adminBlogCreatePost(payload) }
         setModalOpen(false)
         setPage(1)
         fetchData()
@@ -142,14 +142,14 @@ export default function AdminBlogPage({ categoryShortcut }) {
 
     async function handleDelete() {
         setDeleting(true)
-        await deleteBlogPost(deleteTarget.id)
+        await adminBlogDeletePost(deleteTarget.id)
         setDeleting(false)
         setDeleteTarget(null)
         fetchData()
     }
 
     async function handleToggleFeatured(item) {
-        await toggleFeaturedPost(item.id)
+        await adminBlogToggleFeaturedPost(item.id)
         fetchData()
     }
 
