@@ -6,15 +6,23 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
+from pydantic import BaseModel
 
 from app.config import settings
 from app.helpers.security import hash_password, verify_password
 from app.models import UserDocument
-from app.manager.auth.interface import UserInfo
 from app.manager.auth.repository import auth_repository
 
 ALGORITHM = "HS256"
 security = HTTPBearer()
+
+
+class UserInfo(BaseModel):
+    """Thong tin nguoi dung da xac thuc."""
+
+    email: str
+    name: str
+    role: str
 
 
 class AuthUseCase:

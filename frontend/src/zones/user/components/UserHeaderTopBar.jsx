@@ -6,8 +6,8 @@ export default function UserHeaderTopBar() {
             <div className="mx-auto flex w-full max-w-310 flex-wrap items-center justify-between gap-2 px-4 py-2 text-sm text-slate-700">
                 <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
                     <span>DỊCH VỤ SEO Đà Nẵng</span>
-                    <span>0934 52 6656</span>
-                    <span>info@seovip.vn</span>
+                    <span>0356031160</span>
+                    <span>datht.022004@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-5">
                     <ul className="hidden items-center gap-5 lg:flex">

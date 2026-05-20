@@ -4,15 +4,57 @@ import uuid
 from math import ceil
 from datetime import datetime, timezone
 
-from app.manager.category.interface import Category, CategoryCreate, CategoryListResponse, CategoryUpdate
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.manager.category.repository import category_repository
 from app.models import CategoryDocument
 
+
+class CategoryBase(BaseModel):
+    """Cac truong chung cua danh muc blog."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str = Field(..., min_length=1)
+    description: str = ""
+
+
+class CategoryCreate(CategoryBase):
+    """Payload tao danh muc moi."""
+
+    pass
+
+
+class CategoryUpdate(BaseModel):
+    """Payload cap nhat danh muc, cho phep gui tung phan."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str | None = Field(default=None, min_length=1)
+    description: str | None = None
+
+
+class Category(CategoryBase):
+    """Danh muc day du kem slug, so bai viet va moc thoi gian."""
+
+    id: str
+    slug: str
+    postCount: int = 0
+    created_at: datetime
+    updated_at: datetime
+
+
+class CategoryListResponse(BaseModel):
+    """Response danh sach danh muc co phan trang."""
+
+    items: list[Category]
+    total: int
+    page: int
+    pageSize: int
+    totalPages: int
+
+
 DEFAULT_SITE_CATEGORIES = [
-    {
-        "name": "Home",
-        "description": "Nội dung tổng quan và giới thiệu chính trên trang chủ.",
-    },
     {
         "name": "Dịch vụ SEO",
         "description": "Bài viết liên quan tới dịch vụ SEO, audit, content và tăng trưởng organic.",
@@ -32,6 +74,7 @@ DEFAULT_SITE_CATEGORIES = [
 ]
 
 LEGACY_CATEGORY_RENAMES = {
+    "Home": "Blog",
     "SEO Foundation": "Dịch vụ SEO",
     "SEO Local": "Dịch vụ SEO",
     "SEO Audit": "Dịch vụ SEO",

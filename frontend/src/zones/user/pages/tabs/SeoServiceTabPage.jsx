@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getUserSeoService } from '../../../../config/api'
+import { SEO_SERVICE_TAB_MOCK } from '../../../../mock/pages/user/seo-service-tab.mock'
+import RelatedBlogPosts from '../../components/RelatedBlogPosts'
+
+function hasSeoContent(data) {
+    return Boolean(data?.metrics?.length || data?.packages?.length || data?.roadmap?.length)
+}
 
 export default function SeoServiceTabPage({ onChatClick }) {
     const [data, setData] = useState(null)
@@ -10,9 +16,10 @@ export default function SeoServiceTabPage({ onChatClick }) {
         async function load() {
             try {
                 const result = await getUserSeoService()
-                if (!cancelled) setData(result)
+                if (!cancelled) setData(hasSeoContent(result) ? result : SEO_SERVICE_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu SEO Service:', err)
+                if (!cancelled) setData(SEO_SERVICE_TAB_MOCK)
             } finally {
                 if (!cancelled) setLoading(false)
             }
@@ -128,6 +135,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
                     </div>
                 </div>
             </section>
+            <RelatedBlogPosts category="Dịch vụ SEO" />
         </div>
     )
 }

@@ -1,18 +1,27 @@
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile, status
+from pydantic import BaseModel
 
 from app.config import settings
-from app.manager.document.interface import (
-    DeleteResponse,
-    DocumentListResponse,
-    UploadResponse,
-)
-from app.manager.auth.interface import UserInfo
-from app.manager.auth.usecase import require_admin
-from app.manager.document.usecase import document_usecase
+from app.manager.auth.usecase import UserInfo, require_admin
+from app.manager.document.usecase import DocumentInfo, DocumentListResponse, document_usecase
 
 router = APIRouter(prefix="/documents", tags=["Document Management"])
 
 ALLOWED_EXTENSIONS = {"pdf", "docx", "doc", "txt"}
+
+
+class UploadResponse(BaseModel):
+    """Response sau khi upload va index tai lieu thanh cong."""
+
+    message: str
+    document: DocumentInfo
+
+
+class DeleteResponse(BaseModel):
+    """Response sau khi xoa tai lieu khoi he thong."""
+
+    message: str
+    document_id: str
 
 
 @router.post("/upload", response_model=UploadResponse)

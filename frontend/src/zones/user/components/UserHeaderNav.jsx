@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginClick, onLogout, onChatClick, onSelectTab }) {
     const [isLogoutConfirmOpen, setIsLogoutConfirmOpen] = useState(false)
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+    const [isLoggingOut, setIsLoggingOut] = useState(false)
     const userMenuRef = useRef(null)
 
     useEffect(() => {
@@ -23,12 +24,17 @@ export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginCli
 
     function handleLogoutClick() {
         setIsUserMenuOpen(false)
+        setIsLoggingOut(false)
         setIsLogoutConfirmOpen(true)
     }
 
     function confirmLogout() {
-        setIsLogoutConfirmOpen(false)
-        onLogout?.()
+        setIsLoggingOut(true)
+        window.setTimeout(() => {
+            setIsLogoutConfirmOpen(false)
+            setIsLoggingOut(false)
+            onLogout?.()
+        }, 650)
     }
 
     return (
@@ -160,18 +166,26 @@ export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginCli
                         </div>
                         <div className="flex justify-end gap-2">
                             <button
-                                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-                                onClick={() => setIsLogoutConfirmOpen(false)}
+                                className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-60"
+                                disabled={isLoggingOut}
+                                onClick={() => {
+                                    setIsLogoutConfirmOpen(false)
+                                    setIsLoggingOut(false)
+                                }}
                                 type="button"
                             >
                                 Hủy
                             </button>
                             <button
-                                className="rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700"
+                                className="inline-flex min-w-31 items-center justify-center gap-2 rounded-full bg-red-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-red-700 disabled:cursor-wait disabled:bg-red-500"
+                                disabled={isLoggingOut}
                                 onClick={confirmLogout}
                                 type="button"
                             >
-                                Đăng xuất
+                                {isLoggingOut && (
+                                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/45 border-t-white" />
+                                )}
+                                {isLoggingOut ? 'Đang đăng xuất...' : 'Đăng xuất'}
                             </button>
                         </div>
                     </div>

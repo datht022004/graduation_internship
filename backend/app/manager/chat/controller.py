@@ -1,13 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 
-from app.manager.chat.interface import ChatRequest
-from app.manager.auth.interface import UserInfo
-from app.manager.auth.usecase import get_current_user
+from app.manager.auth.usecase import UserInfo, get_current_user
 from app.manager.chat.usecase import chat_usecase
 from app.core.rag_chain import SOURCES_MARKER
 
 router = APIRouter(prefix="/chat", tags=["RAG Chat"])
+
+
+class ChatRequest(BaseModel):
+    """Payload gui cau hoi chat, co the tiep tuc mot session cu."""
+
+    message: str
+    session_id: str | None = None
 
 
 def _format_sse(data: str, event: str | None = None) -> str:

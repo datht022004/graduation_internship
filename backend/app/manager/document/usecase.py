@@ -9,12 +9,33 @@ from langchain_community.document_loaders import (
     TextLoader,
 )
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from pydantic import BaseModel
 
 from app.config import settings
 from app.core.vector_store import add_documents_to_store, delete_documents_from_store
-from app.manager.document.interface import DocumentInfo, DocumentListResponse
 from app.manager.document.repository import document_repository
 from app.models import DocumentDocument
+
+
+class DocumentInfo(BaseModel):
+    """Thong tin mot tai lieu da upload vao kho RAG."""
+
+    id: str
+    filename: str
+    file_type: str
+    file_size: int
+    chunk_count: int
+    uploaded_at: str
+
+
+class DocumentListResponse(BaseModel):
+    """Response danh sach tai lieu co phan trang."""
+
+    documents: list[DocumentInfo]
+    total: int
+    page: int = 1
+    pageSize: int = 10
+    totalPages: int = 1
 
 
 class DocumentUseCase:

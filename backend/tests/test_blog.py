@@ -1,18 +1,17 @@
-"""Tests for blog module: interface, usecase."""
+"""Tests for blog module: schema, usecase."""
 
 import pytest
 from unittest.mock import patch, MagicMock
 from pydantic import ValidationError
 
-from app.manager.blog.interface import BlogPost, BlogPostCreate, BlogPostUpdate
-from app.manager.blog.usecase import BlogUseCase
+from app.manager.blog.usecase import BlogPost, BlogPostCreate, BlogPostUpdate, BlogUseCase
 
 
 # ---------------------------------------------------------------------------
-# Interface / Schema Tests
+# Schema Tests
 # ---------------------------------------------------------------------------
 
-class TestBlogInterfaces:
+class TestBlogSchemas:
     def test_blog_post_create_valid(self):
         post = BlogPostCreate(
             title="Test Title",

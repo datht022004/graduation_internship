@@ -1,14 +1,57 @@
 from datetime import datetime, timezone
 from math import ceil
 
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.helpers.security import hash_password
-from app.manager.auth.interface import UserInfo
-from app.manager.user.interface import ManagedUser, ManagedUserCreate, ManagedUserListResponse, ManagedUserUpdate
+from app.manager.auth.usecase import UserInfo
 from app.manager.user.repository import user_repository
 from app.models import UserDocument
 
 
 VALID_ROLES = {"admin", "user"}
+
+
+class ManagedUser(BaseModel):
+    """Thong tin nguoi dung trong man hinh quan tri."""
+
+    id: str
+    email: str
+    name: str
+    role: str
+    authProviders: list[str] = []
+    createdAt: str = ""
+
+
+class ManagedUserListResponse(BaseModel):
+    """Response danh sach nguoi dung co phan trang."""
+
+    items: list[ManagedUser]
+    total: int
+    page: int
+    pageSize: int
+    totalPages: int
+
+
+class ManagedUserCreate(BaseModel):
+    """Payload admin tao tai khoan nguoi dung moi."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str = Field(..., min_length=1)
+    email: str = Field(..., min_length=3)
+    password: str = Field(..., min_length=6)
+    role: str = "user"
+
+
+class ManagedUserUpdate(BaseModel):
+    """Payload admin cap nhat tai khoan, cho phep gui tung phan."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    name: str | None = Field(default=None, min_length=1)
+    password: str | None = Field(default=None, min_length=6)
+    role: str | None = None
 
 
 class UserUseCase:

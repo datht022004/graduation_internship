@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getUserAds } from '../../../../config/api'
+import { ADS_TAB_MOCK } from '../../../../mock/pages/user/ads-tab.mock'
+import RelatedBlogPosts from '../../components/RelatedBlogPosts'
+
+function hasAdsContent(data) {
+    return Boolean(data?.metrics?.length || data?.channels?.length)
+}
 
 export default function AdsTabPage({ onChatClick }) {
     const [data, setData] = useState(null)
@@ -10,9 +16,10 @@ export default function AdsTabPage({ onChatClick }) {
         async function load() {
             try {
                 const result = await getUserAds()
-                if (!cancelled) setData(result)
+                if (!cancelled) setData(hasAdsContent(result) ? result : ADS_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu Ads:', err)
+                if (!cancelled) setData(ADS_TAB_MOCK)
             } finally {
                 if (!cancelled) setLoading(false)
             }
@@ -120,6 +127,7 @@ export default function AdsTabPage({ onChatClick }) {
                     </div>
                 </article>
             </section>
+            <RelatedBlogPosts category="Quảng cáo +" tone="cyan" />
         </div>
     )
 }

@@ -4,14 +4,14 @@ export default function RoleSelector({ value, onChange }) {
     const options = [AUTH_ROLES.USER, AUTH_ROLES.ADMIN]
 
     return (
-        <div className="grid grid-cols-2 gap-2 rounded-[22px] bg-slate-100 p-1.5 ring-1 ring-slate-200">
+        <div className="grid grid-cols-2 gap-2 rounded-[22px] bg-blue-50/60 p-1.5 ring-1 ring-blue-100">
             {options.map((role) => {
                 const isActive = value === role
                 return (
                     <button
                         className={`rounded-2xl px-3 py-2.5 text-sm font-bold transition ${isActive
-                            ? 'bg-white text-slate-900 shadow-[0_8px_18px_rgba(15,23,42,0.12)] ring-1 ring-slate-200'
-                            : 'text-slate-500 hover:bg-white/70 hover:text-slate-700'
+                            ? 'bg-[#4285F4] text-white shadow-[0_12px_24px_-16px_rgba(66,133,244,0.95)]'
+                            : 'text-slate-500 hover:bg-white/80 hover:text-[#3367D6]'
                             }`}
                         key={role}
                         onClick={() => onChange(role)}

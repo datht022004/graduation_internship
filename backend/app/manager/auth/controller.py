@@ -1,11 +1,42 @@
 from fastapi import APIRouter, Depends, HTTPException, Request, status
+from pydantic import BaseModel
 from pymongo.errors import PyMongoError
 
-from app.manager.auth.interface import GoogleLoginRequest, LoginRequest, LoginResponse, RegisterRequest, UserInfo
-from app.manager.auth.usecase import auth_usecase, get_current_user
+from app.manager.auth.usecase import UserInfo, auth_usecase, get_current_user
 from app.helpers.rate_limit import limiter
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
+
+
+class LoginRequest(BaseModel):
+    """Payload dang nhap bang email/password."""
+
+    email: str
+    password: str
+    role: str = "user"
+
+
+class GoogleLoginRequest(BaseModel):
+    """Payload dang nhap bang Google OAuth token."""
+
+    google_token: str
+    role: str = "user"
+
+
+class RegisterRequest(BaseModel):
+    """Payload tao tai khoan nguoi dung moi."""
+
+    name: str
+    email: str
+    password: str
+
+
+class LoginResponse(BaseModel):
+    """Response dang nhap gom access token va thong tin nguoi dung."""
+
+    access_token: str
+    token_type: str = "bearer"
+    user: UserInfo
 
 
 def _build_login_response(account: dict) -> LoginResponse:

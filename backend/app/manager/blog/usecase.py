@@ -4,9 +4,68 @@ import unicodedata
 from math import ceil
 from datetime import datetime, timezone
 
-from app.manager.blog.interface import BlogPost, BlogPostCreate, BlogPostListResponse, BlogPostUpdate
+from pydantic import BaseModel, ConfigDict, Field
+
 from app.manager.blog.repository import blog_repository
 from app.models import BlogPostDocument
+
+
+class BlogPostBase(BaseModel):
+    """Cac truong chung khi tao, cap nhat va hien thi bai viet blog."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    title: str = Field(..., min_length=1)
+    slug: str = ""
+    category: str = Field(..., min_length=1)
+    readTime: str = Field(..., min_length=1)
+    excerpt: str = Field(..., min_length=1)
+    content: str = ""
+    imageUrl: str = ""
+    author: str = ""
+    tags: str = ""
+    isFeatured: bool = False
+
+
+class BlogPostCreate(BlogPostBase):
+    """Payload tao bai viet blog moi."""
+
+    pass
+
+
+class BlogPostUpdate(BaseModel):
+    """Payload cap nhat bai viet blog, cho phep gui tung phan."""
+
+    model_config = ConfigDict(str_strip_whitespace=True)
+
+    title: str | None = Field(default=None, min_length=1)
+    slug: str | None = None
+    category: str | None = Field(default=None, min_length=1)
+    readTime: str | None = Field(default=None, min_length=1)
+    excerpt: str | None = Field(default=None, min_length=1)
+    content: str | None = None
+    imageUrl: str | None = None
+    author: str | None = None
+    tags: str | None = None
+    isFeatured: bool | None = None
+
+
+class BlogPost(BlogPostBase):
+    """Bai viet blog day du duoc tra ve cho admin va public page."""
+
+    id: str
+    createdAt: str
+    updatedAt: str
+
+
+class BlogPostListResponse(BaseModel):
+    """Response danh sach bai viet blog co phan trang."""
+
+    items: list[BlogPost]
+    total: int
+    page: int
+    pageSize: int
+    totalPages: int
 
 
 class BlogUseCase:

@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
 import { getUserHome } from '../../../../config/api'
+import { HOME_TAB_MOCK } from '../../../../mock/pages/user/home-tab.mock'
+
+function hasHomeContent(data) {
+    return Boolean(data?.serviceCards?.length || data?.painPoints?.length || data?.strengths?.length)
+}
 
 export default function HomeTabPage() {
     const [data, setData] = useState(null)
@@ -10,9 +15,10 @@ export default function HomeTabPage() {
         async function load() {
             try {
                 const result = await getUserHome()
-                if (!cancelled) setData(result)
+                if (!cancelled) setData(hasHomeContent(result) ? result : HOME_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu trang chủ:', err)
+                if (!cancelled) setData(HOME_TAB_MOCK)
             } finally {
                 if (!cancelled) setLoading(false)
             }

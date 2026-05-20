@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 
-from app.manager.auth.interface import UserInfo
-from app.manager.auth.usecase import require_admin
-from app.manager.category.interface import Category, CategoryCreate, CategoryListResponse, CategoryUpdate
-from app.manager.category.usecase import category_usecase
+from app.manager.auth.usecase import UserInfo, require_admin
+from app.manager.category.usecase import Category, CategoryCreate, CategoryListResponse, CategoryUpdate, category_usecase
 
 router = APIRouter(prefix="/admin/categories", tags=["Admin - Categories"])
 

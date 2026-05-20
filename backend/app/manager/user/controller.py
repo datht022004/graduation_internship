@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 
-from app.manager.auth.interface import UserInfo
-from app.manager.auth.usecase import require_admin
-from app.manager.user.interface import ManagedUser, ManagedUserCreate, ManagedUserListResponse, ManagedUserUpdate
-from app.manager.user.usecase import user_usecase
+from app.manager.auth.usecase import UserInfo, require_admin
+from app.manager.user.usecase import ManagedUser, ManagedUserCreate, ManagedUserListResponse, ManagedUserUpdate, user_usecase
 
 router = APIRouter(prefix="/user", tags=["User - Public"])
 admin_router = APIRouter(prefix="/admin/users", tags=["Admin - Users"])

@@ -1,25 +1,29 @@
-"""Tests for auth module: interface, usecase, repository."""
+"""Tests for auth module: schema, usecase, repository."""
 
 import pytest
 from datetime import datetime, timezone
 from unittest.mock import patch, MagicMock
 from pydantic import ValidationError
 
-from app.manager.auth.interface import (
+from app.manager.auth.controller import (
     GoogleLoginRequest,
     LoginRequest,
     LoginResponse,
     RegisterRequest,
-    UserInfo,
 )
-from app.manager.auth.usecase import AuthUseCase, get_current_user, require_admin
+from app.manager.auth.usecase import (
+    UserInfo,
+    AuthUseCase,
+    get_current_user,
+    require_admin,
+)
 
 
 # ---------------------------------------------------------------------------
-# Interface / Schema Tests
+# Schema Tests
 # ---------------------------------------------------------------------------
 
-class TestAuthInterfaces:
+class TestAuthSchemas:
     def test_login_request_defaults(self):
         req = LoginRequest(email="test@test.com", password="pass123")
         assert req.role == "user"

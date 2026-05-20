@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react'
 import { getUserBlog } from '../../../../config/api'
 
+const BLOG_CATEGORY_ORDER = ['Dịch vụ SEO', 'Thiết kế website', 'Quảng cáo +', 'Blog']
+
+function normalizeBlogCategory(category) {
+    return category === 'Home' ? 'Blog' : category
+}
+
 export default function BlogTabPage() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -14,7 +20,10 @@ export default function BlogTabPage() {
             try {
                 const result = await getUserBlog()
                 if (!cancelled) {
-                    setPosts(result || [])
+                    setPosts((result || []).map((post) => ({
+                        ...post,
+                        category: normalizeBlogCategory(post.category),
+                    })))
                     setError('')
                 }
             } catch (err) {
@@ -47,7 +56,18 @@ export default function BlogTabPage() {
         return <div className="py-32 text-center text-slate-400">Chưa có bài viết nào.</div>
     }
 
-    const categories = [...new Set(posts.map((post) => post.category).filter(Boolean))]
+    const categoryCounts = posts.reduce((counts, post) => {
+        if (!post.category) return counts
+        return {
+            ...counts,
+            [post.category]: (counts[post.category] || 0) + 1,
+        }
+    }, {})
+    const unknownCategories = Object.keys(categoryCounts).filter((category) => !BLOG_CATEGORY_ORDER.includes(category))
+    const categories = [
+        ...BLOG_CATEGORY_ORDER.filter((category) => categoryCounts[category] > 0),
+        ...unknownCategories,
+    ]
     const selectedCategory = categories.includes(activeCategory) ? activeCategory : ''
     const visiblePosts = selectedCategory ? posts.filter((post) => post.category === selectedCategory) : posts
     const featuredPost = visiblePosts.find((post) => post.isFeatured) || visiblePosts[0]
@@ -120,7 +140,7 @@ export default function BlogTabPage() {
                             <CategoryTab
                                 key={category}
                                 active={selectedCategory === category}
-                                count={posts.filter((post) => post.category === category).length}
+                                count={categoryCounts[category]}
                                 label={category}
                                 onClick={() => setActiveCategory(category)}
                             />

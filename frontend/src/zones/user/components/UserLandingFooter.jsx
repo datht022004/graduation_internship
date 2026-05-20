@@ -9,7 +9,7 @@ export default function UserLandingFooter() {
                         <p className="mt-4 text-sm leading-7">
                             Công ty TNHH Truyền Thông SEO VIP
                             <br />
-                            0934 52 6656 - info@seovip.vn
+                            0356031160 - datht.022004@gmail.com
                             <br />
                             181 Nguyễn Tri Phương, Đà Nẵng
                         </p>
@@ -41,7 +41,7 @@ export default function UserLandingFooter() {
             </footer>
 
             <button className="fixed bottom-6 left-3 z-20 rounded-full bg-[#f68a44] px-4 py-2 text-sm font-bold text-white shadow-lg">
-                0934 52 6656
+                0356031160
             </button>
         </>
     )

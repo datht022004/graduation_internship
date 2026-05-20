@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react'
 import { getUserWebDesign } from '../../../../config/api'
+import { WEB_DESIGN_TAB_MOCK } from '../../../../mock/pages/user/web-design-tab.mock'
+import RelatedBlogPosts from '../../components/RelatedBlogPosts'
+
+function hasWebDesignContent(data) {
+    return Boolean(data?.phases?.length || data?.highlights?.length)
+}
 
 export default function WebDesignTabPage({ onChatClick }) {
     const [data, setData] = useState(null)
@@ -10,9 +16,10 @@ export default function WebDesignTabPage({ onChatClick }) {
         async function load() {
             try {
                 const result = await getUserWebDesign()
-                if (!cancelled) setData(result)
+                if (!cancelled) setData(hasWebDesignContent(result) ? result : WEB_DESIGN_TAB_MOCK)
             } catch (err) {
                 console.error('Lỗi tải dữ liệu Web Design:', err)
+                if (!cancelled) setData(WEB_DESIGN_TAB_MOCK)
             } finally {
                 if (!cancelled) setLoading(false)
             }
@@ -167,6 +174,7 @@ export default function WebDesignTabPage({ onChatClick }) {
                     </article>
                 </div>
             </section>
+            <RelatedBlogPosts category="Thiết kế website" tone="sky" />
         </div>
     )
 }

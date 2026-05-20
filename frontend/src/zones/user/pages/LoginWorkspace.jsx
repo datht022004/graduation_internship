@@ -4,7 +4,7 @@ import { AUTH_ROLES, getRoleLabel } from '../../../helpers/authRoles'
 import { authApi } from '../../../config/api'
 import GoogleToneLoginCard from '../components/GoogleToneLoginCard'
 
-export default function LoginWorkspace({ onLoginSuccess, hideHint = false }) {
+export default function LoginWorkspace({ onLoginSuccess, onClose, hideHint = false }) {
     const [mode, setMode] = useState('login')
     const [form, setForm] = useState({
         role: AUTH_ROLES.USER,
@@ -108,6 +108,7 @@ export default function LoginWorkspace({ onLoginSuccess, hideHint = false }) {
                 onChangeField={handleChangeField}
                 onChangeMode={handleChangeMode}
                 onChangeRole={handleChangeRole}
+                onClose={onClose}
                 onGoogleSuccess={handleGoogleSuccess}
                 onSubmit={handleSubmit}
                 mode={mode}
