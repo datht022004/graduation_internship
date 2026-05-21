@@ -6,7 +6,7 @@ function hasHomeContent(data) {
     return Boolean(data?.serviceCards?.length || data?.painPoints?.length || data?.strengths?.length)
 }
 
-export default function HomeTabPage() {
+export default function HomeTabPage({ onSelectTab }) {
     const [data, setData] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -107,11 +107,26 @@ export default function HomeTabPage() {
                     <h2 className="text-3xl md:text-4xl font-bold uppercase text-[#13283c]">Hệ sinh thái dịch vụ</h2>
                     <p className="mt-3 text-slate-500">Mọi công cụ bạn cần để vươn lên dẫn đầu ngành.</p>
                 </div>
-                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                     {serviceCards.map((card, index) => (
                         <article
-                            className="group relative flex flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30"
+                            className="group relative flex flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30 cursor-pointer"
                             key={card.title}
+                            onClick={() => {
+                                if (card.tabKey && onSelectTab) {
+                                    onSelectTab(card.tabKey)
+                                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                                }
+                            }}
+                            role={card.tabKey ? "button" : undefined}
+                            tabIndex={card.tabKey ? 0 : undefined}
+                            onKeyDown={(e) => {
+                                if (card.tabKey && onSelectTab && (e.key === 'Enter' || e.key === ' ')) {
+                                    e.preventDefault()
+                                    onSelectTab(card.tabKey)
+                                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                                }
+                            }}
                         >
                             <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-[radial-gradient(circle,#fff2ea_0%,transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                             <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#13283c] text-lg font-black text-white shadow-lg transition-transform group-hover:scale-110 group-hover:bg-[#f2682a]">

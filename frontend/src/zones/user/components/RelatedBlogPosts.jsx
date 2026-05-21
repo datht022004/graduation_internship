@@ -37,6 +37,10 @@ export default function RelatedBlogPosts({ category, tone = 'orange' }) {
         }
     }, [category])
 
+    const handlePostClick = (post) => {
+        window.dispatchEvent(new CustomEvent('open-blog-post', { detail: post }))
+    }
+
     if (loading) {
         return (
             <section className="mx-auto w-full max-w-310 px-4">
@@ -71,8 +75,17 @@ export default function RelatedBlogPosts({ category, tone = 'orange' }) {
             <div className="grid gap-5 md:grid-cols-3">
                 {posts.map((post) => (
                     <article
-                        className="group flex min-h-64 flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-[#f2682a]/40 hover:shadow-[0_20px_40px_-18px_rgba(15,23,42,0.22)]"
+                        className="group flex min-h-64 flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-1 hover:border-[#f2682a]/40 hover:shadow-[0_20px_40px_-18px_rgba(15,23,42,0.22)] cursor-pointer text-left"
                         key={post.id || post.title}
+                        onClick={() => handlePostClick(post)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                                e.preventDefault();
+                                handlePostClick(post);
+                            }
+                        }}
                     >
                         {post.imageUrl && (
                             <div className="h-32 overflow-hidden bg-slate-100">
@@ -104,3 +117,4 @@ export default function RelatedBlogPosts({ category, tone = 'orange' }) {
         </section>
     )
 }
+

@@ -1,4 +1,4 @@
-export default function UserHeroBanner({ tab, onChatClick }) {
+export default function UserHeroBanner({ tab, onChatClick, onOpenProfile }) {
     return (
         <section className="relative overflow-hidden bg-[#0e1e2d]">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(16,80,130,0.45),transparent_34%),radial-gradient(circle_at_85%_15%,rgba(242,104,42,0.33),transparent_35%)]" />
@@ -20,7 +20,11 @@ export default function UserHeroBanner({ tab, onChatClick }) {
                     >
                         Chat tư vấn ngay
                     </button>
-                    <button className="rounded-full border border-white/60 px-6 py-3 text-sm font-bold uppercase text-white transition hover:bg-white/10">
+                    <button 
+                        onClick={onOpenProfile}
+                        className="rounded-full border border-white/60 px-6 py-3 text-sm font-bold uppercase text-white transition hover:bg-white/10"
+                        type="button"
+                    >
                         Hồ sơ năng lực
                     </button>
                 </div>

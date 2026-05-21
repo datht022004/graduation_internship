@@ -1,24 +1,24 @@
 export const HOME_TAB_MOCK = {
     serviceCards: [
         {
-            title: 'Dịch vụ SEO tổng thể',
-            desc: 'Lộ trình SEO rõ ràng: tư vấn, phân tích, triển khai và đo lường để tăng đơn bền vững.',
+            title: 'Dịch vụ SEO',
+            desc: 'Thiết kế chiến lược từ technical SEO, content SEO tới CRO để kéo đúng khách hàng và tăng chuyển đổi.',
+            tabKey: 'seo-service',
         },
         {
             title: 'Thiết kế website',
-            desc: 'Website chuẩn SEO, tối ưu tốc độ, tập trung trải nghiệm UX/UI cho khách hàng doanh nghiệp.',
+            desc: 'Website vận hành nhanh, nội dung rõ ràng, cấu trúc tối ưu để tăng chất lượng lead từ organic và ads.',
+            tabKey: 'web-design',
         },
         {
-            title: 'Báo điện tử - PR',
-            desc: 'Gia tăng nhận diện thương hiệu thông qua hệ thống báo chí và mạng lưới đối tác đa ngành.',
+            title: 'Quảng cáo +',
+            desc: 'Triển khai Google, Meta, TikTok theo phễu bán hàng, theo dõi CPL/ROAS và tối ưu liên tục.',
+            tabKey: 'ads',
         },
         {
-            title: 'Quảng cáo đa kênh',
-            desc: 'Google Ads, Facebook Ads, TikTok Ads theo chiến lược chuyển đổi và kiểm soát ngân sách.',
-        },
-        {
-            title: 'SEO chuyển đổi CRO',
-            desc: 'Tối ưu hành trình khách hàng để tăng tỉ lệ chốt đơn và giảm chi phí trên mỗi lead.',
+            title: 'Blog',
+            desc: 'Kho kiến thức SEO - Ads - Website dành cho doanh nghiệp với bài viết ngắn gọn, có checklist hành động.',
+            tabKey: 'blog',
         },
     ],
     painPoints: [

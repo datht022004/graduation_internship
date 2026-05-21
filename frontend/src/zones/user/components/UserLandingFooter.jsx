@@ -36,7 +36,7 @@ export default function UserLandingFooter() {
                     </section>
                 </div>
                 <div className="mx-auto mt-8 max-w-310 border-t border-slate-700 px-4 pt-5 text-center text-sm text-slate-400">
-                    © 2026 SEO Style Landing. Thiết kế theo phong cách tham chiếu.
+                    © 2026 SEO HOÀNG TIẾN ĐẠT
                 </div>
             </footer>
 
