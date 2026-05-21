@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetSeoServiceContent } from '../../../../services/apiService'
+import { userGetSeoServiceContent } from '../../../../config/apiService'
 import { SEO_SERVICE_TAB_MOCK } from '../../../../mock/pages/user/seo-service-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 

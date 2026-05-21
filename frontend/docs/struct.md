@@ -1,14 +1,17 @@
-# Cấu trúc thư mục Frontend
+# Cấu trúc Frontend
 
-Từ thời điểm này FE dùng cấu trúc đơn giản hơn:
+Tài liệu này mô tả cấu trúc hiện tại của frontend trong project RAG chatbot tư vấn dịch vụ Digital Marketing.
 
-- `src/config/api.js` là nơi duy nhất cấu hình và gọi API backend.
-- `src/zones/` chỉ làm giao diện, page state và render UI.
-- `src/helpers/` chứa logic dùng chung như validate, normalize input, constants.
-- `src/core/domain/` chứa struct/shape chuẩn của dữ liệu FE.
-- Không dùng tầng `adapters/` nữa để tránh vòng import và khó tìm luồng API.
+## 1. Nguyên tắc tổ chức
 
-## 1. Cây thư mục đang dùng
+- `src/config/apiService.js` là nơi tập trung cấu hình API endpoint và các hàm gọi backend.
+- `src/zones/admin` chứa giao diện quản trị.
+- `src/zones/user` chứa giao diện khách hàng, landing page, login và chat widget.
+- `src/helpers` chứa logic dùng chung nhỏ, ví dụ role và validate form auth.
+- `src/mock` chứa dữ liệu fallback cho UI khi API public chưa có dữ liệu đầy đủ.
+- Component không hard-code endpoint backend. Component import function từ `config/apiService.js`.
+
+## 2. Cây thư mục chính
 
 ```text
 frontend/
@@ -16,395 +19,198 @@ frontend/
 │   ├── NOTE.md
 │   ├── module.md
 │   └── struct.md
+├── nginx/
+│   └── default.conf
 ├── public/
 ├── src/
 │   ├── config/
-│   │   └── api.js
-│   ├── core/
-│   │   ├── domain/
-│   │   │   ├── auth.js
-│   │   │   └── document.js
-│   │   └── interfaces/
+│   │   └── apiService.js
 │   ├── helpers/
 │   │   ├── authRoles.js
 │   │   └── authUseCases.js
 │   ├── mock/
 │   │   └── pages/
 │   │       ├── admin/
+│   │       │   ├── ads.mock.js
+│   │       │   ├── blog.mock.js
+│   │       │   ├── dashboard.mock.js
+│   │       │   ├── home.mock.js
+│   │       │   ├── seo-service.mock.js
+│   │       │   └── web-design.mock.js
 │   │       └── user/
+│   │           ├── ads-tab.mock.js
+│   │           ├── blog.mock.js
+│   │           ├── home-tab.mock.js
+│   │           ├── landing.mock.js
+│   │           ├── seo-service-tab.mock.js
+│   │           ├── user-header.mock.js
+│   │           ├── user-landing.mock.js
+│   │           └── web-design-tab.mock.js
 │   ├── zones/
 │   │   ├── admin/
 │   │   │   ├── components/
 │   │   │   ├── config/
+│   │   │   │   └── navigation.js
 │   │   │   └── pages/
 │   │   └── user/
 │   │       ├── components/
 │   │       ├── config/
+│   │       │   └── navigation.ts
 │   │       └── pages/
 │   │           └── tabs/
 │   ├── App.jsx
 │   ├── index.css
 │   └── main.jsx
+├── Dockerfile
 ├── package.json
 └── vite.config.js
 ```
 
-## 2. Luồng dữ liệu chuẩn
+## 3. Luồng dữ liệu
 
-Luồng gọi backend:
-
-```text
-zones/page hoặc zones/component
-    ↓
-src/config/api.js
-    ↓
-Backend API
-```
-
-Nếu cần validate/normalize trước khi gọi API:
+### Luồng gọi API
 
 ```text
-zones/page
+Page hoặc Component
     ↓
-helpers/*
+src/config/apiService.js
     ↓
-src/config/api.js
-    ↓
-Backend API
+Backend FastAPI /api/*
 ```
 
-Nếu API response cần shape ổn định:
+Ví dụ:
 
-```text
-src/config/api.js
-    ↓
-core/domain/*
-    ↓
-zones/*
+```js
+import { documentGetAdminPage } from '../../../config/apiService'
+
+const data = await documentGetAdminPage({ page: 1, pageSize: 5 })
 ```
 
-Ví dụ login:
+### Luồng login
 
 ```text
 LoginWorkspace.jsx
     ↓
 helpers/authUseCases.js
     ↓
-config/api.js authApi.login()
+authApi.login() trong config/apiService.js
     ↓
 POST /api/auth/login
     ↓
-core/domain/auth.js normalize response
+App.jsx lưu app_auth_session vào localStorage
 ```
 
-Ví dụ chat RAG:
+### Luồng chat RAG
 
 ```text
 ChatWidget.jsx
     ↓
-config/api.js streamChatMessage()
+chatStreamMessage() trong config/apiService.js
     ↓
 POST /api/chat
     ↓
-SSE stream text + sources + session
+SSE stream text, sources, session id
 ```
 
-## 3. Vai trò từng thư mục
+## 4. `src/config/apiService.js`
 
-### `src/config/`
+File này đang chứa:
 
-Chứa cấu hình và lời gọi API backend.
-
-File chính:
-
-```text
-src/config/api.js
-```
-
-`api.js` chịu trách nhiệm:
-
-- cấu hình `API_BASE_URL`;
-- tạo `apiClient` bằng axios;
-- gắn JWT vào header `Authorization`;
-- khai báo `API_ENDPOINTS`;
-- gọi API login/register/google;
-- gọi API user tabs;
-- gọi API admin CRUD;
-- gọi API upload/list/delete document;
-- gọi API chat RAG streaming;
-- map response quan trọng về struct trong `core/domain`.
+- `API_URL`
+- `API_ENDPOINTS`
+- timeout axios mặc định
+- interceptor gắn JWT từ `localStorage`
+- các hàm gọi API theo module:
+  - auth
+  - user public content
+  - chat
+  - documents
+  - admin blog
+  - admin categories
+  - admin users
 
 Quy ước:
 
-- Tất cả request backend phải đi qua `src/config/api.js`.
-- Không gọi `fetch('/api/...')` trực tiếp trong component.
-- Không import axios trong `zones`.
-- Không viết endpoint string trong page/component.
-- Nếu backend đổi endpoint, ưu tiên sửa trong `config/api.js`.
+- Khi thêm endpoint mới, khai báo trong `API_ENDPOINTS` trước.
+- Sau đó viết function gọi API ngay bên dưới theo module tương ứng.
+- Note trên function cần ghi rõ `METHOD /path`.
+- Component chỉ gọi function đã export, không gọi `axios` hoặc `fetch` trực tiếp, trừ khi xử lý stream đặc biệt đã nằm trong `apiService.js`.
 
-Ví dụ đúng:
+## 5. `src/zones/admin`
 
-```js
-import { getUserHome } from '../../../../config/api'
+Admin zone gồm các trang:
 
-const data = await getUserHome()
-```
+- `AdminOverviewPage.jsx`: dashboard tổng quan.
+- `AdminBlogPage.jsx`: quản lý bài viết blog.
+- `AdminCategoriesPage.jsx`: quản lý danh mục blog.
+- `AdminUsersPage.jsx`: quản lý tài khoản.
+- `AdminDocumentsPage.jsx`: quản lý tài liệu RAG.
 
-Ví dụ không nên:
+Admin components dùng chung:
 
-```js
-const response = await fetch('/api/user/home')
-```
+- `AdminDataTable.jsx`
+- `AdminModal.jsx`
+- `AdminFormField.jsx`
+- `AdminDeleteConfirm.jsx`
+- `AdminPageHeader.jsx`
+- `AdminSidebar.jsx`
+- `AdminStatCard.jsx`
+- `DocumentUploader.jsx`
+- `DocumentList.jsx`
+- `BlogPostPreviewModal.jsx`
 
-### `src/zones/`
-
-Chứa toàn bộ giao diện theo khu vực nghiệp vụ.
-
-```text
-zones/admin/
-zones/user/
-```
-
-`zones` được phép:
-
-- render layout;
-- quản lý state màn hình;
-- gọi function API từ `config/api.js`;
-- gọi helper validate/normalize;
-- truyền props cho component con;
-- xử lý loading/error UI.
-
-`zones` không nên:
-
-- tự tạo axios client;
-- tự hard-code endpoint;
-- tự đọc/ghi token thủ công;
-- chứa business struct dài;
-- chứa logic mapping response backend phức tạp.
-
-### `src/helpers/`
-
-Chứa logic dùng chung, không phụ thuộc UI cụ thể và không trực tiếp quản lý HTTP client.
-
-Hiện tại:
+Navigation admin nằm ở:
 
 ```text
-helpers/authRoles.js
-helpers/authUseCases.js
+src/zones/admin/config/navigation.js
 ```
 
-Phù hợp để đặt:
+Các mục hiện có: dashboard, blog, categories, users, documents.
 
-- role constants;
-- validate form;
-- normalize email/password/name;
-- function tiện ích dùng nhiều nơi;
-- format number/date/string;
-- rule nhỏ không thuộc riêng admin hoặc user.
+## 6. `src/zones/user`
 
-Không nên đặt trong `helpers`:
+User zone gồm:
 
-- API client;
-- endpoint backend;
-- component UI;
-- mock data dài;
-- entity struct chuẩn.
+- `UserZonePage.jsx`: container chính của user zone.
+- `UserLandingPage.jsx`: landing page và tab content.
+- `LoginWorkspace.jsx`: form login/register/google login.
+- `tabs/*`: nội dung Home, SEO Service, Web Design, Ads, Blog.
+- `ChatWidget.jsx`: chat RAG có streaming và lưu session theo email user.
 
-### `src/core/domain/`
+Navigation user hiện chỉ có entry `landing`.
 
-Chứa struct/shape chuẩn của dữ liệu FE.
-
-Hiện tại:
+## 7. `src/helpers`
 
 ```text
-core/domain/auth.js
-core/domain/document.js
+authRoles.js
+authUseCases.js
 ```
 
-Mục tiêu:
+`authRoles.js` định nghĩa role admin/user và label hiển thị.
 
-- FE nhận dữ liệu có shape ổn định;
-- API response backend có thể được normalize trước khi đưa vào UI;
-- tránh component phải biết field backend trả về thế nào.
+`authUseCases.js` validate form login/register, normalize email/name rồi gọi `authApi`.
 
-Ví dụ:
+## 8. `src/mock`
 
-```js
-export function createUserStruct(input = {}) {
-    return {
-        email: input.email ?? '',
-        name: input.name ?? '',
-        role: input.role ?? 'user',
-    }
-}
+Mock data hiện dùng làm fallback cho giao diện public nếu API trả dữ liệu rỗng hoặc lỗi.
+
+Không dùng mock để đăng nhập hoặc CRUD admin. Các luồng đó đã gọi backend thật qua `apiService.js`.
+
+## 9. Môi trường và API base URL
+
+Frontend dùng Vite env:
+
+```env
+VITE_API_BASE_URL=/api
+VITE_GOOGLE_CLIENT_ID=...
 ```
 
-Khi thêm module lớn, có thể thêm struct tương ứng:
+Nếu `VITE_API_BASE_URL` không có, `apiService.js` tự ghép:
 
 ```text
-core/domain/blog.js
-core/domain/service.js
-core/domain/ads.js
-core/domain/seo.js
+{VITE_API_PROTOCOL || http}://{VITE_API_HOST || window.location.hostname}:{VITE_API_PORT || 8000}/api
 ```
 
-Chỉ thêm struct khi dữ liệu đó dùng nhiều nơi hoặc cần normalize rõ ràng.
+Trong dev, `vite.config.js` proxy `/api` sang `http://localhost:8000`.
 
-### `src/core/interfaces/`
-
-Để dành cho contract/interface sau này.
-
-Hiện tại project đang dùng JavaScript, nên thư mục này có thể để trống. Nếu sau này chuyển sang TypeScript hoặc muốn ghi contract bằng JSDoc, đây là nơi phù hợp.
-
-### `src/mock/`
-
-Chứa dữ liệu tĩnh phục vụ UI.
-
-Hiện tại vẫn còn dùng cho:
-
-- navigation/tab content tĩnh ở user landing;
-- nội dung mock page cũ;
-- dữ liệu tham khảo khi backend chưa đủ nội dung.
-
-Quy ước mới:
-
-- `mock/` chỉ chứa dữ liệu tĩnh.
-- Không chứa API function.
-- Không chứa CRUD logic.
-- Không tạo thêm mock repository.
-- Nếu dữ liệu đã có backend endpoint, ưu tiên gọi qua `config/api.js`.
-
-### `src/App.jsx`, `main.jsx`, `index.css`
-
-- `main.jsx`: mount React app và provider toàn cục.
-- `App.jsx`: quản lý session FE, zone hiện tại, login/logout.
-- `index.css`: global style, Tailwind import, animation và class dùng chung.
-
-## 4. Quy ước API trong `config/api.js`
-
-### Nhóm auth
-
-```js
-authApi.login(payload)
-authApi.register(payload)
-authApi.googleLogin(payload)
-```
-
-Backend tương ứng:
-
-```text
-POST /api/auth/login
-POST /api/auth/register
-POST /api/auth/google
-```
-
-### Nhóm user
-
-```js
-getUserHome()
-getUserSeoService()
-getUserSeoTraining()
-getUserWebDesign()
-getUserAds()
-getUserBlog()
-getUserLandingContent()
-```
-
-Backend tương ứng:
-
-```text
-GET /api/user/home
-GET /api/user/seo-service
-GET /api/user/seo-training
-GET /api/user/web-design
-GET /api/user/ads
-GET /api/user/blog
-```
-
-### Nhóm admin document/RAG
-
-```js
-getAdminDocuments()
-uploadAdminDocument(file)
-deleteAdminDocument(docId)
-```
-
-Backend tương ứng:
-
-```text
-GET /api/documents
-POST /api/documents/upload
-DELETE /api/documents/{docId}
-```
-
-### Nhóm chat RAG
-
-```js
-streamChatMessage({
-    message,
-    sessionId,
-    signal,
-    onTextChange,
-    onSessionChange,
-})
-```
-
-Backend tương ứng:
-
-```text
-POST /api/chat
-```
-
-Response là `text/event-stream`, FE xử lý:
-
-- text chunk;
-- sources;
-- session id;
-- done event.
-
-### Nhóm admin CRUD
-
-Admin pages gọi trực tiếp các function trong `config/api.js`.
-
-Ví dụ:
-
-```js
-getBlogPosts()
-createBlogPost(payload)
-updateBlogPost(id, payload)
-deleteBlogPost(id)
-```
-
-Không tạo thêm repository trung gian.
-
-## 5. Khi thêm module mới
-
-Ví dụ thêm module `email marketing`.
-
-Nên làm:
-
-```text
-1. Backend tạo endpoint /api/admin/email-marketing hoặc /api/user/email-marketing
-2. FE thêm endpoint vào API_ENDPOINTS trong src/config/api.js
-3. FE thêm function gọi API trong src/config/api.js
-4. Nếu response cần shape ổn định, thêm struct trong src/core/domain/
-5. Page/component trong zones gọi function từ config/api.js
-```
-
-Không nên làm:
-
-```text
-zones/.../Page.jsx tự fetch('/api/...')
-helpers/ tự gọi axios
-mock/ tạo CRUD logic
-tạo lại adapters/repositories
-```
-
-## 6. Tóm tắt dễ nhớ
-
-- `config/api.js`: gọi backend, giữ endpoint, axios client, JWT header.
-- `zones/`: giao diện và state màn hình.
-- `helpers/`: validate, normalize input, constants dùng chung.
-- `core/domain/`: struct/shape chuẩn.
-- `mock/`: dữ liệu tĩnh cho UI, không chứa API logic.
-- Không dùng `adapters/` nữa.
+Trong Docker production, `nginx/default.conf` proxy `/api/` sang backend service.

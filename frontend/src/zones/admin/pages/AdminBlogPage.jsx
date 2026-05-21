@@ -5,7 +5,7 @@ import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
 import BlogPostPreviewModal from '../components/BlogPostPreviewModal'
-import { adminBlogGetPostPage, adminBlogCreatePost, adminBlogUpdatePost, adminBlogDeletePost, adminBlogToggleFeaturedPost, adminCategoryGetList } from '../../../services/apiService'
+import { adminBlogGetPostPage, adminBlogCreatePost, adminBlogUpdatePost, adminBlogDeletePost, adminBlogToggleFeaturedPost, adminCategoryGetList } from '../../../config/apiService'
 
 const EMPTY_BLOG_POST = {
     title: '',

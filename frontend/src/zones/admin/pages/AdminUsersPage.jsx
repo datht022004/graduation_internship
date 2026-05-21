@@ -4,7 +4,7 @@ import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
 import AdminFormField from '../components/AdminFormField'
 import AdminModal from '../components/AdminModal'
 import AdminPageHeader from '../components/AdminPageHeader'
-import { adminUserCreate, adminUserDeleteByEmail, adminUserGetPage, adminUserUpdateByEmail } from '../../../services/apiService'
+import { adminUserCreate, adminUserDeleteByEmail, adminUserGetPage, adminUserUpdateByEmail } from '../../../config/apiService'
 
 const EMPTY_USER = {
     name: '',

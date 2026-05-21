@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { documentDeleteById } from '../../../services/apiService'
+import { documentDeleteById } from '../../../config/apiService'
 import AdminDeleteConfirm from './AdminDeleteConfirm'
 
 function formatFileSize(bytes) {

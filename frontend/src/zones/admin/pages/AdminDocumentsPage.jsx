@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import DocumentUploader from '../components/DocumentUploader'
 import DocumentList from '../components/DocumentList'
 import AdminPageHeader from '../components/AdminPageHeader'
-import { documentGetAdminPage } from '../../../services/apiService'
+import { documentGetAdminPage } from '../../../config/apiService'
 
 const PAGE_SIZE = 5
 

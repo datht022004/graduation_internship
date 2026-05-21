@@ -1,58 +1,68 @@
-# Document Module
+# Document API
 
-> Module quản lý tài liệu RAG: upload, parse, chunk, embed và quản lý lifecycle.
+Tất cả endpoint cần admin token.
 
----
+## GET `/api/documents`
 
-## 1. Cấu trúc file
+Query:
 
-```
-backend/app/manager/document/
-├── controller.py   # 3 endpoints (admin only)
-├── interface.py    # DocumentInfo, UploadResponse, DeleteResponse
-├── repository.py   # CRUD documents + file local
-└── usecase.py      # Upload → parse → chunk → embed pipeline
-```
+| Param | Mặc định |
+|-------|----------|
+| `page` | `1` |
+| `pageSize` | `10` |
 
-## 2. API Endpoints
+Response:
 
-Prefix: `/api/documents` — yêu cầu admin auth.
-
-| Method | URL | Mô tả |
-|---|---|---|
-| POST | `/upload` | Upload + index tài liệu (PDF/DOCX/TXT, max 100MB) |
-| GET | `/` | Danh sách tất cả tài liệu |
-| DELETE | `/{doc_id}` | Xóa tài liệu (metadata + file + vectors) |
-
-## 3. Luồng Upload
-
-```
-upload_and_index_document(content, filename)
-  1. Detect file type (pdf/docx/txt)
-  2. doc_id = uuid4()[:8]
-  3. Lưu file → data/documents/{doc_id}_{filename}
-  4. Load text: PyPDFLoader / Docx2txtLoader / TextLoader
-  5. Split: RecursiveCharacterTextSplitter(1000 chars, 200 overlap)
-  6. Gắn metadata: {doc_id, filename, file_type}
-  7. Embed + lưu vào vector store (document_vectors)
-  8. Lưu metadata vào documents collection
-  ⚠ Lỗi bước 4-8 → xóa file đã lưu
+```json
+{
+  "documents": [],
+  "total": 0,
+  "page": 1,
+  "pageSize": 10,
+  "totalPages": 1
+}
 ```
 
-## 4. Luồng Xóa
+## POST `/api/documents/upload`
 
+Request:
+
+```text
+multipart/form-data
+file=<pdf/doc/docx/txt>
 ```
-delete_document(doc_id)
-  1. Kiểm tra tồn tại → get_document_by_id
-  2. Xóa vectors → delete_documents_from_store
-  3. Xóa file local → os.remove(data/documents/{doc_id}_*)
-  4. Xóa metadata → remove_document
+
+Response:
+
+```json
+{
+  "message": "Upload successful: doc.txt (1 chunks)",
+  "document": {
+    "id": "...",
+    "filename": "doc.txt",
+    "file_type": "txt",
+    "file_size": 100,
+    "chunk_count": 1,
+    "uploaded_at": "..."
+  }
+}
 ```
 
-## 5. Repository
+Error thường gặp:
 
-Collection: `documents` (App MongoDB). Dùng custom field `id` (UUID[:8]).
+- `400`: file type không hỗ trợ
+- `413`: file quá lớn
+- `500`: lỗi parse/embed/index
 
-## 6. Quan hệ với Chat
+## DELETE `/api/documents/{doc_id}`
 
-Document module index dữ liệu → Chat module search dữ liệu qua vector store.
+Response:
+
+```json
+{
+  "message": "Document deleted successfully.",
+  "document_id": "..."
+}
+```
+
+Không tìm thấy trả `404`.

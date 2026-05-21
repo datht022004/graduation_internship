@@ -4,7 +4,7 @@ import AdminDataTable from '../components/AdminDataTable'
 import AdminModal from '../components/AdminModal'
 import AdminFormField from '../components/AdminFormField'
 import AdminDeleteConfirm from '../components/AdminDeleteConfirm'
-import { adminCategoryCreate, adminCategoryDeleteById, adminCategoryGetPage, adminCategoryUpdateById } from '../../../services/apiService'
+import { adminCategoryCreate, adminCategoryDeleteById, adminCategoryGetPage, adminCategoryUpdateById } from '../../../config/apiService'
 
 const EMPTY_CATEGORY = {
     name: '',

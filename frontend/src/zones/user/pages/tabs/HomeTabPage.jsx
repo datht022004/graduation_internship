@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetHomeContent } from '../../../../services/apiService'
+import { userGetHomeContent } from '../../../../config/apiService'
 import { HOME_TAB_MOCK } from '../../../../mock/pages/user/home-tab.mock'
 
 function hasHomeContent(data) {

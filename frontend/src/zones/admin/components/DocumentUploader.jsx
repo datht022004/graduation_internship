@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { documentUploadAdminFile } from '../../../services/apiService'
+import { documentUploadAdminFile } from '../../../config/apiService'
 
 export default function DocumentUploader({ onUploadSuccess }) {
     const [dragActive, setDragActive] = useState(false)

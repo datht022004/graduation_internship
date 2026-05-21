@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetAdsContent } from '../../../../services/apiService'
+import { userGetAdsContent } from '../../../../config/apiService'
 import { ADS_TAB_MOCK } from '../../../../mock/pages/user/ads-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 

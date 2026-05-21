@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import AdminPageHeader from '../components/AdminPageHeader'
 import AdminStatCard from '../components/AdminStatCard'
 import BlogPostPreviewModal from '../components/BlogPostPreviewModal'
-import { documentGetAdminPage, adminBlogGetPostPage, adminCategoryGetPage } from '../../../services/apiService'
+import { documentGetAdminPage, adminBlogGetPostPage, adminCategoryGetPage } from '../../../config/apiService'
 
 export default function AdminOverviewPage({ onOpenBlogPage, onOpenBlogCategory }) {
     const [stats, setStats] = useState({ blogs: 0, categories: 0, documents: 0 })

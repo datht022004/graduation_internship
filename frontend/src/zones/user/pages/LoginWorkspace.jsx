@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { loginWithEmailPassword, registerWithEmailPassword } from '../../../helpers/authUseCases'
 import { AUTH_ROLES, getRoleLabel } from '../../../helpers/authRoles'
-import { authApi } from '../../../services/apiService'
+import { authApi } from '../../../config/apiService'
 import GoogleToneLoginCard from '../components/GoogleToneLoginCard'
 
 function getErrorMessage(error, fallback) {

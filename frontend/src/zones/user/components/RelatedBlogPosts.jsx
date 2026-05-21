@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetBlogContent } from '../../../services/apiService'
+import { userGetBlogContent } from '../../../config/apiService'
 
 export default function RelatedBlogPosts({ category, tone = 'orange' }) {
     const [posts, setPosts] = useState([])

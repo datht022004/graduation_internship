@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetWebDesignContent } from '../../../../services/apiService'
+import { userGetWebDesignContent } from '../../../../config/apiService'
 import { WEB_DESIGN_TAB_MOCK } from '../../../../mock/pages/user/web-design-tab.mock'
 import RelatedBlogPosts from '../../components/RelatedBlogPosts'
 

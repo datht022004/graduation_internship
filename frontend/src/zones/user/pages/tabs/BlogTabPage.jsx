@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { userGetBlogContent } from '../../../../services/apiService'
+import { userGetBlogContent } from '../../../../config/apiService'
 
 const BLOG_CATEGORY_ORDER = ['Dịch vụ SEO', 'Thiết kế website', 'Quảng cáo +', 'Blog']
 

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { chatGetSessionById, chatStreamMessage } from '../../../services/apiService'
+import { chatGetSessionById, chatStreamMessage } from '../../../config/apiService'
 
 function buildInitialMessages(userName) {
     return [
