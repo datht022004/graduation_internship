@@ -17,3 +17,4 @@ class TestimonialDocument(MongoDocument):
     service_type: str = "seo"
     is_active: bool = True
     created_at: datetime = Field(default_factory=_utcnow)
+    updated_at: datetime = Field(default_factory=_utcnow)

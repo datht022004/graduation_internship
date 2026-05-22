@@ -105,7 +105,22 @@ export const authApi = {
 
 // GET /user/home - User module: lấy nội dung trang Home.
 export async function userGetHomeContent() {
-    const { data } = await axios.get(API_ENDPOINTS.user.home)
+    try {
+        const { data } = await axios.get(`${API_URL}/user/site-content/home`)
+        if (Array.isArray(data) && data.length > 0) {
+            const transformed = {}
+            for (const item of data) {
+                if (item.section_key === 'services') transformed.serviceCards = item.content?.serviceCards || []
+                if (item.section_key === 'pain_points') transformed.painPoints = item.content?.items || []
+                if (item.section_key === 'strengths') transformed.strengths = item.content?.items || []
+            }
+            return transformed
+        }
+    } catch (err) {
+        console.warn('Could not fetch home content from CMS', err)
+    }
+    // Fallback
+    const { data } = await axios.get(API_ENDPOINTS.user.home).catch(() => ({ data: null }))
     return data
 }
 

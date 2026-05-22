@@ -16,4 +16,5 @@ class CompanyProfileDocument(MongoDocument):
     icon: str = ""
     sort_order: int = 1
     is_active: bool = True
+    created_at: datetime = Field(default_factory=_utcnow)
     updated_at: datetime = Field(default_factory=_utcnow)
