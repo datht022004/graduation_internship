@@ -15,5 +15,6 @@ class BlogPostDocument(MongoDocument):
     author: str = ""
     tags: str = ""
     isFeatured: bool = False
+    viewCount: int = 0
     createdAt: str
     updatedAt: str
