@@ -6,6 +6,7 @@ import AdminBlogPage from './AdminBlogPage'
 import AdminCategoriesPage from './AdminCategoriesPage'
 import AdminDocumentsPage from './AdminDocumentsPage'
 import AdminUsersPage from './AdminUsersPage'
+import AdminSiteContentPage from './AdminSiteContentPage'
 
 function AdminZonePage({ authUser, onLogout }) {
     const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
@@ -38,6 +39,8 @@ function AdminZonePage({ authUser, onLogout }) {
                 return <AdminUsersPage />
             case 'documents':
                 return <AdminDocumentsPage />
+            case 'cms':
+                return <AdminSiteContentPage />
             default:
                 return <AdminOverviewPage />
         }

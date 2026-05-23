@@ -24,6 +24,11 @@ export const ADMIN_NAVIGATION = {
         label: 'Tài liệu RAG',
         icon: 'document',
     },
+    cms: {
+        key: 'cms',
+        label: 'Giao diện CMS',
+        icon: 'palette',
+    },
 }
 
 export const ADMIN_DEFAULT_PAGE = ADMIN_NAVIGATION.dashboard.key

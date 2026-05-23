@@ -43,6 +43,8 @@ export const API_ENDPOINTS = {
         userByEmail: (email) => `${API_URL}/admin/users/${encodeURIComponent(email)}`,
         categories: `${API_URL}/admin/categories`,
         categoryById: (id) => `${API_URL}/admin/categories/${id}`,
+        siteContent: `${API_URL}/admin/site-content`,
+        siteContentById: (id) => `${API_URL}/admin/site-content/${id}`,
     },
 }
 
@@ -126,19 +128,53 @@ export async function userGetHomeContent() {
 
 // GET /user/seo-service - User module: lấy nội dung dịch vụ SEO.
 export async function userGetSeoServiceContent() {
-    const { data } = await axios.get(API_ENDPOINTS.user.seoService)
+    try {
+        const { data } = await axios.get(`${API_URL}/user/site-content/seo-service`)
+        if (Array.isArray(data) && data.length > 0) {
+            const transformed = {}
+            for (const item of data) {
+                if (item.section_key === 'metrics') transformed.metrics = item.content?.items || []
+                if (item.section_key === 'packages') transformed.packages = item.content?.items || []
+                if (item.section_key === 'roadmap') transformed.roadmap = item.content?.items || []
+            }
+            return transformed
+        }
+    } catch (err) { console.warn('Could not fetch seo-service content', err) }
+    const { data } = await axios.get(API_ENDPOINTS.user.seoService).catch(() => ({ data: null }))
     return data
 }
 
 // GET /user/web-design - User module: lấy nội dung thiết kế website.
 export async function userGetWebDesignContent() {
-    const { data } = await axios.get(API_ENDPOINTS.user.webDesign)
+    try {
+        const { data } = await axios.get(`${API_URL}/user/site-content/web-design`)
+        if (Array.isArray(data) && data.length > 0) {
+            const transformed = {}
+            for (const item of data) {
+                if (item.section_key === 'phases') transformed.phases = item.content?.items || []
+                if (item.section_key === 'highlights') transformed.highlights = item.content?.items || []
+            }
+            return transformed
+        }
+    } catch (err) { console.warn('Could not fetch web-design content', err) }
+    const { data } = await axios.get(API_ENDPOINTS.user.webDesign).catch(() => ({ data: null }))
     return data
 }
 
 // GET /user/ads - User module: lấy nội dung quảng cáo.
 export async function userGetAdsContent() {
-    const { data } = await axios.get(API_ENDPOINTS.user.ads)
+    try {
+        const { data } = await axios.get(`${API_URL}/user/site-content/ads`)
+        if (Array.isArray(data) && data.length > 0) {
+            const transformed = {}
+            for (const item of data) {
+                if (item.section_key === 'channels') transformed.channels = item.content?.items || []
+                if (item.section_key === 'metrics') transformed.metrics = item.content?.items || []
+            }
+            return transformed
+        }
+    } catch (err) { console.warn('Could not fetch ads content', err) }
+    const { data } = await axios.get(API_ENDPOINTS.user.ads).catch(() => ({ data: null }))
     return data
 }
 
@@ -256,6 +292,18 @@ export async function adminCategoryUpdateById(id, payload) {
 // DELETE /admin/categories/{id} - Admin category module: xóa danh mục.
 export async function adminCategoryDeleteById(id) {
     const { data } = await axios.delete(API_ENDPOINTS.admin.categoryById(id))
+    return data
+}
+
+// GET /admin/site-content - Lấy nội dung trang.
+export async function adminSiteContentGetByPage(pageKey) {
+    const { data } = await axios.get(API_ENDPOINTS.admin.siteContent, { params: { page_key: pageKey } })
+    return data || []
+}
+
+// PUT /admin/site-content/{id} - Cập nhật nội dung CMS.
+export async function adminSiteContentUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.siteContentById(id), payload)
     return data
 }
 
