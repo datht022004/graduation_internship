@@ -45,6 +45,16 @@ export const API_ENDPOINTS = {
         categoryById: (id) => `${API_URL}/admin/categories/${id}`,
         siteContent: `${API_URL}/admin/site-content`,
         siteContentById: (id) => `${API_URL}/admin/site-content/${id}`,
+        companyProfile: `${API_URL}/admin/company-profile`,
+        companyProfileById: (id) => `${API_URL}/admin/company-profile/${id}`,
+        servicePackages: `${API_URL}/admin/service-packages`,
+        servicePackageById: (id) => `${API_URL}/admin/service-packages/${id}`,
+        caseStudies: `${API_URL}/admin/case-studies`,
+        caseStudyById: (id) => `${API_URL}/admin/case-studies/${id}`,
+        testimonials: `${API_URL}/admin/testimonials`,
+        testimonialById: (id) => `${API_URL}/admin/testimonials/${id}`,
+        contactRequests: `${API_URL}/admin/contact-requests`,
+        contactRequestById: (id) => `${API_URL}/admin/contact-requests/${id}`,
     },
 }
 
@@ -331,5 +341,95 @@ export async function chatGetSessions() {
 // GET /chat/sessions/{id} - Chat module: lấy chi tiết một session chat.
 export async function chatGetSessionById(sessionId) {
     const { data } = await axios.get(API_ENDPOINTS.chat.sessionById(sessionId))
+    return data
+}
+
+// CMS Admin: Company Profile
+export async function adminCompanyProfileGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.companyProfile)
+    return data
+}
+export async function adminCompanyProfileCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.companyProfile, payload)
+    return data
+}
+export async function adminCompanyProfileUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.companyProfileById(id), payload)
+    return data
+}
+export async function adminCompanyProfileDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.companyProfileById(id))
+    return data
+}
+
+// CMS Admin: Service Packages
+export async function adminServicePackagesGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.servicePackages)
+    return data
+}
+export async function adminServicePackagesCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.servicePackages, payload)
+    return data
+}
+export async function adminServicePackagesUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.servicePackageById(id), payload)
+    return data
+}
+export async function adminServicePackagesDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.servicePackageById(id))
+    return data
+}
+
+// CMS Admin: Case Studies
+export async function adminCaseStudiesGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.caseStudies)
+    return data
+}
+export async function adminCaseStudiesCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.caseStudies, payload)
+    return data
+}
+export async function adminCaseStudiesUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.caseStudyById(id), payload)
+    return data
+}
+export async function adminCaseStudiesDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.caseStudyById(id))
+    return data
+}
+
+// CMS Admin: Testimonials
+export async function adminTestimonialsGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.testimonials)
+    return data
+}
+export async function adminTestimonialsCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.testimonials, payload)
+    return data
+}
+export async function adminTestimonialsUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.testimonialById(id), payload)
+    return data
+}
+export async function adminTestimonialsDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.testimonialById(id))
+    return data
+}
+
+// CMS Admin: Contact Requests
+export async function adminContactRequestsGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.contactRequests)
+    return data
+}
+export async function adminContactRequestsCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.contactRequests, payload)
+    return data
+}
+export async function adminContactRequestsUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.contactRequestById(id), payload)
+    return data
+}
+export async function adminContactRequestsDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.contactRequestById(id))
     return data
 }

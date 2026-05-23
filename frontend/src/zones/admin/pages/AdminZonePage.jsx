@@ -7,6 +7,11 @@ import AdminCategoriesPage from './AdminCategoriesPage'
 import AdminDocumentsPage from './AdminDocumentsPage'
 import AdminUsersPage from './AdminUsersPage'
 import AdminSiteContentPage from './AdminSiteContentPage'
+import AdminCompanyProfilePage from './AdminCompanyProfilePage'
+import AdminServicePackagesPage from './AdminServicePackagesPage'
+import AdminCaseStudiesPage from './AdminCaseStudiesPage'
+import AdminTestimonialsPage from './AdminTestimonialsPage'
+import AdminContactRequestsPage from './AdminContactRequestsPage'
 
 function AdminZonePage({ authUser, onLogout }) {
     const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
@@ -41,6 +46,16 @@ function AdminZonePage({ authUser, onLogout }) {
                 return <AdminDocumentsPage />
             case 'cms':
                 return <AdminSiteContentPage />
+            case 'companyProfile':
+                return <AdminCompanyProfilePage />
+            case 'servicePackages':
+                return <AdminServicePackagesPage />
+            case 'caseStudies':
+                return <AdminCaseStudiesPage />
+            case 'testimonials':
+                return <AdminTestimonialsPage />
+            case 'contactRequests':
+                return <AdminContactRequestsPage />
             default:
                 return <AdminOverviewPage />
         }

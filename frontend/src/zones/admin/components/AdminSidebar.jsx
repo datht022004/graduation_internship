@@ -56,6 +56,31 @@ const ICONS = {
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128a9.37 9.37 0 01-5.25 0m4.464-3.073a4.125 4.125 0 00-7.928 0M9.75 19.125v.003A9.37 9.37 0 014.5 19.125a4.125 4.125 0 017.928-3.07m0 0A4.125 4.125 0 0112 9.75a4.125 4.125 0 00-4.125 4.125m8.25 0A4.125 4.125 0 0112 9.75m0 0A3.375 3.375 0 108.625 6.375 3.375 3.375 0 0012 9.75zm6.375 0a3 3 0 10-2.23-5.006" />
         </svg>
     ),
+    building: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12.75M10.5 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21" />
+        </svg>
+    ),
+    box: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />
+        </svg>
+    ),
+    briefcase: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.884 1.975-1.977 1.975H5.727c-1.093 0-1.977-.88-1.977-1.975v-4.25m16.5 0A2.25 2.25 0 0018 12.01V8.625c0-1.093-.884-1.975-1.977-1.975H7.977C6.884 6.65 6 7.532 6 8.625v3.385c0 1.093.884 1.975 1.977 1.975h1.12c.622 0 1.157.408 1.332.998l.68 2.302c.175.59.71.998 1.332.998h1.12c.622 0 1.157-.408 1.332-.998l.68-2.302c.175-.59.71-.998 1.332-.998h1.12zM12 6.65v3" />
+        </svg>
+    ),
+    star: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+        </svg>
+    ),
+    mail: (
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+        </svg>
+    ),
 }
 
 export default function AdminSidebar({ activePage, onPageChange, user, onLogout }) {
