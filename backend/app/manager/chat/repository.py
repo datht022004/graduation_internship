@@ -97,4 +97,43 @@ class ChatRepository:
             "messages": [_message_to_item(message) for message in session.get("history", [])],
         }
 
+    def get_users_with_chats(self):
+        pipeline = [
+            {"$match": {"user_email": {"$ne": None, "$ne": ""}}},
+            {"$group": {
+                "_id": "$user_email",
+                "session_count": {"$sum": 1},
+                "last_active": {"$max": "$updated_at"}
+            }},
+            {"$sort": {"last_active": -1}}
+        ]
+        results = list(self.get_collection().aggregate(pipeline))
+        return [
+            {
+                "email": r["_id"],
+                "session_count": r["session_count"],
+                "last_active": r["last_active"]
+            }
+            for r in results
+        ]
+
+    def list_sessions_for_admin(self, user_email: str):
+        sessions = self.get_collection().find(
+            {"user_email": user_email},
+            {"_id": 0, "session_id": 1, "title": 1, "updated_at": 1, "created_at": 1},
+        ).sort("updated_at", -1)
+        return list(sessions)
+
+    def get_session_messages_admin(self, session_id: str):
+        session = self.get_collection().find_one(
+            {"session_id": session_id},
+            {"_id": 0, "session_id": 1, "title": 1, "history": 1, "updated_at": 1, "created_at": 1, "user_email": 1},
+        )
+        if not session:
+            return None
+        return {
+            **session,
+            "messages": [_message_to_item(message) for message in session.get("history", [])],
+        }
+
 chat_repository = ChatRepository()

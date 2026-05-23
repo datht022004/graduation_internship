@@ -9,12 +9,12 @@ import AdminUsersPage from './AdminUsersPage'
 import AdminSiteContentPage from './AdminSiteContentPage'
 import AdminCompanyProfilePage from './AdminCompanyProfilePage'
 import AdminServicePackagesPage from './AdminServicePackagesPage'
-import AdminCaseStudiesPage from './AdminCaseStudiesPage'
-import AdminTestimonialsPage from './AdminTestimonialsPage'
 import AdminContactRequestsPage from './AdminContactRequestsPage'
 
 function AdminZonePage({ authUser, onLogout }) {
-    const [activePage, setActivePage] = useState(ADMIN_DEFAULT_PAGE)
+    const [activePage, setActivePage] = useState(() => {
+        return sessionStorage.getItem('admin_active_page') || ADMIN_DEFAULT_PAGE
+    })
     const [blogCategoryShortcut, setBlogCategoryShortcut] = useState(null)
 
     function handlePageChange(page) {
@@ -22,6 +22,7 @@ function AdminZonePage({ authUser, onLogout }) {
             setBlogCategoryShortcut(null)
         }
         setActivePage(page)
+        sessionStorage.setItem('admin_active_page', page)
     }
 
     function openBlogCategory(categoryName) {
@@ -30,6 +31,7 @@ function AdminZonePage({ authUser, onLogout }) {
             requestKey: `${categoryName}-${Date.now()}`,
         })
         setActivePage('blog')
+        sessionStorage.setItem('admin_active_page', 'blog')
     }
 
     function renderContent() {
@@ -50,10 +52,6 @@ function AdminZonePage({ authUser, onLogout }) {
                 return <AdminCompanyProfilePage />
             case 'servicePackages':
                 return <AdminServicePackagesPage />
-            case 'caseStudies':
-                return <AdminCaseStudiesPage />
-            case 'testimonials':
-                return <AdminTestimonialsPage />
             case 'contactRequests':
                 return <AdminContactRequestsPage />
             default:

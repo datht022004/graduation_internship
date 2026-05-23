@@ -398,21 +398,42 @@ export async function adminCaseStudiesDeleteById(id) {
     return data
 }
 
-// CMS Admin: Testimonials
-export async function adminTestimonialsGetList() {
-    const { data } = await axios.get(API_ENDPOINTS.admin.testimonials)
+// ----------------------------------------------------------------------
+// ADMIN: TESTIMONIALS (CMS)
+// ----------------------------------------------------------------------
+
+export const adminTestimonialsGetList = async () => {
+    return fetchWithAuth(`${API_URL}/admin/testimonials`, { method: 'GET' })
+}
+
+export const adminTestimonialsCreate = async (payload) => {
+    return fetchWithAuth(`${API_URL}/admin/testimonials`, { method: 'POST', body: JSON.stringify(payload) })
+}
+
+export const adminTestimonialsUpdateById = async (id, payload) => {
+    return fetchWithAuth(`${API_URL}/admin/testimonials/${id}`, { method: 'PUT', body: JSON.stringify(payload) })
+}
+
+export const adminTestimonialsDeleteById = async (id) => {
+    return fetchWithAuth(`${API_URL}/admin/testimonials/${id}`, { method: 'DELETE' })
+}
+
+// ----------------------------------------------------------------------
+// ADMIN: CHAT HISTORY (Replaces Contact Requests purpose)
+// ----------------------------------------------------------------------
+
+export const adminChatGetUsers = async () => {
+    const { data } = await axios.get(`${API_URL}/admin/chat/users`)
     return data
 }
-export async function adminTestimonialsCreate(payload) {
-    const { data } = await axios.post(API_ENDPOINTS.admin.testimonials, payload)
+
+export const adminChatGetUserSessions = async (email) => {
+    const { data } = await axios.get(`${API_URL}/admin/chat/users/${encodeURIComponent(email)}/sessions`)
     return data
 }
-export async function adminTestimonialsUpdateById(id, payload) {
-    const { data } = await axios.put(API_ENDPOINTS.admin.testimonialById(id), payload)
-    return data
-}
-export async function adminTestimonialsDeleteById(id) {
-    const { data } = await axios.delete(API_ENDPOINTS.admin.testimonialById(id))
+
+export const adminChatGetSessionDetail = async (sessionId) => {
+    const { data } = await axios.get(`${API_URL}/admin/chat/sessions/${sessionId}`)
     return data
 }
 

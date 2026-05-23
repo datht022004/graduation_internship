@@ -39,20 +39,10 @@ export const ADMIN_NAVIGATION = {
         label: 'Gói Dịch vụ',
         icon: 'box',
     },
-    caseStudies: {
-        key: 'caseStudies',
-        label: 'Dự án (Case Studies)',
-        icon: 'briefcase',
-    },
-    testimonials: {
-        key: 'testimonials',
-        label: 'Đánh giá Khách hàng',
-        icon: 'star',
-    },
     contactRequests: {
         key: 'contactRequests',
-        label: 'Yêu cầu Tư vấn',
-        icon: 'mail',
+        label: 'Lịch sử Chat',
+        icon: 'message-circle',
     },
 }
 
