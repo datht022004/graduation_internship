@@ -110,7 +110,7 @@ export default function HomeTabPage({ onSelectTab }) {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                     {serviceCards.map((card, index) => (
                         <article
-                            className="group relative flex flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30 cursor-pointer"
+                            className={`group relative flex flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30 ${card.tabKey ? 'cursor-pointer hover:-translate-y-2' : ''}`}
                             key={card.title}
                             onClick={() => {
                                 if (card.tabKey && onSelectTab) {
@@ -134,10 +134,12 @@ export default function HomeTabPage({ onSelectTab }) {
                             </div>
                             <h3 className="text-xl font-bold uppercase leading-tight text-slate-900 group-hover:text-[#f2682a] transition-colors">{card.title}</h3>
                             <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-500">{card.desc}</p>
-                            <div className="mt-6 flex items-center gap-2 text-sm font-bold uppercase text-[#13283c] transition-colors group-hover:text-[#f2682a]">
-                                <span>Khám phá ngay</span>
-                                <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                            </div>
+                            {card.tabKey && (
+                                <div className="mt-6 flex items-center gap-2 text-sm font-bold uppercase text-[#13283c] transition-colors group-hover:text-[#f2682a]">
+                                    <span>Khám phá ngay</span>
+                                    <svg className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </div>
+                            )}
                         </article>
                     ))}
                 </div>

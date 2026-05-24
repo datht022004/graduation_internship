@@ -12,6 +12,17 @@ import SeoServiceTabPage from './tabs/SeoServiceTabPage'
 import WebDesignTabPage from './tabs/WebDesignTabPage'
 import CompanyProfilePage from './tabs/CompanyProfilePage'
 
+const USER_ACTIVE_TAB_STORAGE_KEY = 'user_landing_active_tab'
+
+function isKnownTabKey(key) {
+    return USER_LANDING_TABS_MOCK.some((tab) => tab.key === key)
+}
+
+function getInitialTabKey() {
+    const storedTabKey = localStorage.getItem(USER_ACTIVE_TAB_STORAGE_KEY)
+    return isKnownTabKey(storedTabKey) ? storedTabKey : USER_LANDING_TABS_MOCK[0].key
+}
+
 function renderTabContent(activeTabKey, onChatClick, onSelectTab) {
     if (activeTabKey === 'seo-service') {
         return <SeoServiceTabPage onChatClick={onChatClick} />
@@ -33,7 +44,7 @@ function renderTabContent(activeTabKey, onChatClick, onSelectTab) {
 }
 
 export default function UserLandingPage({ authUser, onLoginClick, onLogout, onChatClick }) {
-    const [activeTabKey, setActiveTabKey] = useState(USER_LANDING_TABS_MOCK[0].key)
+    const [activeTabKey, setActiveTabKey] = useState(getInitialTabKey)
     const [selectedPost, setSelectedPost] = useState(null)
     const [isProfileOpen, setIsProfileOpen] = useState(false)
     const [isTransitioning, setIsTransitioning] = useState(false)
@@ -43,9 +54,12 @@ export default function UserLandingPage({ authUser, onLoginClick, onLogout, onCh
     )
 
     const handleSetTab = (key) => {
+        if (!isKnownTabKey(key)) return
+
         if (key === activeTabKey && !selectedPost && !isProfileOpen) return
         setIsTransitioning(true)
         setTimeout(() => {
+            localStorage.setItem(USER_ACTIVE_TAB_STORAGE_KEY, key)
             setActiveTabKey(key)
             setSelectedPost(null)
             setIsProfileOpen(false)

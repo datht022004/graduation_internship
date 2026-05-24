@@ -123,7 +123,6 @@ export default function WebDesignTabPage({ onChatClick }) {
                             
                             <div className="relative mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sky-700 opacity-60 transition-opacity group-hover:opacity-100">
                                 <span>Milestone {index + 1}</span>
-                                <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </div>
                         </article>
                     ))}

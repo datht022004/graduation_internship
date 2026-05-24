@@ -402,20 +402,24 @@ export async function adminCaseStudiesDeleteById(id) {
 // ADMIN: TESTIMONIALS (CMS)
 // ----------------------------------------------------------------------
 
-export const adminTestimonialsGetList = async () => {
-    return fetchWithAuth(`${API_URL}/admin/testimonials`, { method: 'GET' })
+export async function adminTestimonialsGetList() {
+    const { data } = await axios.get(API_ENDPOINTS.admin.testimonials)
+    return data
 }
 
-export const adminTestimonialsCreate = async (payload) => {
-    return fetchWithAuth(`${API_URL}/admin/testimonials`, { method: 'POST', body: JSON.stringify(payload) })
+export async function adminTestimonialsCreate(payload) {
+    const { data } = await axios.post(API_ENDPOINTS.admin.testimonials, payload)
+    return data
 }
 
-export const adminTestimonialsUpdateById = async (id, payload) => {
-    return fetchWithAuth(`${API_URL}/admin/testimonials/${id}`, { method: 'PUT', body: JSON.stringify(payload) })
+export async function adminTestimonialsUpdateById(id, payload) {
+    const { data } = await axios.put(API_ENDPOINTS.admin.testimonialById(id), payload)
+    return data
 }
 
-export const adminTestimonialsDeleteById = async (id) => {
-    return fetchWithAuth(`${API_URL}/admin/testimonials/${id}`, { method: 'DELETE' })
+export async function adminTestimonialsDeleteById(id) {
+    const { data } = await axios.delete(API_ENDPOINTS.admin.testimonialById(id))
+    return data
 }
 
 // ----------------------------------------------------------------------

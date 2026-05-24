@@ -10,7 +10,6 @@ export default function AdminContactRequestsPage() {
     const [loading, setLoading] = useState(true)
     
     const [selectedUser, setSelectedUser] = useState(null)
-    const [selectedSession, setSelectedSession] = useState(null)
 
     const fetchUsers = async () => {
         setLoading(true)
@@ -42,7 +41,6 @@ export default function AdminContactRequestsPage() {
         try {
             const data = await adminChatGetSessionDetail(session.session_id)
             setChatDetail(data)
-            setSelectedSession(session)
             setViewMode('chat')
         } finally {
             setLoading(false)
