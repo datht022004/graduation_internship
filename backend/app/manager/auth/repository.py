@@ -6,30 +6,36 @@ from app.models import UserDocument
 USERS_COLLECTION = "users"
 
 class AuthRepository:
+    # Lấy Mongo collection tương ứng với repository hiện tại.
     def get_collection(self):
         return get_db()[USERS_COLLECTION]
 
+    # Tạo index cần thiết để truy vấn nhanh và tránh trùng dữ liệu.
     def ensure_indexes(self):
         self.get_collection().create_index("email", unique=True)
 
+    # Thao tác trực tiếp với MongoDB cho module hiện tại.
     def get_account_by_email(self, email: str) -> Optional[dict]:
         user = self.get_collection().find_one({"email": email.strip().lower()})
         if user:
             user["_id"] = str(user["_id"])
         return user
 
+    # Thao tác trực tiếp với MongoDB cho module hiện tại.
     def get_account_by_role(self, role: str) -> Optional[dict]:
         user = self.get_collection().find_one({"role": role})
         if user:
             user["_id"] = str(user["_id"])
         return user
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_account(self, user_data: dict) -> str:
         if "email" in user_data:
             user_data["email"] = user_data["email"].strip().lower()
         result = self.get_collection().insert_one(user_data)
         return str(result.inserted_id)
 
+    # Gắn google_id vào tài khoản đã tồn tại.
     def attach_google_identity(self, email: str, google_id: str):
         self.get_collection().update_one(
             {"email": email.strip().lower()},
@@ -39,6 +45,7 @@ class AuthRepository:
             },
         )
 
+    # Lấy hoặc tạo tài khoản tương ứng với Google identity.
     def get_or_create_google_account(self, email: str, name: str, role: str, google_id: str) -> dict:
         account = self.get_account_by_email(email)
         if account:

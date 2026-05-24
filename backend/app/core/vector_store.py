@@ -11,6 +11,7 @@ VECTOR_COLLECTION = "document_vectors"
 _vector_store = None
 
 
+# Tạo MongoDB Atlas Vector Search index nếu chưa tồn tại.
 def ensure_vector_search_index(collection):
     existing_indexes = list(collection.list_search_indexes())
     for index in existing_indexes:
@@ -37,6 +38,7 @@ def ensure_vector_search_index(collection):
     collection.create_search_index(model=index_model)
 
 
+# Khởi tạo embedding model theo provider đang cấu hình.
 def get_embeddings():
     provider = settings.LLM_PROVIDER.lower()
 
@@ -65,6 +67,7 @@ def get_embeddings():
     raise ValueError(f"Unsupported LLM_PROVIDER: {settings.LLM_PROVIDER}")
 
 
+# Khởi tạo vector store dùng chung cho RAG.
 def init_vector_store():
     global _vector_store
     collection = get_vector_db()[VECTOR_COLLECTION]
@@ -77,6 +80,7 @@ def init_vector_store():
     return _vector_store
 
 
+# Lấy vector store đã khởi tạo để truy vấn tài liệu.
 def get_vector_store() -> MongoDBAtlasVectorSearch:
     global _vector_store
     if _vector_store is None:
@@ -84,11 +88,13 @@ def get_vector_store() -> MongoDBAtlasVectorSearch:
     return _vector_store
 
 
+# Thêm các chunk tài liệu vào vector store.
 def add_documents_to_store(chunks):
     store = get_vector_store()
     store.add_documents(chunks)
 
 
+# Xóa các vector chunk theo document id.
 def delete_documents_from_store(doc_id: str):
     collection = get_vector_db()[VECTOR_COLLECTION]
     collection.delete_many(

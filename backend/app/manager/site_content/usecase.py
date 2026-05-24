@@ -46,11 +46,13 @@ class SiteContent(SiteContentBase):
 
 
 class SiteContentUseCase:
+    # Xử lý nghiệp vụ chính cho module hiện tại.
     def get_content_by_page(self, page_key: str) -> list[SiteContent]:
         site_content_repository.ensure_indexes()
         contents = site_content_repository.get_content_by_page(page_key)
         return [SiteContent(**content) for content in contents]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_content(self, payload: SiteContentCreate, admin_email: str) -> SiteContent:
         site_content_repository.ensure_indexes()
         now = self._now()
@@ -69,6 +71,7 @@ class SiteContentUseCase:
         )
         return SiteContent(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update_content(self, content_id: str, payload: SiteContentUpdate, admin_email: str) -> SiteContent | None:
         site_content_repository.ensure_indexes()
         existing = site_content_repository.get_content_by_id(content_id)
@@ -83,9 +86,11 @@ class SiteContentUseCase:
 
         return SiteContent(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_content(self, content_id: str) -> bool:
         return site_content_repository.delete_content(content_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

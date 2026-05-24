@@ -6,6 +6,7 @@ from app.manager.category.usecase import Category, CategoryCreate, CategoryListR
 router = APIRouter(prefix="/admin/categories", tags=["Admin - Categories"])
 
 
+# Lấy danh sách bản ghi có phân trang/lọc khi cần.
 @router.get("", response_model=CategoryListResponse)
 async def list_categories(
     name: str = "",
@@ -16,6 +17,7 @@ async def list_categories(
     return category_usecase.list_categories(name=name, page=page, page_size=page_size)
 
 
+# Tạo bản ghi mới sau khi validate payload.
 @router.post("", response_model=Category, status_code=status.HTTP_201_CREATED)
 async def create_category(
     body: CategoryCreate,
@@ -24,6 +26,7 @@ async def create_category(
     return category_usecase.create_category(body)
 
 
+# Cập nhật bản ghi hiện có theo id/khóa chính.
 @router.put("/{category_id}", response_model=Category)
 async def update_category(
     category_id: str,
@@ -39,6 +42,7 @@ async def update_category(
     return category
 
 
+# Xóa bản ghi/tài nguyên theo id/khóa chính.
 @router.delete("/{category_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_category(
     category_id: str,

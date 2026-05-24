@@ -55,6 +55,7 @@ class ManagedUserUpdate(BaseModel):
 
 
 class UserUseCase:
+    # Trả dữ liệu public cho tab Trang chủ.
     def get_home(self):
         return {
             "serviceCards": [],
@@ -62,6 +63,7 @@ class UserUseCase:
             "strengths": [],
         }
 
+    # Trả dữ liệu public cho tab Dịch vụ SEO.
     def get_seo_service(self):
         return {
             "metrics": [],
@@ -69,23 +71,27 @@ class UserUseCase:
             "roadmap": [],
         }
 
+    # Trả dữ liệu public cho tab Thiết kế Website.
     def get_web_design(self):
         return {
             "phases": [],
             "highlights": [],
         }
 
+    # Trả dữ liệu public cho tab Quảng cáo.
     def get_ads(self):
         return {
             "metrics": [],
             "channels": [],
         }
 
+    # Trả dữ liệu public cho tab Blog.
     def get_blog(self):
         from app.manager.blog.usecase import blog_usecase
 
         return blog_usecase.get_public_posts()
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_managed_users(self, search: str = "", role: str = "", page: int = 1, page_size: int = 10) -> ManagedUserListResponse:
         user_repository.ensure_indexes()
         page = max(page, 1)
@@ -108,6 +114,7 @@ class UserUseCase:
             totalPages=total_pages,
         )
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_managed_user(self, payload: ManagedUserCreate) -> tuple[str, ManagedUser | None]:
         user_repository.ensure_indexes()
         email = payload.email.strip().lower()
@@ -131,6 +138,7 @@ class UserUseCase:
         user = user_repository.create_user(user_doc.model_dump(by_alias=True, exclude_none=True))
         return "created", self._to_managed_user(user)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update_managed_user(self, email: str, payload: ManagedUserUpdate, current_admin: UserInfo) -> tuple[str, ManagedUser | None]:
         user_repository.ensure_indexes()
         existing = user_repository.get_user_by_email(email)
@@ -160,6 +168,7 @@ class UserUseCase:
 
         return "updated", self._to_managed_user(existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_managed_user(self, email: str, current_admin: UserInfo) -> str:
         user_repository.ensure_indexes()
         normalized_email = email.strip().lower()
@@ -169,6 +178,7 @@ class UserUseCase:
             return "not_found"
         return "deleted" if user_repository.delete_user(normalized_email) else "not_found"
 
+    # Chuyển dict dữ liệu sang schema response tương ứng.
     def _to_managed_user(self, user: dict) -> ManagedUser:
         created_at = user.get("created_at", "")
         if isinstance(created_at, datetime):
@@ -183,9 +193,11 @@ class UserUseCase:
             createdAt=str(created_at or ""),
         )
 
+    # Kiểm tra email có đúng định dạng cơ bản hay không.
     def _is_valid_email(self, email: str) -> bool:
         return "@" in email and "." in email.rsplit("@", 1)[-1]
 
+    # Chuẩn hóa tên hiển thị cho user.
     def _display_name(self, name: str) -> str:
         translations = {
             "System Administrator": "Quản trị viên hệ thống",

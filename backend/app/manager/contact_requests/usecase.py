@@ -45,6 +45,7 @@ class ContactRequest(ContactRequestBase):
     updated_at: datetime | None = None
 
 class ContactRequestUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all(self) -> list[ContactRequest]:
         contact_request_repository.ensure_indexes()
         items = contact_request_repository.get_all()
@@ -56,6 +57,7 @@ class ContactRequestUseCase:
                 item["created_at"] = self._now()
         return [ContactRequest(**item) for item in items]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create(self, payload: ContactRequestCreate) -> ContactRequest:
         contact_request_repository.ensure_indexes()
         now = self._now()
@@ -67,6 +69,7 @@ class ContactRequestUseCase:
             created["updated_at"] = None
         return ContactRequest(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update(self, item_id: str, payload: ContactRequestUpdate) -> ContactRequest | None:
         contact_request_repository.ensure_indexes()
         existing = contact_request_repository.get_by_id(item_id)
@@ -85,9 +88,11 @@ class ContactRequestUseCase:
 
         return ContactRequest(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete(self, item_id: str) -> bool:
         return contact_request_repository.delete(item_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

@@ -41,6 +41,7 @@ class CompanyProfile(CompanyProfileBase):
     updated_at: datetime | None = None
 
 class CompanyProfileUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all(self) -> list[CompanyProfile]:
         company_profile_repository.ensure_indexes()
         items = company_profile_repository.get_all()
@@ -52,6 +53,7 @@ class CompanyProfileUseCase:
                 item["created_at"] = self._now()
         return [CompanyProfile(**item) for item in items]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create(self, payload: CompanyProfileCreate) -> CompanyProfile:
         company_profile_repository.ensure_indexes()
         now = self._now()
@@ -63,6 +65,7 @@ class CompanyProfileUseCase:
             created["updated_at"] = None
         return CompanyProfile(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update(self, item_id: str, payload: CompanyProfileUpdate) -> CompanyProfile | None:
         company_profile_repository.ensure_indexes()
         existing = company_profile_repository.get_by_id(item_id)
@@ -81,9 +84,11 @@ class CompanyProfileUseCase:
 
         return CompanyProfile(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete(self, item_id: str) -> bool:
         return company_profile_repository.delete(item_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

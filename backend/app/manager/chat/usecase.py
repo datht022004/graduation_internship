@@ -19,10 +19,12 @@ SIMPLE_GREETING_ANSWERS = {
 }
 
 
+# Chuẩn hóa dữ liệu từ MongoDB sang format trả về API.
 def _normalize_message(message: str) -> str:
     return " ".join(message.strip().lower().split())
 
 
+# Trả lời nhanh các câu chào đơn giản không cần gọi LLM.
 def _get_quick_answer(question: str) -> str | None:
     normalized = _normalize_message(question).strip("!?. ")
     if normalized in SIMPLE_GREETING_ANSWERS:
@@ -31,16 +33,19 @@ def _get_quick_answer(question: str) -> str | None:
 
 
 class ChatUseCase:
+    # Tạo session chat mới hoặc tái sử dụng session hiện có.
     def get_or_create_session(self, session_id: str | None, user_email: str | None = None) -> str:
         if not session_id:
             session_id = str(uuid.uuid4())
         chat_repository.init_session(session_id, user_email)
         return session_id
 
+    # Lấy vài lượt chat gần nhất làm context cho LLM.
     def _get_context_history(self, session_id: str, user_email: str | None):
         history = chat_repository.get_session_history(session_id, user_email)
         return history[-(MAX_CONTEXT_TURNS * 2) :]
 
+    # Lưu câu hỏi và câu trả lời vào lịch sử chat.
     def _add_to_history(self, session_id: str, user_email: str | None, question: str, answer: str):
         history = chat_repository.get_session_history(session_id, user_email)
         history.append(HumanMessage(content=question))
@@ -50,12 +55,15 @@ class ChatUseCase:
         chat_repository.save_session_history(session_id, history, user_email)
         chat_repository.set_title_if_empty(session_id, user_email, question)
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_sessions(self, user_email: str):
         return chat_repository.list_sessions(user_email)
 
+    # Xử lý nghiệp vụ chính cho module hiện tại.
     def get_session_messages(self, session_id: str, user_email: str):
         return chat_repository.get_session_messages(session_id, user_email)
 
+    # Điều phối quick answer hoặc RAG stream cho một câu hỏi.
     async def stream_chat(
         self,
         question: str,

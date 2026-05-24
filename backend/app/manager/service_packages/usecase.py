@@ -41,6 +41,7 @@ class ServicePackage(ServicePackageBase):
     updated_at: datetime | None = None
 
 class ServicePackageUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all(self) -> list[ServicePackage]:
         service_package_repository.ensure_indexes()
         items = service_package_repository.get_all()
@@ -52,6 +53,7 @@ class ServicePackageUseCase:
                 item["created_at"] = self._now()
         return [ServicePackage(**item) for item in items]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create(self, payload: ServicePackageCreate) -> ServicePackage:
         service_package_repository.ensure_indexes()
         now = self._now()
@@ -63,6 +65,7 @@ class ServicePackageUseCase:
             created["updated_at"] = None
         return ServicePackage(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update(self, item_id: str, payload: ServicePackageUpdate) -> ServicePackage | None:
         service_package_repository.ensure_indexes()
         existing = service_package_repository.get_by_id(item_id)
@@ -81,9 +84,11 @@ class ServicePackageUseCase:
 
         return ServicePackage(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete(self, item_id: str) -> bool:
         return service_package_repository.delete(item_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

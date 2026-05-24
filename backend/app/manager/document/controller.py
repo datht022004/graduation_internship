@@ -24,6 +24,7 @@ class DeleteResponse(BaseModel):
     document_id: str
 
 
+# Nhận file upload, tách chunk và index vào vector store.
 @router.post("/upload", response_model=UploadResponse)
 async def upload_document(
     file: UploadFile = File(...),
@@ -67,6 +68,7 @@ async def upload_document(
         )
 
 
+# Lấy danh sách bản ghi có phân trang/lọc khi cần.
 @router.get("", response_model=DocumentListResponse)
 async def list_documents(
     page: int = Query(default=1, ge=1),
@@ -76,6 +78,7 @@ async def list_documents(
     return document_usecase.list_documents(page=page, page_size=page_size)
 
 
+# Xóa bản ghi/tài nguyên theo id/khóa chính.
 @router.delete("/{doc_id}", response_model=DeleteResponse)
 async def remove_document(
     doc_id: str,

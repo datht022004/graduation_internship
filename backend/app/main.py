@@ -9,7 +9,27 @@ from app.manager.router import api_router
 from app.config import settings
 from app.core.vector_store import init_vector_store
 
+OPENAPI_TAGS = [
+    {"name": "Health", "description": "Kiểm tra trạng thái backend."},
+    {"name": "Auth", "description": "Đăng nhập, đăng ký và lấy thông tin user hiện tại."},
+    {"name": "RAG Chat", "description": "Chatbot RAG dạng Server-Sent Events và lịch sử chat user."},
+    {"name": "Admin - Chat History", "description": "Admin xem lịch sử chat theo user/session."},
+    {"name": "Documents", "description": "Upload, liệt kê và xóa tài liệu RAG."},
+    {"name": "User", "description": "Dữ liệu public cho giao diện user."},
+    {"name": "Admin - Users", "description": "Quản lý tài khoản người dùng."},
+    {"name": "Blog", "description": "Quản lý và đọc bài viết blog."},
+    {"name": "Category", "description": "Quản lý danh mục blog."},
+    {"name": "SiteContent", "description": "CMS nội dung động cho các trang user."},
+    {"name": "Admin - SiteContent", "description": "Admin tạo, cập nhật và xóa nội dung CMS."},
+    {"name": "Admin - CompanyProfile", "description": "Quản lý hồ sơ công ty."},
+    {"name": "Admin - ServicePackage", "description": "Quản lý gói dịch vụ."},
+    {"name": "Admin - CaseStudy", "description": "Quản lý case study."},
+    {"name": "Admin - ContactRequest", "description": "Quản lý yêu cầu liên hệ."},
+    {"name": "Admin - Testimonial", "description": "Quản lý đánh giá khách hàng."},
+]
 
+
+# Khởi tạo tài nguyên ứng dụng khi FastAPI start/stop.
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings.upload_path
@@ -36,6 +56,8 @@ async def lifespan(app: FastAPI):
     print(f"   App MongoDB: {settings.APP_MONGODB_URI}")
     print(f"   Vector MongoDB: {settings.VECTOR_MONGODB_URI}")
     print(f"   Upload dir: {settings.UPLOAD_DIR}")
+    print("   Swagger UI: http://localhost:8000/docs")
+    print("   ReDoc: http://localhost:8000/redoc")
     yield
     print("Backend is shutting down...")
 
@@ -46,6 +68,16 @@ app = FastAPI(
     title="Nova Business RAG Chatbot API",
     description="Backend API for service consulting chatbot using RAG with MongoDB Vector Search",
     version="1.0.0",
+    docs_url="/docs",
+    redoc_url="/redoc",
+    openapi_url="/openapi.json",
+    openapi_tags=OPENAPI_TAGS,
+    swagger_ui_parameters={
+        "persistAuthorization": True,
+        "displayRequestDuration": True,
+        "filter": True,
+        "tryItOutEnabled": True,
+    },
     lifespan=lifespan,
 )
 
@@ -68,6 +100,7 @@ app.add_middleware(
 app.include_router(api_router)
 
 
+# Endpoint kiểm tra nhanh trạng thái backend.
 @app.get("/", tags=["Health"])
 async def health_check():
     return {

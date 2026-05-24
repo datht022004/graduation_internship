@@ -7,6 +7,7 @@ from app.manager.case_studies.usecase import case_study_usecase, CaseStudyCreate
 from app.manager.testimonials.usecase import testimonial_usecase, TestimonialCreate
 from app.manager.contact_requests.usecase import contact_request_usecase, ContactRequestCreate
 
+# Seed dữ liệu mẫu ban đầu cho môi trường demo/dev.
 def seed_demo_data():
     db = get_db()
     # Drop unneeded collections to keep DB clean

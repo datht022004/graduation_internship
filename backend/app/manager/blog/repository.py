@@ -7,13 +7,16 @@ BLOG_POSTS_COLLECTION = "blog_posts"
 
 
 class BlogRepository:
+    # Lấy Mongo collection tương ứng với repository hiện tại.
     def get_collection(self):
         return get_db()[BLOG_POSTS_COLLECTION]
 
+    # Tạo index cần thiết để truy vấn nhanh và tránh trùng dữ liệu.
     def ensure_indexes(self):
         self.get_collection().create_index("id", unique=True)
         self.get_collection().create_index([("isFeatured", -1), ("createdAt", -1)])
 
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all_posts(self) -> list[dict]:
         posts = list(
             self.get_collection().find({}).sort(
@@ -22,6 +25,7 @@ class BlogRepository:
         )
         return [self._normalize(post) for post in posts]
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_posts(self, category: str = "", search: str = "", skip: int = 0, limit: int = 10) -> list[dict]:
         query = self._build_list_query(category)
         posts = list(
@@ -32,6 +36,7 @@ class BlogRepository:
         matched_posts = self._filter_by_search([self._normalize(post) for post in posts], search)
         return matched_posts[skip : skip + limit]
 
+    # Đếm số bản ghi phù hợp điều kiện truy vấn.
     def count_matching_posts(self, category: str = "", search: str = "") -> int:
         query = self._build_list_query(category)
         if not search.strip():
@@ -43,41 +48,50 @@ class BlogRepository:
         )
         return len(self._filter_by_search([self._normalize(post) for post in posts], search))
 
+    # Tìm một bản ghi theo id.
     def get_post_by_id(self, post_id: str) -> dict | None:
         post = self.get_collection().find_one({"id": post_id})
         if not post:
             return None
         return self._normalize(post)
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_post(self, post_data: dict) -> dict:
         self.get_collection().insert_one(post_data)
         return self.get_post_by_id(post_data["id"])
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update_post(self, post_id: str, post_data: dict) -> dict | None:
         self.get_collection().update_one({"id": post_id}, {"$set": post_data})
         return self.get_post_by_id(post_id)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_post(self, post_id: str) -> bool:
         result = self.get_collection().delete_one({"id": post_id})
         return result.deleted_count > 0
 
+    # Đếm số bản ghi phù hợp điều kiện truy vấn.
     def count_posts(self) -> int:
         return self.get_collection().count_documents({})
 
+    # Thêm nhiều bản ghi cùng lúc khi seed dữ liệu.
     def insert_many(self, posts: list[dict]):
         if posts:
             self.get_collection().insert_many(posts)
 
+    # Chuẩn hóa dữ liệu từ MongoDB sang format trả về API.
     def _normalize(self, post: dict) -> dict:
         post["_id"] = str(post["_id"])
         return post
 
+    # Tạo dữ liệu phụ trợ nội bộ từ input hiện tại.
     def _build_list_query(self, category: str = "") -> dict:
         cleaned_category = category.strip()
         if not cleaned_category:
             return {}
         return {"category": cleaned_category}
 
+    # Thao tác trực tiếp với MongoDB cho module hiện tại.
     def _filter_by_search(self, posts: list[dict], search: str = "") -> list[dict]:
         cleaned_search = search.strip().lower()
         if not cleaned_search:
@@ -92,6 +106,7 @@ class BlogRepository:
                 filtered.append(post)
         return filtered
 
+    # Tạo slug URL thân thiện và hạn chế trùng lặp.
     def _create_slug(self, value: str) -> str:
         slug = unicodedata.normalize("NFD", value.strip().lower())
         slug = "".join(char for char in slug if unicodedata.category(char) != "Mn")

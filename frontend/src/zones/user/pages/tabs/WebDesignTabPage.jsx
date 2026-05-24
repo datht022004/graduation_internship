@@ -111,19 +111,15 @@ export default function WebDesignTabPage({ onChatClick }) {
                 </div>
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                     {phases.map((phase, index) => (
-                        <article className="group relative overflow-hidden rounded-[32px] border border-sky-100 bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_25px_50px_-12px_rgba(2,132,199,0.15)] hover:border-sky-300" key={phase.title}>
-                            <div className="absolute right-0 top-0 h-32 w-32 rounded-bl-[40px] bg-gradient-to-bl from-sky-50 to-transparent transition-transform duration-500 group-hover:scale-150" />
+                        <article className="group relative overflow-hidden rounded-3xl border border-sky-100 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-18px_rgba(2,132,199,0.2)] hover:border-sky-300" key={phase.title}>
+                            <div className="absolute right-0 top-0 h-24 w-24 rounded-bl-[32px] bg-gradient-to-bl from-sky-50 to-transparent transition-transform duration-500 group-hover:scale-125" />
                             
-                            <div className="relative mb-6 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#082f49] text-xl font-black text-white shadow-lg transition-transform group-hover:scale-110 group-hover:bg-sky-500">
+                            <div className="relative mb-5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-[#082f49] text-base font-black text-white shadow-md transition-transform group-hover:scale-105 group-hover:bg-sky-500">
                                 {index + 1}
                             </div>
                             
-                            <h3 className="relative text-xl font-bold uppercase leading-tight text-slate-900 group-hover:text-sky-600 transition-colors">{phase.title}</h3>
-                            <p className="relative mt-3 h-20 text-sm leading-relaxed text-slate-500">{phase.desc}</p>
-                            
-                            <div className="relative mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sky-700 opacity-60 transition-opacity group-hover:opacity-100">
-                                <span>Milestone {index + 1}</span>
-                            </div>
+                            <h3 className="relative text-lg font-bold uppercase leading-tight text-slate-900 transition-colors group-hover:text-sky-600">{phase.title}</h3>
+                            <p className="relative mt-3 text-sm leading-relaxed text-slate-500">{phase.desc}</p>
                         </article>
                     ))}
                 </div>

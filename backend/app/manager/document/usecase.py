@@ -39,10 +39,12 @@ class DocumentListResponse(BaseModel):
 
 
 class DocumentUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all_documents(self) -> list[DocumentInfo]:
         docs = document_repository.get_all_documents()
         return [DocumentInfo(**doc) for doc in docs]
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_documents(self, page: int = 1, page_size: int = 10) -> DocumentListResponse:
         page = max(page, 1)
         page_size = min(max(page_size, 1), 100)
@@ -59,6 +61,7 @@ class DocumentUseCase:
             totalPages=total_pages,
         )
 
+    # Chọn loader phù hợp với loại file upload.
     def _get_loader(self, file_path: str, file_type: str):
         if file_type == "pdf":
             return PyPDFLoader(file_path)
@@ -69,6 +72,7 @@ class DocumentUseCase:
         else:
             raise ValueError(f"Unsupported file type: {file_type}")
 
+    # Nhận diện loại file từ phần mở rộng filename.
     def _detect_file_type(self, filename: str) -> str:
         ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
         type_map = {
@@ -84,6 +88,7 @@ class DocumentUseCase:
             )
         return type_map[ext]
 
+    # Nhận file upload, tách chunk và index vào vector store.
     async def upload_and_index_document(
         self,
         file_content: bytes,
@@ -140,6 +145,7 @@ class DocumentUseCase:
                 os.remove(file_path)
             raise e
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_document(self, doc_id: str) -> bool:
         doc_entry = document_repository.get_document_by_id(doc_id)
 

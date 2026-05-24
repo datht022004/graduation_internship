@@ -26,6 +26,7 @@ class UserInfo(BaseModel):
 
 
 class AuthUseCase:
+    # Tạo tài khoản mặc định nếu hệ thống chưa có user seed.
     def init_default_users(self):
         auth_repository.ensure_indexes()
 
@@ -55,6 +56,7 @@ class AuthUseCase:
                 ).model_dump(by_alias=True, exclude_none=True)
             )
 
+    # Tạo tài khoản người dùng mới.
     def register_manual_user(self, name: str, email: str, password: str) -> Optional[dict]:
         normalized_email = email.strip().lower()
         if auth_repository.get_account_by_email(normalized_email):
@@ -72,6 +74,7 @@ class AuthUseCase:
         )
         return auth_repository.get_account_by_email(normalized_email)
 
+    # Xác thực user bằng email, mật khẩu và role.
     def authenticate_user(self, email: str, password: str, role: str) -> Optional[dict]:
         account = auth_repository.get_account_by_email(email.strip().lower())
         if not account:
@@ -80,6 +83,7 @@ class AuthUseCase:
             return account
         return None
 
+    # Xác thực hoặc tạo tài khoản từ Google token.
     def authenticate_google(self, token: str, role: str) -> Optional[dict]:
         try:
             idinfo = id_token.verify_oauth2_token(
@@ -113,6 +117,7 @@ class AuthUseCase:
 
         return auth_repository.get_or_create_google_account(normalized_email, name, "user", google_id)
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_access_token(self, data: dict) -> str:
         to_encode = data.copy()
         expire = datetime.now(timezone.utc) + timedelta(
@@ -121,6 +126,7 @@ class AuthUseCase:
         to_encode.update({"exp": expire})
         return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=ALGORITHM)
 
+    # Giải mã và kiểm tra JWT access token.
     def decode_token(self, token: str) -> dict:
         try:
             payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[ALGORITHM])
@@ -135,6 +141,7 @@ class AuthUseCase:
 auth_usecase = AuthUseCase()
 
 
+# Đọc JWT hiện tại và trả thông tin user đang đăng nhập.
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
 ) -> UserInfo:
@@ -150,6 +157,7 @@ async def get_current_user(
     return UserInfo(email=email, name=name or "", role=role)
 
 
+# Chặn request nếu user hiện tại không có quyền admin.
 async def require_admin(
     user: UserInfo = Depends(get_current_user),
 ) -> UserInfo:

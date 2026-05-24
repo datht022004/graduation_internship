@@ -89,11 +89,13 @@ LEGACY_CATEGORY_RENAMES = {
 
 
 class CategoryUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all_categories(self) -> list[Category]:
         category_repository.ensure_indexes()
         categories = category_repository.get_all_categories()
         return [self._with_post_count(category) for category in categories]
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_categories(self, name: str = "", page: int = 1, page_size: int = 10) -> CategoryListResponse:
         category_repository.ensure_indexes()
         page = max(page, 1)
@@ -112,6 +114,7 @@ class CategoryUseCase:
             totalPages=total_pages,
         )
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_category(self, payload: CategoryCreate) -> Category:
         category_repository.ensure_indexes()
         now = self._now()
@@ -130,6 +133,7 @@ class CategoryUseCase:
         )
         return self._with_post_count(category)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update_category(self, category_id: str, payload: CategoryUpdate) -> Category | None:
         category_repository.ensure_indexes()
         existing = category_repository.get_category_by_id(category_id)
@@ -148,6 +152,7 @@ class CategoryUseCase:
 
         return self._with_post_count(existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_category(self, category_id: str) -> str:
         existing = category_repository.get_category_by_id(category_id)
         if not existing:
@@ -156,6 +161,7 @@ class CategoryUseCase:
             return "in_use"
         return "deleted" if category_repository.delete_category(category_id) else "not_found"
 
+    # Seed dữ liệu mẫu ban đầu cho môi trường demo/dev.
     def seed_default_categories(self):
         category_repository.ensure_indexes()
         self._migrate_legacy_categories()
@@ -179,6 +185,7 @@ class CategoryUseCase:
             categories.append(category_doc.model_dump(by_alias=True, exclude_none=True))
         category_repository.insert_many(categories)
 
+    # Chuyển dữ liệu category cũ sang schema hiện tại.
     def _migrate_legacy_categories(self):
         now = self._now()
         descriptions = {
@@ -207,12 +214,14 @@ class CategoryUseCase:
                 },
             )
 
+    # Gắn số bài viết vào response category.
     def _with_post_count(self, category: dict) -> Category:
         return Category(
             **category,
             postCount=category_repository.count_posts_by_category(category["name"]),
         )
 
+    # Tạo slug URL thân thiện và hạn chế trùng lặp.
     def _unique_slug(self, name: str, exclude_id: str | None = None) -> str:
         base_slug = self._create_slug(name)
         slug = base_slug
@@ -222,6 +231,7 @@ class CategoryUseCase:
             suffix += 1
         return slug
 
+    # Tạo slug URL thân thiện và hạn chế trùng lặp.
     def _create_slug(self, value: str) -> str:
         slug = unicodedata.normalize("NFD", value.strip().lower())
         slug = "".join(char for char in slug if unicodedata.category(char) != "Mn")
@@ -230,6 +240,7 @@ class CategoryUseCase:
         slug = slug.strip("-")
         return slug or "danh-muc"
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

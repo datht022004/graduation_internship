@@ -45,6 +45,7 @@ class CaseStudy(CaseStudyBase):
     updated_at: datetime | None = None
 
 class CaseStudyUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all(self) -> list[CaseStudy]:
         case_study_repository.ensure_indexes()
         items = case_study_repository.get_all()
@@ -56,6 +57,7 @@ class CaseStudyUseCase:
                 item["created_at"] = self._now()
         return [CaseStudy(**item) for item in items]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create(self, payload: CaseStudyCreate) -> CaseStudy:
         case_study_repository.ensure_indexes()
         now = self._now()
@@ -67,6 +69,7 @@ class CaseStudyUseCase:
             created["updated_at"] = None
         return CaseStudy(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update(self, item_id: str, payload: CaseStudyUpdate) -> CaseStudy | None:
         case_study_repository.ensure_indexes()
         existing = case_study_repository.get_by_id(item_id)
@@ -85,9 +88,11 @@ class CaseStudyUseCase:
 
         return CaseStudy(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete(self, item_id: str) -> bool:
         return case_study_repository.delete(item_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

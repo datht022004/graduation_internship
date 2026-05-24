@@ -21,11 +21,13 @@ Tài liệu tham khảo:
 """
 
 
+# Đảm bảo provider LLM đã cấu hình API key trước khi gọi.
 def _require_api_key(provider: str, api_key: str):
     if not api_key:
         raise ValueError(f"{provider} API key is required for RAG chat.")
 
 
+# Khởi tạo LLM theo provider đang cấu hình.
 def _get_llm():
     provider = settings.LLM_PROVIDER.lower()
 
@@ -48,6 +50,7 @@ def _get_llm():
     raise ValueError(f"Unsupported LLM_PROVIDER: {settings.LLM_PROVIDER}")
 
 
+# Stream câu trả lời RAG dựa trên tài liệu liên quan và lịch sử chat.
 async def stream_rag_response(
     question: str,
     chat_history: list[BaseMessage],

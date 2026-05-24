@@ -4,6 +4,7 @@ from pydantic import Field
 from typing import Any
 from .base import MongoDocument
 
+# Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
 

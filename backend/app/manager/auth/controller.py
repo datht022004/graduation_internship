@@ -39,6 +39,7 @@ class LoginResponse(BaseModel):
     user: UserInfo
 
 
+# Tạo dữ liệu phụ trợ nội bộ từ input hiện tại.
 def _build_login_response(account: dict) -> LoginResponse:
     token = auth_usecase.create_access_token(
         data={
@@ -58,6 +59,7 @@ def _build_login_response(account: dict) -> LoginResponse:
     )
 
 
+# Xử lý request API và gọi usecase tương ứng.
 def _database_unavailable() -> HTTPException:
     return HTTPException(
         status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -65,6 +67,7 @@ def _database_unavailable() -> HTTPException:
     )
 
 
+# Xử lý đăng nhập bằng email/password.
 @router.post("/login", response_model=LoginResponse)
 @limiter.limit("10/minute")
 async def login(request: Request, body: LoginRequest):
@@ -82,6 +85,7 @@ async def login(request: Request, body: LoginRequest):
     return _build_login_response(account)
 
 
+# Tạo tài khoản người dùng mới.
 @router.post("/register", response_model=LoginResponse, status_code=status.HTTP_201_CREATED)
 @limiter.limit("5/minute")
 async def register(request: Request, body: RegisterRequest):
@@ -120,11 +124,13 @@ async def register(request: Request, body: RegisterRequest):
     return _build_login_response(account)
 
 
+# Xử lý request API và gọi usecase tương ứng.
 @router.get("/me", response_model=UserInfo)
 async def get_me(user: UserInfo = Depends(get_current_user)):
     return user
 
 
+# Xác thực hoặc tạo tài khoản từ Google token.
 @router.post("/google", response_model=LoginResponse)
 @limiter.limit("10/minute")
 async def google_login(request: Request, body: GoogleLoginRequest):

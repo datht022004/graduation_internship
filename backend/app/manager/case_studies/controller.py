@@ -11,18 +11,22 @@ from app.manager.case_studies.usecase import (
 admin_router = APIRouter(prefix="/admin/case-studies", tags=["Admin - CaseStudy"])
 public_router = APIRouter(prefix="/user/case-studies", tags=["User - CaseStudy"])
 
+# Lấy toàn bộ bản ghi cho module hiện tại.
 @public_router.get("", response_model=list[CaseStudy])
 async def get_all_public():
     return case_study_usecase.get_all()
 
+# Lấy toàn bộ bản ghi cho module hiện tại.
 @admin_router.get("", response_model=list[CaseStudy])
 async def get_all_admin(admin: UserInfo = Depends(require_admin)):
     return case_study_usecase.get_all()
 
+# Tạo bản ghi mới sau khi validate payload.
 @admin_router.post("", response_model=CaseStudy, status_code=status.HTTP_201_CREATED)
 async def create_item(body: CaseStudyCreate, admin: UserInfo = Depends(require_admin)):
     return case_study_usecase.create(body)
 
+# Cập nhật bản ghi hiện có theo id/khóa chính.
 @admin_router.put("/{item_id}", response_model=CaseStudy)
 async def update_item(item_id: str, body: CaseStudyUpdate, admin: UserInfo = Depends(require_admin)):
     item = case_study_usecase.update(item_id, body)
@@ -30,6 +34,7 @@ async def update_item(item_id: str, body: CaseStudyUpdate, admin: UserInfo = Dep
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
     return item
 
+# Xóa bản ghi/tài nguyên theo id/khóa chính.
 @admin_router.delete("/{item_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_item(item_id: str, admin: UserInfo = Depends(require_admin)):
     deleted = case_study_usecase.delete(item_id)

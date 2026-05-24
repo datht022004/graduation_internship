@@ -88,9 +88,6 @@ export default function SeoServiceTabPage({ onChatClick }) {
                                         ))}
                                     </ul>
                                 </div>
-                                <div className="mt-8">
-                                    <button className="w-full rounded-2xl bg-white/10 px-4 py-3 text-sm font-bold uppercase text-white transition hover:bg-white/20">Xem chi tiết gói</button>
-                                </div>
                             </article>
                         ))}
                     </div>

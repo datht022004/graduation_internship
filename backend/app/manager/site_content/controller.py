@@ -12,12 +12,14 @@ admin_router = APIRouter(prefix="/admin/site-content", tags=["Admin - Site Conte
 public_router = APIRouter(prefix="/user/site-content", tags=["User - Site Content"])
 
 
+# Xử lý request API và gọi usecase tương ứng.
 @public_router.get("/{page_key}", response_model=list[SiteContent])
 async def get_site_content(page_key: str):
     """Lấy nội dung của một trang (FE user)."""
     return site_content_usecase.get_content_by_page(page_key)
 
 
+# Xử lý request API và gọi usecase tương ứng.
 @admin_router.get("", response_model=list[SiteContent])
 async def get_site_content_admin(
     page_key: str,
@@ -27,6 +29,7 @@ async def get_site_content_admin(
     return site_content_usecase.get_content_by_page(page_key)
 
 
+# Tạo bản ghi mới sau khi validate payload.
 @admin_router.post("", response_model=SiteContent, status_code=status.HTTP_201_CREATED)
 async def create_site_content(
     body: SiteContentCreate,
@@ -35,6 +38,7 @@ async def create_site_content(
     return site_content_usecase.create_content(body, admin.email)
 
 
+# Cập nhật bản ghi hiện có theo id/khóa chính.
 @admin_router.put("/{content_id}", response_model=SiteContent)
 async def update_site_content(
     content_id: str,
@@ -50,6 +54,7 @@ async def update_site_content(
     return content
 
 
+# Xóa bản ghi/tài nguyên theo id/khóa chính.
 @admin_router.delete("/{content_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_site_content(
     content_id: str,

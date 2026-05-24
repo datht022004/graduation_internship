@@ -36,10 +36,12 @@ class Settings(BaseSettings):
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 
+    # Quy đổi cấu hình dung lượng upload sang bytes.
     @property
     def max_file_size_bytes(self) -> int:
         return self.MAX_FILE_SIZE_MB * 1024 * 1024
 
+    # Trả về thư mục upload và đảm bảo thư mục tồn tại.
     @property
     def upload_path(self) -> Path:
         path = Path(self.UPLOAD_DIR)

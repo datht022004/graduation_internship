@@ -54,7 +54,18 @@ uvicorn app.main:app --reload --port 8000
 
 ### 5. Xem API docs
 
-Mở trình duyệt: http://localhost:8000/docs
+Mở trình duyệt:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+- OpenAPI JSON: http://localhost:8000/openapi.json
+
+Test API cần đăng nhập:
+
+1. Gọi `POST /api/auth/login` trong Swagger để lấy `access_token`.
+2. Bấm nút `Authorize` ở góc phải Swagger.
+3. Nhập token theo dạng `Bearer <access_token>`.
+4. Các API có khóa sẽ dùng token đó khi bấm `Try it out`.
 
 ## API Endpoints
 

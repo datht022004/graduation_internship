@@ -8,6 +8,7 @@ _vector_client = None
 _vector_db = None
 
 
+# Lấy Mongo client cho database nghiệp vụ chính.
 def get_app_client() -> MongoClient:
     global _app_client
     if _app_client is None:
@@ -19,6 +20,7 @@ def get_app_client() -> MongoClient:
     return _app_client
 
 
+# Lấy database nghiệp vụ chính.
 def get_db():
     global _app_db
     if _app_db is None:
@@ -26,6 +28,7 @@ def get_db():
     return _app_db
 
 
+# Lấy Mongo client cho database vector/RAG.
 def get_vector_client() -> MongoClient:
     global _vector_client
     if _vector_client is None:
@@ -37,6 +40,7 @@ def get_vector_client() -> MongoClient:
     return _vector_client
 
 
+# Lấy database vector/RAG.
 def get_vector_db():
     global _vector_db
     if _vector_db is None:

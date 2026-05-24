@@ -41,6 +41,7 @@ class Testimonial(TestimonialBase):
     updated_at: datetime | None = None
 
 class TestimonialUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all(self) -> list[Testimonial]:
         testimonial_repository.ensure_indexes()
         items = testimonial_repository.get_all()
@@ -52,6 +53,7 @@ class TestimonialUseCase:
                 item["created_at"] = self._now()
         return [Testimonial(**item) for item in items]
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create(self, payload: TestimonialCreate) -> Testimonial:
         testimonial_repository.ensure_indexes()
         now = self._now()
@@ -63,6 +65,7 @@ class TestimonialUseCase:
             created["updated_at"] = None
         return Testimonial(**created)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update(self, item_id: str, payload: TestimonialUpdate) -> Testimonial | None:
         testimonial_repository.ensure_indexes()
         existing = testimonial_repository.get_by_id(item_id)
@@ -81,9 +84,11 @@ class TestimonialUseCase:
 
         return Testimonial(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete(self, item_id: str) -> bool:
         return testimonial_repository.delete(item_id)
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> datetime:
         return datetime.now(timezone.utc)
 

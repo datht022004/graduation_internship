@@ -7,31 +7,37 @@ router = APIRouter(prefix="/user", tags=["User - Public"])
 admin_router = APIRouter(prefix="/admin/users", tags=["Admin - Users"])
 
 
+# Trả dữ liệu public cho tab Trang chủ.
 @router.get("/home")
 async def get_home():
     return user_usecase.get_home()
 
 
+# Trả dữ liệu public cho tab Dịch vụ SEO.
 @router.get("/seo-service")
 async def get_seo_service():
     return user_usecase.get_seo_service()
 
 
+# Trả dữ liệu public cho tab Thiết kế Website.
 @router.get("/web-design")
 async def get_web_design():
     return user_usecase.get_web_design()
 
 
+# Trả dữ liệu public cho tab Quảng cáo.
 @router.get("/ads")
 async def get_ads():
     return user_usecase.get_ads()
 
 
+# Trả dữ liệu public cho tab Blog.
 @router.get("/blog")
 async def get_blog():
     return user_usecase.get_blog()
 
 
+# Lấy danh sách bản ghi có phân trang/lọc khi cần.
 @admin_router.get("", response_model=ManagedUserListResponse)
 async def list_users(
     q: str = "",
@@ -43,6 +49,7 @@ async def list_users(
     return user_usecase.list_managed_users(search=q, role=role, page=page, page_size=page_size)
 
 
+# Tạo bản ghi mới sau khi validate payload.
 @admin_router.post("", response_model=ManagedUser, status_code=status.HTTP_201_CREATED)
 async def create_user(
     body: ManagedUserCreate,
@@ -58,6 +65,7 @@ async def create_user(
     return user
 
 
+# Cập nhật bản ghi hiện có theo id/khóa chính.
 @admin_router.put("/{email}", response_model=ManagedUser)
 async def update_user(
     email: str,
@@ -74,6 +82,7 @@ async def update_user(
     return user
 
 
+# Xóa bản ghi/tài nguyên theo id/khóa chính.
 @admin_router.delete("/{email}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_user(
     email: str,

@@ -69,10 +69,12 @@ class BlogPostListResponse(BaseModel):
 
 
 class BlogUseCase:
+    # Lấy toàn bộ bản ghi cho module hiện tại.
     def get_all_posts(self) -> list[BlogPost]:
         posts = blog_repository.get_all_posts()
         return [BlogPost(**post) for post in posts]
 
+    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
     def list_posts(self, category: str = "", search: str = "", page: int = 1, page_size: int = 10) -> BlogPostListResponse:
         blog_repository.ensure_indexes()
         page = max(page, 1)
@@ -91,9 +93,11 @@ class BlogUseCase:
             totalPages=total_pages,
         )
 
+    # Lấy danh sách bài viết public cho trang user.
     def get_public_posts(self) -> list[BlogPost]:
         return self.get_all_posts()
 
+    # Tạo bản ghi mới sau khi validate payload.
     def create_post(self, payload: BlogPostCreate) -> BlogPost:
         now = self._now()
         post_data = {
@@ -106,6 +110,7 @@ class BlogUseCase:
         post = blog_repository.create_post(post_doc.model_dump(by_alias=True, exclude_none=True))
         return BlogPost(**post)
 
+    # Cập nhật bản ghi hiện có theo id/khóa chính.
     def update_post(self, post_id: str, payload: BlogPostUpdate) -> BlogPost | None:
         existing = blog_repository.get_post_by_id(post_id)
         if not existing:
@@ -119,9 +124,11 @@ class BlogUseCase:
 
         return BlogPost(**existing)
 
+    # Xóa bản ghi/tài nguyên theo id/khóa chính.
     def delete_post(self, post_id: str) -> bool:
         return blog_repository.delete_post(post_id)
 
+    # Bật/tắt trạng thái nổi bật của bài viết.
     def toggle_featured(self, post_id: str) -> BlogPost | None:
         existing = blog_repository.get_post_by_id(post_id)
         if not existing:
@@ -136,6 +143,7 @@ class BlogUseCase:
         )
         return BlogPost(**updated)
 
+    # Seed dữ liệu mẫu ban đầu cho môi trường demo/dev.
     def seed_default_posts(self):
         blog_repository.ensure_indexes()
         if blog_repository.count_posts() > 0:
@@ -188,6 +196,7 @@ class BlogUseCase:
             posts.append(post_doc.model_dump(by_alias=True, exclude_none=True))
         blog_repository.insert_many(posts)
 
+    # Làm sạch payload trước khi lưu xuống database.
     def _clean_post_data(self, data: dict) -> dict:
         cleaned = {}
         for key, value in data.items():
@@ -199,6 +208,7 @@ class BlogUseCase:
             cleaned["slug"] = cleaned.get("slug") or self._create_slug(cleaned["title"])
         return cleaned
 
+    # Tạo slug URL thân thiện và hạn chế trùng lặp.
     def _create_slug(self, value: str) -> str:
         slug = unicodedata.normalize("NFD", value.strip().lower())
         slug = "".join(char for char in slug if unicodedata.category(char) != "Mn")
@@ -206,6 +216,7 @@ class BlogUseCase:
         slug = re.sub(r"[^a-z0-9]+", "-", slug)
         return slug.strip("-") or "bai-viet"
 
+    # Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
     def _now(self) -> str:
         return datetime.now(timezone.utc).isoformat()
 
