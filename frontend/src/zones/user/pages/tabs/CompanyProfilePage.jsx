@@ -7,7 +7,7 @@ export default function CompanyProfilePage({ onBack }) {
     }, [])
 
     return (
-        <article className="mx-auto w-full max-w-7xl px-4 py-8 md:py-12 float-in">
+        <article className="float-in mx-auto w-full max-w-7xl px-3 py-6 sm:px-4 sm:py-8 md:py-12">
             {/* Back Action */}
             <div className="mb-8 flex justify-between items-center">
                 <button
@@ -22,16 +22,16 @@ export default function CompanyProfilePage({ onBack }) {
                 </button>
             </div>
 
-            <div className="relative flex w-full flex-col overflow-hidden rounded-[36px] bg-[#0b131e] shadow-2xl ring-1 ring-slate-200">
+            <div className="relative flex w-full flex-col overflow-hidden rounded-[28px] bg-[#0b131e] shadow-2xl ring-1 ring-slate-200 md:rounded-[36px]">
 
                 {/* Hero Section */}
-                <div className="relative flex min-h-[50vh] flex-col justify-center px-8 py-20 text-center md:px-20">
+                <div className="relative flex min-h-[38vh] flex-col justify-center px-5 py-14 text-center sm:px-8 sm:py-20 md:min-h-[50vh] md:px-20">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(242,104,42,0.15),transparent_60%)]" />
                     <div className="relative z-10 mx-auto max-w-4xl">
                         <span className="mb-4 inline-block rounded-full border border-[#f2682a]/30 bg-[#f2682a]/10 px-4 py-1.5 text-xs font-black uppercase tracking-[0.2em] text-[#f2682a]">
                             Company Profile 2026
                         </span>
-                        <h2 className="text-4xl font-black uppercase leading-tight text-white md:text-6xl lg:text-7xl">
+                        <h2 className="text-3xl font-black uppercase leading-tight text-white sm:text-4xl md:text-6xl lg:text-7xl">
                             Đối tác <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f2682a] to-[#ffb35a]">tăng trưởng</span> số 1 của bạn
                         </h2>
                         <p className="mt-6 text-lg font-medium text-slate-400 md:text-xl leading-relaxed">
@@ -41,8 +41,8 @@ export default function CompanyProfilePage({ onBack }) {
                 </div>
 
                 {/* Metrics Section */}
-                <div className="border-y border-white/5 bg-white/[0.02] py-16">
-                    <div className="mx-auto grid max-w-6xl gap-8 px-8 sm:grid-cols-2 md:grid-cols-4">
+                <div className="border-y border-white/5 bg-white/[0.02] py-10 sm:py-16">
+                    <div className="mx-auto grid max-w-6xl gap-6 px-5 sm:grid-cols-2 sm:px-8 md:grid-cols-4 md:gap-8">
                         {[
                             { number: '250+', label: 'Dự án thành công', color: 'text-[#f2682a]' },
                             { number: '95%', label: 'Khách hàng gia hạn', color: 'text-[#6dc8be]' },
@@ -50,7 +50,7 @@ export default function CompanyProfilePage({ onBack }) {
                             { number: '24/7', label: 'Support & Monitor', color: 'text-white' },
                         ].map((stat, i) => (
                             <div key={i} className="text-center">
-                                <p className={`text-5xl font-black md:text-6xl ${stat.color}`}>{stat.number}</p>
+                                <p className={`text-4xl font-black md:text-6xl ${stat.color}`}>{stat.number}</p>
                                 <p className="mt-2 text-sm font-bold uppercase tracking-widest text-slate-500">{stat.label}</p>
                             </div>
                         ))}
@@ -58,7 +58,7 @@ export default function CompanyProfilePage({ onBack }) {
                 </div>
 
                 {/* Core Capabilities */}
-                <div className="py-20 px-8 md:px-20 mx-auto max-w-7xl">
+                <div className="mx-auto max-w-7xl px-5 py-12 sm:px-8 md:px-20 md:py-20">
                     <h3 className="mb-12 text-center text-3xl font-black uppercase text-white md:text-4xl">Năng lực cốt lõi</h3>
                     <div className="grid gap-6 md:grid-cols-3">
                         {[
@@ -78,12 +78,12 @@ export default function CompanyProfilePage({ onBack }) {
                 </div>
 
                 {/* Featured Case Study */}
-                <div className="px-8 pb-24 pt-10 md:px-20 mx-auto max-w-7xl">
-                    <div className="overflow-hidden rounded-[40px] bg-[linear-gradient(135deg,#1f3c57,#0e1e2d)] p-1">
-                        <div className="rounded-[36px] bg-[#0b131e] p-8 md:p-12 lg:flex lg:items-center lg:gap-12">
+                <div className="mx-auto max-w-7xl px-5 pb-16 pt-8 sm:px-8 md:px-20 md:pb-24 md:pt-10">
+                    <div className="overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#1f3c57,#0e1e2d)] p-1 md:rounded-[40px]">
+                        <div className="rounded-[24px] bg-[#0b131e] p-5 sm:p-8 md:rounded-[36px] md:p-12 lg:flex lg:items-center lg:gap-12">
                             <div className="lg:w-1/2">
                                 <span className="text-xs font-black uppercase tracking-[0.2em] text-[#6dc8be]">Case Study Tiêu Biểu</span>
-                                <h3 className="mt-4 text-3xl font-black leading-tight text-white md:text-5xl">
+                                <h3 className="mt-4 text-2xl font-black leading-tight text-white sm:text-3xl md:text-5xl">
                                     Tăng trưởng <span className="text-[#6dc8be]">400%</span> traffic organic sau 6 tháng
                                 </h3>
                                 <p className="mt-6 text-slate-400 leading-relaxed">

@@ -24,6 +24,7 @@ export const API_ENDPOINTS = {
         webDesign: `${API_URL}/user/web-design`,
         ads: `${API_URL}/user/ads`,
         blog: `${API_URL}/user/blog`,
+        servicePackages: `${API_URL}/user/service-packages`,
     },
     chat: {
         stream: `${API_URL}/chat`,
@@ -192,6 +193,12 @@ export async function userGetAdsContent() {
 export async function userGetBlogContent() {
     const { data } = await axios.get(API_ENDPOINTS.user.blog)
     return data
+}
+
+// GET /user/service-packages - User module: lấy bảng giá/gói dịch vụ public.
+export async function userGetServicePackages() {
+    const { data } = await axios.get(API_ENDPOINTS.user.servicePackages)
+    return data || []
 }
 
 // GET /documents - Document module: lấy danh sách tài liệu admin.

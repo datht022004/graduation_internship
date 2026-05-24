@@ -7,7 +7,7 @@ export default function BlogDetailPage({ post, onBack }) {
     const tags = (post.tags || '').split(',').map((tag) => tag.trim()).filter(Boolean)
 
     return (
-        <article className="mx-auto w-full max-w-7xl px-4 py-8 md:py-12 float-in">
+        <article className="float-in mx-auto w-full max-w-7xl px-3 py-6 sm:px-4 sm:py-8 md:py-12">
             <button
                 type="button"
                 onClick={onBack}
@@ -19,11 +19,11 @@ export default function BlogDetailPage({ post, onBack }) {
                 Quay lại
             </button>
 
-            <div className="overflow-hidden rounded-[32px] bg-white shadow-sm border border-slate-200">
+            <div className="overflow-hidden rounded-[24px] border border-slate-200 bg-white shadow-sm sm:rounded-[32px]">
                 {post.imageUrl && (
-                    <img src={post.imageUrl} alt="" className="h-64 w-full object-cover md:h-[500px] lg:h-[600px]" />
+                    <img src={post.imageUrl} alt="" className="h-56 w-full object-cover sm:h-64 md:h-[500px] lg:h-[600px]" />
                 )}
-                <div className="mx-auto max-w-5xl px-6 py-8 md:px-12 md:py-16">
+                <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6 sm:py-8 md:px-12 md:py-16">
                     <div className="mb-6 flex flex-wrap items-center gap-3">
                         <span className="inline-flex items-center rounded-full bg-[#fff1e7] px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-[#f2682a]">
                             {post.category || 'Blog'}
@@ -37,8 +37,8 @@ export default function BlogDetailPage({ post, onBack }) {
                             {post.readTime || '5 phút đọc'}
                         </span>
                     </div>
-                    <h1 className="text-3xl font-black leading-tight text-slate-950 md:text-5xl">{post.title}</h1>
-                    <p className="mt-6 text-lg leading-8 text-slate-600 font-medium">{post.excerpt}</p>
+                    <h1 className="text-2xl font-black leading-tight text-slate-950 sm:text-3xl md:text-5xl">{post.title}</h1>
+                    <p className="mt-5 text-base font-medium leading-7 text-slate-600 sm:mt-6 sm:text-lg sm:leading-8">{post.excerpt}</p>
                     {tags.length > 0 && (
                         <div className="mt-6 flex flex-wrap gap-2">
                             {tags.map((tag) => (

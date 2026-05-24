@@ -93,11 +93,11 @@ function UserZonePage({ authUser, onLoginSuccess, onLogout, onRequestAdminZone }
 
             {!isChatExpanded && (
                 <button
-                    className="chatbot-fab fixed bottom-6 right-4 z-50 flex items-center gap-2 rounded-full bg-[#4285F4] px-3 py-2.5 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(66,133,244,0.4)] transition hover:bg-[#3367D6]"
+                    className="chatbot-fab fixed bottom-4 right-3 z-50 flex items-center gap-2 rounded-full bg-[#4285F4] px-2.5 py-2 text-xs font-semibold text-white shadow-[0_14px_34px_rgba(66,133,244,0.4)] transition hover:bg-[#3367D6] sm:bottom-6 sm:right-4 sm:px-3 sm:py-2.5 sm:text-sm"
                     onClick={handleChatClick}
                     type="button"
                 >
-                    <span className="chatbot-core flex h-9 w-9 items-center justify-center rounded-full bg-white text-xs font-bold text-[#4285F4]">
+                    <span className="chatbot-core flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs font-bold text-[#4285F4] sm:h-9 sm:w-9">
                         AI
                     </span>
                     <span className="chatbot-dot inline-block h-2.5 w-2.5 rounded-full bg-emerald-300" />

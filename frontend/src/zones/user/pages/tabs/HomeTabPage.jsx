@@ -49,24 +49,24 @@ export default function HomeTabPage({ onSelectTab }) {
     return (
         <div className="flex flex-col gap-6 md:gap-10 pb-16">
             {/* Intro Section */}
-            <section className="float-in stagger-1 relative overflow-hidden rounded-[40px] bg-[linear-gradient(135deg,#fff7ef,#ffe9db_35%,#f4f9ff_100%)] p-8 md:p-14 mx-4 mt-6 shadow-[0_20px_60px_-15px_rgba(242,104,42,0.15)] ring-1 ring-white">
+            <section className="float-in stagger-1 relative mx-3 mt-4 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#fff7ef,#ffe9db_35%,#f4f9ff_100%)] p-4 shadow-[0_20px_60px_-15px_rgba(242,104,42,0.15)] ring-1 ring-white sm:mx-4 sm:mt-6 sm:p-8 md:rounded-[40px] md:p-14">
                 <div className="absolute -left-18 -top-16 h-56 w-56 rounded-full bg-[#f2682a]/30 blur-[80px]" />
                 <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-[#13283c]/20 blur-[80px]" />
                 
                 <div className="relative z-10 grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
-                    <article className="rounded-[32px] border border-white/60 bg-white/70 p-8 shadow-[0_30px_60px_-20px_rgba(31,60,87,0.15)] backdrop-blur-md">
+                    <article className="rounded-[24px] border border-white/60 bg-white/70 p-5 shadow-[0_30px_60px_-20px_rgba(31,60,87,0.15)] backdrop-blur-md sm:rounded-[32px] sm:p-8">
                         <div className="inline-flex items-center gap-2 rounded-full bg-[#fff2ea] px-3 py-1 mt-2 mb-4">
                             <span className="h-2 w-2 rounded-full bg-[#f2682a] animate-pulse" />
                             <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#f2682a]">Tăng trưởng bền vững</p>
                         </div>
-                        <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold uppercase leading-[1.15] text-[#13283c]">
+                        <h2 className="text-2xl font-bold uppercase leading-[1.15] text-[#13283c] sm:text-3xl lg:text-4xl xl:text-5xl">
                             Mở khóa doanh thu<br/>
                             <span className="text-[#f2682a]">Scale nhanh hơn</span>
                         </h2>
                         <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600">
                             Nền tảng dịch vụ tập trung vào mục tiêu mang lại giá trị thật: tăng cường lượng lead chất lượng cao, tối ưu hóa điểm chạm và chi phí, xây dựng một hệ thống marketing vận hành tự động và hiệu quả.
                         </p>
-                        <div className="mt-8 grid gap-4 sm:grid-cols-3">
+                        <div className="mt-6 grid gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4">
                             <div className="group rounded-2xl bg-[linear-gradient(145deg,#1f3c57,#0e1e2d)] p-5 text-white shadow-lg transition hover:-translate-y-1">
                                 <p className="text-3xl font-black tracking-tight text-[#6dc8be]">360°</p>
                                 <p className="mt-1 text-xs uppercase tracking-wider text-slate-300">Giải pháp toàn diện</p>
@@ -82,11 +82,11 @@ export default function HomeTabPage({ onSelectTab }) {
                         </div>
                     </article>
 
-                    <article className="flex flex-col justify-center rounded-[32px] bg-[#0c1825] p-8 text-white shadow-2xl relative overflow-hidden">
+                    <article className="relative flex flex-col justify-center overflow-hidden rounded-[24px] bg-[#0c1825] p-5 text-white shadow-2xl sm:rounded-[32px] sm:p-8">
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
                         <div className="relative z-10">
                             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#ffb35a]">Dành cho ai?</p>
-                            <ul className="mt-6 flex flex-col gap-4">
+                            <ul className="mt-5 flex flex-col gap-3 sm:mt-6 sm:gap-4">
                                 {['Chủ doanh nghiệp vừa và nhỏ (SME)', 'Startup muốn mở rộng thị trường bùng nổ', 'Đội ngũ cần bộ máy Marketing chuyên nghiệp', 'Cá nhân muốn phát triển năng lực quản trị'].map((item, idx) => (
                                     <li key={idx} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10 hover:border-[#f2682a]/50">
                                         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#f2682a]/20 text-[#f2682a]">
@@ -110,7 +110,7 @@ export default function HomeTabPage({ onSelectTab }) {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                     {serviceCards.map((card, index) => (
                         <article
-                            className={`group relative flex flex-col overflow-hidden rounded-[28px] border border-slate-200 bg-white p-8 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30 ${card.tabKey ? 'cursor-pointer hover:-translate-y-2' : ''}`}
+                            className={`group relative flex flex-col overflow-hidden rounded-[24px] border border-slate-200 bg-white p-5 shadow-[0_4px_20px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 hover:shadow-[0_25px_50px_-12px_rgba(242,104,42,0.15)] hover:border-[#f2682a]/30 sm:rounded-[28px] sm:p-8 ${card.tabKey ? 'cursor-pointer hover:-translate-y-2' : ''}`}
                             key={card.title}
                             onClick={() => {
                                 if (card.tabKey && onSelectTab) {

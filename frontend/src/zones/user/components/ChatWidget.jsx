@@ -254,24 +254,24 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
 
     return (
         <section
-            className={`float-in fixed z-50 rounded-[26px] border border-white/55 bg-white/82 p-4 shadow-[0_30px_70px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl ring-1 ring-slate-900/5 ${isExpanded
-                ? 'inset-3 flex max-w-none flex-col md:inset-8'
-                : 'bottom-24 right-4 w-[25rem] max-w-[calc(100vw-2rem)]'
+            className={`float-in fixed z-50 rounded-[22px] border border-white/55 bg-white/82 p-3 shadow-[0_30px_70px_-20px_rgba(15,23,42,0.35)] backdrop-blur-xl ring-1 ring-slate-900/5 sm:rounded-[26px] sm:p-4 ${isExpanded
+                ? 'inset-2 flex max-w-none flex-col sm:inset-3 md:inset-8'
+                : 'bottom-20 right-2 w-[calc(100vw-1rem)] max-w-[25rem] sm:bottom-24 sm:right-4 sm:w-[25rem]'
                 }`}
         >
-            <header className="relative mb-4 flex items-center justify-between overflow-hidden rounded-[22px] bg-[linear-gradient(135deg,#111827,#123047_58%,#0e7490)] p-5 text-white shadow-[0_20px_35px_-22px_rgba(8,47,73,0.9)]">
+            <header className="relative mb-3 flex items-center justify-between overflow-hidden rounded-[18px] bg-[linear-gradient(135deg,#111827,#123047_58%,#0e7490)] p-3 text-white shadow-[0_20px_35px_-22px_rgba(8,47,73,0.9)] sm:mb-4 sm:rounded-[22px] sm:p-5">
                 <div className="absolute inset-x-0 top-0 h-px bg-white/35" />
                 <div className="relative z-10 flex items-center gap-3">
-                    <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-300/15 text-cyan-200 shadow-inner ring-1 ring-white/15 backdrop-blur-md">
+                    <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-cyan-300/15 text-cyan-200 shadow-inner ring-1 ring-white/15 backdrop-blur-md sm:h-11 sm:w-11">
                         <span className="absolute right-0 top-0 flex h-2.5 w-2.5">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                             <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
                         </span>
                         <RobotIcon className="h-6 w-6" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                         <p className="text-sm font-black uppercase tracking-[0.12em] text-white drop-shadow-md">Trợ lý AI</p>
-                        <p className="mt-0.5 text-[11px] font-medium text-cyan-50/80">Đang hỗ trợ: {user.name}</p>
+                        <p className="mt-0.5 truncate text-[11px] font-medium text-cyan-50/80">Đang hỗ trợ: {user.name}</p>
                     </div>
                 </div>
                 <div className="relative z-10 flex items-center gap-2">
@@ -304,7 +304,7 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
                 </div>
             </header>
 
-            <div className={`space-y-4 overflow-y-auto rounded-[22px] border border-slate-200/70 bg-[linear-gradient(180deg,#f8fafc,#eef5f8)] p-4 shadow-inner scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-300 ${isExpanded ? 'min-h-0 flex-1' : 'h-[25rem]'}`}>
+            <div className={`space-y-3 overflow-y-auto rounded-[18px] border border-slate-200/70 bg-[linear-gradient(180deg,#f8fafc,#eef5f8)] p-3 shadow-inner scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-300 sm:space-y-4 sm:rounded-[22px] sm:p-4 ${isExpanded ? 'min-h-0 flex-1' : 'h-[min(25rem,calc(100vh-14rem))]'}`}>
                 {messages.map((message) => (
                     <div className={`flex w-full ${message.role === 'user' ? 'justify-end' : 'justify-start'}`} key={message.id}>
                         {message.role === 'bot' && (
@@ -312,7 +312,7 @@ export default function ChatWidget({ user, isOpen, onClose, onExpandedChange }) 
                                 <RobotIcon className="h-5 w-5" />
                             </div>
                         )}
-                        <div className="flex flex-col gap-1 max-w-[80%]">
+                        <div className="flex max-w-[86%] flex-col gap-1 sm:max-w-[80%]">
                             <div
                                 className={`rounded-[20px] px-4 py-3 text-sm leading-relaxed shadow-sm break-words whitespace-pre-wrap ${message.role === 'bot'
                                     ? 'rounded-tl-md border border-slate-100 bg-white text-slate-700 shadow-[0_12px_28px_-24px_rgba(15,23,42,0.7)]'

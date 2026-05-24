@@ -49,13 +49,13 @@ export default function SeoServiceTabPage({ onChatClick }) {
 
     return (
         <div className="flex flex-col gap-6 md:gap-10 pb-16">
-            <section className="float-in stagger-1 relative overflow-hidden rounded-[40px] bg-[#09131e] px-6 py-14 md:py-20 mx-4 mt-6 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)]">
+            <section className="float-in stagger-1 relative mx-3 mt-4 overflow-hidden rounded-[28px] bg-[#09131e] px-4 py-10 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] sm:mx-4 sm:mt-6 sm:px-6 sm:py-14 md:rounded-[40px] md:py-20">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(242,104,42,0.15),transparent_40%),radial-gradient(circle_at_85%_0%,rgba(56,189,248,0.12),transparent_40%)]" />
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-[0.03]" />
                 <div className="relative z-10 mx-auto max-w-310">
                     
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-white drop-shadow-lg">
+                        <h2 className="text-3xl font-black uppercase tracking-tight text-white drop-shadow-lg md:text-5xl">
                             Giải pháp <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f2682a] to-[#ffb35a]">SEO Toàn Diện</span>
                         </h2>
                         <p className="mt-5 mx-auto max-w-2xl text-base text-slate-300">Tăng trưởng traffic thực chất, thống trị thứ hạng từ khóa và chuyển đổi người dùng thành khách hàng trung thành với tư duy SEO cốt lõi.</p>
@@ -65,7 +65,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
                         {metrics.map((metric) => (
                             <article className="group relative rounded-3xl border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-md transition-transform hover:-translate-y-2 hover:bg-white/10" key={metric.label}>
                                 <div className="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-[#f2682a]/20 blur-2xl opacity-0 transition-opacity group-hover:opacity-100" />
-                                <p className="relative text-5xl font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">{metric.value}</p>
+                                <p className="relative text-4xl font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] sm:text-5xl">{metric.value}</p>
                                 <p className="relative mt-3 text-sm font-semibold uppercase tracking-widest text-[#6dc8be]">{metric.label}</p>
                             </article>
                         ))}
@@ -73,7 +73,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
 
                     <div className="grid gap-6 lg:grid-cols-3 mb-16">
                         {packages.map((pkg) => (
-                            <article className="group flex flex-col justify-between rounded-[32px] bg-gradient-to-b from-white/10 to-white/5 p-8 text-white border border-white/10 shadow-xl transition hover:border-[#f2682a]/50 hover:bg-white/10" key={pkg.title}>
+                            <article className="group flex flex-col justify-between rounded-[24px] border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-5 text-white shadow-xl transition hover:border-[#f2682a]/50 hover:bg-white/10 sm:rounded-[32px] sm:p-8" key={pkg.title}>
                                 <div>
                                     <h3 className="text-2xl font-bold uppercase tracking-wide text-[#f3c7a3]">{pkg.title}</h3>
                                     <p className="mt-3 text-sm leading-relaxed text-slate-300">{pkg.summary}</p>
@@ -93,7 +93,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
                     </div>
 
                     <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
-                        <article className="rounded-[36px] bg-gradient-to-br from-[#13283c] to-[#0a1520] p-10 text-white shadow-2xl border border-white/10 relative overflow-hidden">
+                        <article className="relative overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-[#13283c] to-[#0a1520] p-6 text-white shadow-2xl sm:rounded-[36px] sm:p-10">
                             <div className="absolute right-0 top-0 h-64 w-64 bg-[#f2682a]/10 blur-[100px]" />
                             <h3 className="text-3xl font-black uppercase text-white relative z-10">Lộ trình triển khai chuẩn quốc tế</h3>
                             <div className="mt-10 space-y-8 relative z-10">
@@ -113,7 +113,7 @@ export default function SeoServiceTabPage({ onChatClick }) {
                             </div>
                         </article>
 
-                        <article className="flex flex-col justify-center rounded-[36px] bg-[linear-gradient(145deg,#f2682a,#e3521b)] p-10 text-white shadow-[0_30px_60px_rgba(242,104,42,0.35)] relative overflow-hidden">
+                        <article className="relative flex flex-col justify-center overflow-hidden rounded-[28px] bg-[linear-gradient(145deg,#f2682a,#e3521b)] p-6 text-white shadow-[0_30px_60px_rgba(242,104,42,0.35)] sm:rounded-[36px] sm:p-10">
                             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/food.png')] opacity-10 mix-blend-overlay" />
                             <div className="relative z-10">
                                 <span className="inline-flex items-center justify-center rounded-2xl bg-white/20 p-4 mb-6 shadow-lg backdrop-blur-md">

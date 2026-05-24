@@ -49,7 +49,7 @@ export default function AdsTabPage({ onChatClick }) {
     return (
         <div className="flex flex-col gap-6 md:gap-10 pb-16">
             {/* Hero Introduction */}
-            <section className="float-in stagger-1 relative overflow-hidden rounded-[40px] bg-[#090f1a] px-6 py-14 md:py-20 mx-4 mt-6 shadow-[0_30px_60px_-15px_rgba(14,165,233,0.25)] border border-slate-800">
+            <section className="float-in stagger-1 relative mx-3 mt-4 overflow-hidden rounded-[28px] border border-slate-800 bg-[#090f1a] px-4 py-10 shadow-[0_30px_60px_-15px_rgba(14,165,233,0.25)] sm:mx-4 sm:mt-6 sm:px-6 sm:py-14 md:rounded-[40px] md:py-20">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_25%,rgba(14,165,233,0.15),transparent_35%),radial-gradient(circle_at_85%_10%,rgba(16,185,129,0.12),transparent_30%),radial-gradient(circle_at_60%_90%,rgba(242,104,42,0.1),transparent_35%)]" />
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/micro-carbon.png')] opacity-30 mix-blend-overlay" />
                 
@@ -62,7 +62,7 @@ export default function AdsTabPage({ onChatClick }) {
                             </span>
                             <p className="text-xs font-black uppercase tracking-[0.2em] text-cyan-400">Performance Dashboard</p>
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-lg">
+                        <h2 className="text-3xl font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-lg md:text-5xl lg:text-6xl">
                             Quảng cáo đa kênh<br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-emerald-400 to-teal-200">Đo lường thời gian thực</span>
                         </h2>
@@ -71,7 +71,7 @@ export default function AdsTabPage({ onChatClick }) {
 
                     <div className="grid gap-6 md:grid-cols-3 mb-16">
                         {metrics.map((metric, idx) => (
-                            <article className="group relative overflow-hidden rounded-[32px] border border-white/10 bg-white/5 p-8 shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:bg-white/10 hover:border-cyan-500/40" key={metric.label}>
+                            <article className="group relative overflow-hidden rounded-[24px] border border-white/10 bg-white/5 p-5 shadow-2xl backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:border-cyan-500/40 hover:bg-white/10 sm:rounded-[32px] sm:p-8" key={metric.label}>
                                 <div className="absolute -left-10 -top-10 h-32 w-32 rounded-full bg-cyan-500/20 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-800 text-cyan-400 border border-white/5 shadow-inner group-hover:bg-cyan-500/20 transition-colors">
@@ -79,7 +79,7 @@ export default function AdsTabPage({ onChatClick }) {
                                     </div>
                                     <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Metric 0{idx + 1}</span>
                                 </div>
-                                <p className="relative text-4xl md:text-5xl font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">{metric.value}</p>
+                                <p className="relative text-3xl font-black tracking-tighter text-white drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] sm:text-4xl md:text-5xl">{metric.value}</p>
                                 <p className="relative mt-2 text-sm font-semibold uppercase tracking-wider text-emerald-300">{metric.label}</p>
                             </article>
                         ))}
@@ -87,7 +87,7 @@ export default function AdsTabPage({ onChatClick }) {
 
                     <div className="grid gap-6 lg:grid-cols-3">
                         {channels.map((channel) => (
-                            <article className="group flex flex-col justify-between rounded-[32px] border border-slate-700 bg-gradient-to-b from-[#101b2e] to-[#0a111f] p-8 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-emerald-500/50 hover:shadow-[0_20px_40px_-10px_rgba(16,185,129,0.15)] relative overflow-hidden" key={channel.name}>
+                            <article className="group relative flex flex-col justify-between overflow-hidden rounded-[24px] border border-slate-700 bg-gradient-to-b from-[#101b2e] to-[#0a111f] p-5 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-emerald-500/50 hover:shadow-[0_20px_40px_-10px_rgba(16,185,129,0.15)] sm:rounded-[32px] sm:p-8" key={channel.name}>
                                 <div className="absolute right-0 top-0 h-32 w-32 rounded-bl-full bg-slate-800/50 transition-colors group-hover:bg-emerald-900/40" />
                                 <div className="relative z-10">
                                     <span className="inline-flex rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.2em] text-emerald-400 mb-6 backdrop-blur-sm">KPI: {channel.kpi}</span>
@@ -105,7 +105,7 @@ export default function AdsTabPage({ onChatClick }) {
 
             {/* Dashboard Action Section */}
             <section className="float-in stagger-2 px-4">
-                <article className="mx-auto flex w-full max-w-310 flex-col justify-between gap-8 rounded-[40px] border border-cyan-500/30 bg-[linear-gradient(150deg,#0f172a,#082f49)] p-8 md:p-14 text-white shadow-[0_30px_60px_rgba(14,165,233,0.25)] relative overflow-hidden md:flex-row md:items-center">
+                <article className="relative mx-auto flex w-full max-w-310 flex-col justify-between gap-6 overflow-hidden rounded-[28px] border border-cyan-500/30 bg-[linear-gradient(150deg,#0f172a,#082f49)] p-5 text-white shadow-[0_30px_60px_rgba(14,165,233,0.25)] sm:p-8 md:flex-row md:items-center md:gap-8 md:rounded-[40px] md:p-14">
                     <div className="absolute -left-32 -top-32 h-64 w-64 rounded-full bg-cyan-400/20 blur-[100px]" />
                     <div className="absolute -bottom-32 -right-32 h-64 w-64 rounded-full bg-teal-400/10 blur-[100px]" />
                     
@@ -118,7 +118,7 @@ export default function AdsTabPage({ onChatClick }) {
                     </div>
 
                     <div className="relative z-10 flex shrink-0 flex-col gap-4">
-                        <button className="flex w-full items-center justify-center gap-3 rounded-full bg-cyan-400 px-8 py-5 text-sm font-black uppercase text-slate-900 transition-transform hover:scale-[1.03] shadow-[0_0_20px_rgba(34,211,238,0.4)]" onClick={onChatClick} type="button">
+                        <button className="flex w-full items-center justify-center gap-3 rounded-full bg-cyan-400 px-5 py-4 text-sm font-black uppercase text-slate-900 shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-transform hover:scale-[1.03] sm:px-8 sm:py-5" onClick={onChatClick} type="button">
                             <span>Nhận Mẫu Dashboard</span>
                             <svg className="w-5 h-5 animate-bounce-x" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>

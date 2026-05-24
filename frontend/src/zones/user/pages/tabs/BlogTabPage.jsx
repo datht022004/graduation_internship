@@ -81,7 +81,7 @@ export default function BlogTabPage() {
             <section className="float-in stagger-1 relative mx-4 mt-6">
                 <div className="mx-auto max-w-310">
                     <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-                        <article className="group relative overflow-hidden rounded-[36px] bg-[linear-gradient(150deg,#1e252f,#0f141a)] p-8 md:p-12 text-white shadow-[0_30px_60px_-15px_rgba(242,104,42,0.15)] ring-1 ring-white/10 transition-transform duration-500 hover:shadow-[0_40px_80px_-20px_rgba(242,104,42,0.3)]">
+                        <article className="group relative overflow-hidden rounded-[28px] bg-[linear-gradient(150deg,#1e252f,#0f141a)] p-5 text-white shadow-[0_30px_60px_-15px_rgba(242,104,42,0.15)] ring-1 ring-white/10 transition-transform duration-500 hover:shadow-[0_40px_80px_-20px_rgba(242,104,42,0.3)] sm:p-8 md:rounded-[36px] md:p-12">
                             {featuredPost.imageUrl && (
                                 <img src={featuredPost.imageUrl} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-luminosity" />
                             )}
@@ -95,12 +95,12 @@ export default function BlogTabPage() {
                                         <svg className="w-4 h-4 text-[#f3c7a3]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
                                         <p className="text-xs font-black uppercase tracking-[0.2em] text-[#f3c7a3]">Bài viết nổi bật</p>
                                     </div>
-                                    <h2 className="max-w-3xl text-3xl font-black uppercase leading-tight tracking-wide md:text-5xl lg:text-6xl group-hover:text-[#f3c7a3] transition-colors duration-300 line-clamp-4">
+                                    <h2 className="line-clamp-4 max-w-3xl text-2xl font-black uppercase leading-tight tracking-wide transition-colors duration-300 group-hover:text-[#f3c7a3] sm:text-3xl md:text-5xl lg:text-6xl">
                                         {featuredPost.title}
                                     </h2>
                                 </div>
                                 <div className="mt-12 flex items-center gap-4">
-                                    <button onClick={() => handlePostClick(featuredPost)} className="flex items-center gap-3 rounded-full bg-[#f2682a] px-6 py-4 text-sm font-black uppercase text-white transition-transform hover:scale-105 shadow-xl shadow-[#f2682a]/30" type="button">
+                                    <button onClick={() => handlePostClick(featuredPost)} className="flex items-center gap-3 rounded-full bg-[#f2682a] px-5 py-3 text-sm font-black uppercase text-white shadow-xl shadow-[#f2682a]/30 transition-transform hover:scale-105 sm:px-6 sm:py-4" type="button">
                                         <span>Đọc bài nổi bật</span>
                                         <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                                     </button>
@@ -108,7 +108,7 @@ export default function BlogTabPage() {
                             </div>
                         </article>
 
-                        <aside className="relative flex flex-col justify-center overflow-hidden rounded-[36px] bg-[linear-gradient(135deg,#fff8ef,#fdf1e1)] p-8 md:p-12 shadow-[0_20px_40px_-15px_rgba(242,104,42,0.1)] ring-1 ring-[#f2682a]/10">
+                        <aside className="relative flex flex-col justify-center overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#fff8ef,#fdf1e1)] p-5 shadow-[0_20px_40px_-15px_rgba(242,104,42,0.1)] ring-1 ring-[#f2682a]/10 sm:p-8 md:rounded-[36px] md:p-12">
                             <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/3 rounded-full bg-[#f2682a]/5 blur-[60px]" />
                             <div className="relative z-10 text-center">
                                 <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#fff1e7] text-[#f2682a] shadow-inner">
@@ -194,4 +194,3 @@ function CategoryTab({ active, count, label, onClick }) {
         </button>
     )
 }
-

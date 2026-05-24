@@ -40,16 +40,16 @@ export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginCli
     return (
         <>
             <header className="border-b border-slate-200 bg-white">
-                <div className="mx-auto flex w-full max-w-310 items-center justify-between gap-4 px-4 py-4">
-                    <div>
-                        <p className="text-4xl font-bold uppercase leading-none tracking-tight text-[#f2682a]">
+                <div className="mx-auto flex w-full max-w-310 flex-wrap items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:py-4">
+                    <div className="min-w-0">
+                        <p className="text-3xl font-bold uppercase leading-none tracking-tight text-[#f2682a] sm:text-4xl">
                             SEO<span className="text-slate-900">vip</span>
                         </p>
                         <p className="text-sm italic text-slate-500">Cùng bạn tỏa sáng</p>
                     </div>
 
                     <nav className="hidden flex-1 justify-center lg:flex">
-                        <ul className="flex items-center gap-8 text-[28px] font-medium text-slate-700">
+                        <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 font-medium text-slate-700 xl:gap-x-8">
                             {tabs.map((tab) => (
                                 <li key={tab.key}>
                                     <button
@@ -64,9 +64,9 @@ export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginCli
                         </ul>
                     </nav>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex shrink-0 items-center gap-2">
                         <button
-                            className="rounded-full bg-[#f68a44] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#e36d22]"
+                            className="rounded-full bg-[#f68a44] px-3 py-2 text-xs font-bold text-white transition hover:bg-[#e36d22] sm:px-4 sm:text-sm"
                             onClick={onChatClick}
                             type="button"
                         >
@@ -86,7 +86,7 @@ export default function UserHeaderNav({ tabs, activeTabKey, authUser, onLoginCli
                                 </button>
 
                                 {isUserMenuOpen && (
-                                    <div className="absolute right-0 top-13 z-[70] w-72 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_22px_50px_-24px_rgba(15,23,42,0.55)]">
+                                    <div className="absolute right-0 top-13 z-[70] w-[min(18rem,calc(100vw-2rem))] rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_22px_50px_-24px_rgba(15,23,42,0.55)]">
                                         <div className="mb-4 flex items-center gap-3">
                                             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200">
                                                 <svg className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

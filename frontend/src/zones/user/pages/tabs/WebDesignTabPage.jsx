@@ -49,18 +49,18 @@ export default function WebDesignTabPage({ onChatClick }) {
     return (
         <div className="flex flex-col gap-6 md:gap-10 pb-16">
             {/* Hero Introduction */}
-            <section className="float-in stagger-1 relative overflow-hidden rounded-[40px] bg-[linear-gradient(135deg,#f0f9ff,#e0f2fe_45%,#eff6ff)] px-6 py-14 md:py-20 mx-4 mt-6 shadow-[0_30px_60px_-15px_rgba(2,132,199,0.15)] ring-1 ring-white">
+            <section className="float-in stagger-1 relative mx-3 mt-4 overflow-hidden rounded-[28px] bg-[linear-gradient(135deg,#f0f9ff,#e0f2fe_45%,#eff6ff)] px-4 py-10 shadow-[0_30px_60px_-15px_rgba(2,132,199,0.15)] ring-1 ring-white sm:mx-4 sm:mt-6 sm:px-6 sm:py-14 md:rounded-[40px] md:py-20">
                 <div className="absolute -left-18 -top-16 h-56 w-56 rounded-full bg-sky-400/20 blur-[80px]" />
                 <div className="absolute -bottom-24 right-0 h-72 w-72 rounded-full bg-cyan-400/20 blur-[80px]" />
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/connected.png')] opacity-[0.03]" />
                 
                 <div className="relative z-10 mx-auto max-w-310">
-                    <div className="rounded-[36px] bg-white/60 p-8 md:p-12 shadow-2xl backdrop-blur-md border border-white/60 mb-12">
+                    <div className="mb-8 rounded-[28px] border border-white/60 bg-white/60 p-5 shadow-2xl backdrop-blur-md sm:p-8 md:mb-12 md:rounded-[36px] md:p-12">
                         <div className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-1.5 mb-6 shadow-sm">
                             <span className="h-2 w-2 rounded-full bg-sky-500 animate-pulse" />
                             <p className="text-xs font-black uppercase tracking-[0.2em] text-sky-700">Website Conversion Lab</p>
                         </div>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-black uppercase leading-[1.1] text-slate-900 tracking-tight">
+                        <h2 className="text-3xl font-black uppercase leading-[1.1] tracking-tight text-slate-900 md:text-5xl lg:text-6xl">
                             Thiết kế Website<br/>
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-cyan-500">Tối ưu chuyển đổi</span>
                         </h2>
@@ -70,7 +70,7 @@ export default function WebDesignTabPage({ onChatClick }) {
                     </div>
 
                     <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-                        <article className="group relative overflow-hidden rounded-[32px] border border-white/60 bg-white shadow-[0_20px_40px_-15px_rgba(2,132,199,0.15)]">
+                        <article className="group relative overflow-hidden rounded-[24px] border border-white/60 bg-white shadow-[0_20px_40px_-15px_rgba(2,132,199,0.15)] sm:rounded-[32px]">
                             <img
                                 alt="Banner văn phòng công ty"
                                 className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105 md:h-80"
@@ -78,7 +78,7 @@ export default function WebDesignTabPage({ onChatClick }) {
                                 src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1400&q=80"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#082f49]/90 via-[#082f49]/40 to-transparent" />
-                            <div className="absolute bottom-0 left-0 p-8 text-white relative z-10 w-full">
+                            <div className="relative bottom-0 left-0 z-10 w-full p-5 text-white sm:p-8">
                                 <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 mb-3 backdrop-blur-md">
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
                                     <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white">Digital Workspace</p>
@@ -87,14 +87,14 @@ export default function WebDesignTabPage({ onChatClick }) {
                             </div>
                         </article>
 
-                        <article className="group relative overflow-hidden rounded-[32px] border border-white/60 bg-white shadow-[0_20px_40px_-15px_rgba(2,132,199,0.1)] flex flex-col">
+                        <article className="group relative flex flex-col overflow-hidden rounded-[24px] border border-white/60 bg-white shadow-[0_20px_40px_-15px_rgba(2,132,199,0.1)] sm:rounded-[32px]">
                             <img
                                 alt="Team UX UI"
                                 className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-110"
                                 loading="lazy"
                                 src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=900&q=80"
                             />
-                            <div className="flex-1 p-6 md:p-8 bg-white relative z-10">
+                            <div className="relative z-10 flex-1 bg-white p-5 sm:p-6 md:p-8">
                                 <p className="text-xs font-black uppercase tracking-[0.16em] text-sky-600 mb-2">Design & SEO Sync</p>
                                 <p className="text-sm font-medium leading-relaxed text-slate-700">Team Design, Content và SEO làm việc chung một luồng, đảm bảo website xuất xưởng vừa thẩm mỹ vừa thân thiện với Google.</p>
                             </div>
@@ -128,7 +128,7 @@ export default function WebDesignTabPage({ onChatClick }) {
             {/* Highlights & CTA */}
             <section className="float-in stagger-3 px-4">
                 <div className="mx-auto grid max-w-310 gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-                    <article className="rounded-[36px] border border-slate-200 bg-white p-8 md:p-12 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.1)]">
+                    <article className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.1)] sm:p-8 md:rounded-[36px] md:p-12">
                         <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-3xl text-sky-500 shadow-inner">
                             🎯
                         </div>
@@ -145,7 +145,7 @@ export default function WebDesignTabPage({ onChatClick }) {
                         </ul>
                     </article>
 
-                    <article className="flex flex-col justify-center rounded-[36px] bg-[linear-gradient(160deg,#082f49,#0284c7)] p-8 md:p-12 text-white shadow-[0_30px_60px_rgba(2,132,199,0.3)] relative overflow-hidden">
+                    <article className="relative flex flex-col justify-center overflow-hidden rounded-[28px] bg-[linear-gradient(160deg,#082f49,#0284c7)] p-5 text-white shadow-[0_30px_60px_rgba(2,132,199,0.3)] sm:p-8 md:rounded-[36px] md:p-12">
                         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-sky-400/30 blur-[80px]" />
                         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/black-paper.png')] opacity-20 mix-blend-overlay" />
                         

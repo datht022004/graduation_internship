@@ -18,6 +18,21 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--ink);
   background: #efefef;
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 h1,
@@ -369,6 +384,22 @@ h4 {
   display: block;
   margin-bottom: 0.35rem;
   color: #9a3412;
+}
+
+@media (max-width: 640px) {
+  .float-in {
+    animation-duration: 420ms;
+  }
+
+  .blog-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .blog-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 }
 
 @keyframes slide-in-left {

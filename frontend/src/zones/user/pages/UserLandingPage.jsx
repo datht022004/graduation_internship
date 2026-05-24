@@ -11,6 +11,7 @@ import HomeTabPage from './tabs/HomeTabPage'
 import SeoServiceTabPage from './tabs/SeoServiceTabPage'
 import WebDesignTabPage from './tabs/WebDesignTabPage'
 import CompanyProfilePage from './tabs/CompanyProfilePage'
+import PricingTabPage from './tabs/PricingTabPage'
 
 const USER_ACTIVE_TAB_STORAGE_KEY = 'user_landing_active_tab'
 
@@ -34,6 +35,10 @@ function renderTabContent(activeTabKey, onChatClick, onSelectTab) {
 
     if (activeTabKey === 'ads') {
         return <AdsTabPage onChatClick={onChatClick} />
+    }
+
+    if (activeTabKey === 'pricing') {
+        return <PricingTabPage onChatClick={onChatClick} />
     }
 
     if (activeTabKey === 'blog') {

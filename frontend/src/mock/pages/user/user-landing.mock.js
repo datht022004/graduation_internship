@@ -32,6 +32,14 @@ export const USER_LANDING_TABS_MOCK = [
             'Triển khai Google, Meta, TikTok theo phễu bán hàng, theo dõi CPL/ROAS và tối ưu liên tục.',
     },
     {
+        key: 'pricing',
+        label: 'Bảng giá dịch vụ',
+        eyebrow: 'Service Pricing',
+        title: 'Bảng giá dịch vụ rõ ràng theo nhu cầu',
+        description:
+            'Tham khảo nhanh các gói SEO, website và quảng cáo để chọn phương án phù hợp ngân sách triển khai.',
+    },
+    {
         key: 'blog',
         label: 'Blog',
         eyebrow: 'Insight & Playbook',
