@@ -1,61 +1,61 @@
 # Module CMS Extensions
 
-Các module mở rộng phục vụ cho việc quản trị nội dung website động (Dynamic CMS).
+File này là bản tổng quan nhanh cho nhóm module CMS mở rộng. Tài liệu chi tiết đã được tách ra từng file `module-*.md` riêng.
 
-Path:
+## Các module trong nhóm
 
-```text
-app/manager/company_profile/
-app/manager/service_packages/
-app/manager/case_studies/
-app/manager/testimonials/
-app/manager/contact_requests/
-```
+| Module | Backend path | Collection | Tài liệu chi tiết |
+|--------|--------------|------------|-------------------|
+| Company Profile | `backend/app/manager/company_profile/` | `company_profile` | `backend/docs/module-company-profile.md` |
+| Service Packages | `backend/app/manager/service_packages/` | `service_packages` | `backend/docs/module-service-packages.md` |
+| Case Studies | `backend/app/manager/case_studies/` | `case_studies` | `backend/docs/module-case-studies.md` |
+| Testimonials | `backend/app/manager/testimonials/` | `testimonials` | `backend/docs/module-testimonials.md` |
+| Contact Requests | `backend/app/manager/contact_requests/` | `contact_requests` | `backend/docs/module-contact-requests.md` |
+| Site Content | `backend/app/manager/site_content/` | `site_content` | `backend/docs/module-site-content.md` |
 
-## Cấu trúc chung (Files)
+## Cấu trúc chung
 
-Mỗi thư mục đại diện cho một module CMS với cấu trúc chuẩn:
+Phần lớn các module CMS có 3 file chính:
 
 | File | Vai trò |
 |------|---------|
-| `controller.py` | Định nghĩa các routes (APIs) cho Admin (yêu cầu auth) và Public (không yêu cầu auth). |
-| `usecase.py` | Pydantic models (Schema validation) và logic nghiệp vụ. |
-| `repository.py` | Tương tác trực tiếp với MongoDB (CRUD operations). |
+| `controller.py` | Khai báo public/admin routes |
+| `usecase.py` | Pydantic schema, validate và nghiệp vụ CRUD |
+| `repository.py` | Thao tác MongoDB |
 
-## Danh sách Modules
+## Mẫu endpoint chung
 
-### 1. Company Profile (Hồ sơ Công ty)
-- **Collection**: `company_profiles`
-- **Mục đích**: Quản lý thông tin giới thiệu, tầm nhìn, sứ mệnh, v.v.
-- **Admin Endpoints**: `/api/admin/company-profile` (GET, POST, PUT, DELETE)
-- **Public Endpoints**: `/api/user/company-profile` (GET)
+Các module public/admin thường đi theo mẫu:
 
-### 2. Service Packages (Gói Dịch Vụ)
-- **Collection**: `service_packages`
-- **Mục đích**: Quản lý danh sách các gói dịch vụ (SEO, Web Design, Ads) và giá cả, tính năng.
-- **Admin Endpoints**: `/api/admin/service-packages` (GET, POST, PUT, DELETE)
-- **Public Endpoints**: `/api/user/service-packages` (GET)
+```text
+GET    /api/user/{resource}
+GET    /api/admin/{resource}
+POST   /api/admin/{resource}
+PUT    /api/admin/{resource}/{item_id}
+DELETE /api/admin/{resource}/{item_id}
+```
 
-### 3. Case Studies (Dự Án Đã Làm)
-- **Collection**: `case_studies`
-- **Mục đích**: Quản lý các dự án, danh mục đầu tư (portfolio) để show thành tựu cho khách hàng.
-- **Admin Endpoints**: `/api/admin/case-studies` (GET, POST, PUT, DELETE)
-- **Public Endpoints**: `/api/user/case-studies` (GET)
+Riêng `site_content` dùng:
 
-### 4. Testimonials (Đánh giá Khách Hàng)
-- **Collection**: `testimonials`
-- **Mục đích**: Quản lý nhận xét và đánh giá của khách hàng, tích hợp sao (rating).
-- **Admin Endpoints**: `/api/admin/testimonials` (GET, POST, PUT, DELETE)
-- **Public Endpoints**: `/api/user/testimonials` (GET)
+```text
+GET /api/user/site-content/{page_key}
+GET /api/admin/site-content?page_key=...
+```
 
-### 5. Contact Requests (Yêu Cầu Tư Vấn)
-- **Collection**: `contact_requests`
-- **Mục đích**: Lưu trữ thông tin khách hàng điền form liên hệ/tư vấn.
-- **Admin Endpoints**: `/api/admin/contact-requests` (GET, POST, PUT, DELETE)
-- **Public Endpoints**: `/api/user/contact-requests` (POST) (Để user có thể gửi yêu cầu).
+Riêng `contact_requests` hiện chỉ có admin CRUD trong code backend. `public_router` đã được khai báo nhưng chưa có public endpoint.
 
-## Phân quyền & Security
+## Phân quyền
 
-- Toàn bộ các route `/api/admin/*` bắt buộc sử dụng `Depends(require_admin)` từ `app.manager.auth.usecase`.
-- API trả về lỗi `401/403` nếu không cung cấp token Admin hợp lệ.
-- Validation dữ liệu được Pydantic tự động xử lý chặt chẽ ở lớp `usecase.py`.
+- Public routes `/api/user/*` không yêu cầu đăng nhập.
+- Admin routes `/api/admin/*` dùng `Depends(require_admin)`.
+- Request admin cần header:
+
+```text
+Authorization: Bearer <access_token>
+```
+
+## Lưu ý chung
+
+- Các repository CMS hiện chủ yếu đọc toàn bộ collection, chưa đồng nhất sort/filter theo `sort_order` hoặc `is_active`.
+- Nếu FE cần ẩn item inactive hoặc sắp xếp theo thứ tự, nên xử lý ở FE hoặc bổ sung filter/sort trong repository.
+- Các file chi tiết mới là nguồn tham khảo chính khi cần xem luồng, schema và endpoint từng module.
