@@ -42,7 +42,7 @@ export const ADMIN_NAVIGATION = {
     contactRequests: {
         key: 'contactRequests',
         label: 'Lịch sử Chat',
-        icon: 'message-circle',
+        icon: 'mail',
     },
 }
 

@@ -85,6 +85,18 @@ axios.interceptors.request.use((config) => ({
     headers: withAuthHeaders(config.headers),
 }))
 
+// Tự động xóa session và thông báo khi token hết hạn (401)
+axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('app_auth_session')
+            window.dispatchEvent(new CustomEvent('app:session-expired'))
+        }
+        return Promise.reject(error)
+    }
+)
+
 // POST /auth/login - Auth module: đăng nhập email/password.
 export async function authLogin(payload) {
     const { data } = await axios.post(API_ENDPOINTS.auth.login, payload)

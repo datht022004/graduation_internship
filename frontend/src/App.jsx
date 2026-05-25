@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import AdminZonePage from './zones/admin/pages/AdminZonePage'
 import UserZonePage from './zones/user/pages/UserZonePage'
 
@@ -55,6 +55,15 @@ function App() {
     localStorage.removeItem('app_auth_session')
     setActiveZone('user')
   }
+
+  // Tự động logout khi axios phát hiện token hết hạn (401)
+  useEffect(() => {
+    function onSessionExpired() {
+      handleLogout()
+    }
+    window.addEventListener('app:session-expired', onSessionExpired)
+    return () => window.removeEventListener('app:session-expired', onSessionExpired)
+  }, [authUser])
 
   if (activeZone === 'admin' && authUser?.role === 'admin') {
     return (

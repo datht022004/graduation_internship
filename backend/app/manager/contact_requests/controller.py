@@ -11,10 +11,6 @@ from app.manager.contact_requests.usecase import (
 admin_router = APIRouter(prefix="/admin/contact-requests", tags=["Admin - ContactRequest"])
 public_router = APIRouter(prefix="/user/contact-requests", tags=["User - ContactRequest"])
 
-# Lấy toàn bộ bản ghi cho module hiện tại.
-@public_router.get("", response_model=list[ContactRequest])
-async def get_all_public():
-    return contact_request_usecase.get_all()
 
 # Lấy toàn bộ bản ghi cho module hiện tại.
 @admin_router.get("", response_model=list[ContactRequest])
