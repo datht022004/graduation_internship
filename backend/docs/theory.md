@@ -42,6 +42,13 @@ React là thư viện xây dựng giao diện dựa trên **Component**. Để q
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
     ```
+    * **Giải thích chi tiết & dễ hiểu:**
+      * **Ý tưởng cơ bản:** Đặt một "lá cờ" đánh dấu (thẻ `<div>` trống) ở dưới cùng danh sách tin nhắn chat. Mỗi khi có tin nhắn mới (`messages` thay đổi), React tự động kích hoạt `useEffect` để ra lệnh cho trình duyệt cuộn màn hình mượt mà xuống đúng vị trí "lá cờ".
+      * **Chi tiết từng phần:**
+        * `const messagesEndRef = useRef(null);`: Tạo một tham chiếu (ref) đóng vai trò như chiếc hộp chứa vị trí của thẻ HTML sau khi hiển thị.
+        * `<div ref={messagesEndRef} />` (đặt ở dưới cùng JSX của danh sách chat): Gắn chiếc hộp tham chiếu vào thẻ HTML này để làm đích cần cuộn tới.
+        * `scrollIntoView({ behavior: 'smooth' })`: Phương thức của trình duyệt giúp cuộn màn hình mượt mà đến phần tử được gọi.
+        * `[messages]`: Dependency array đảm bảo hành động cuộn chỉ chạy khi danh sách tin nhắn thay đổi (có tin mới).
   * **Tác vụ 2: Hủy luồng stream khi đóng khung chat (Cleanup):**
     ```jsx
     const abortRef = useRef(null);

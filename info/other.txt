@@ -1,80 +1,208 @@
-THÔNG TIN BỔ SUNG KHÁC VỀ SEOVIP (SEOViP)
+THÔNG TIN BỔ SUNG CHI TIẾT TOÀN DIỆN VỀ SEOVIP (SEOViP)
 
-Tài liệu này tổng hợp các thông tin về chương trình thực tập, tuyển dụng, câu hỏi thường gặp (FAQs), các chính sách bảo mật/thanh toán và hoạt động cộng đồng của công ty SEOViP.
+Tài liệu này tổng hợp chi tiết các thông tin về chương trình tuyển dụng, thực tập sinh, hệ thống chính sách - quy định chung (Thanh toán, Bảo mật, Bảo hành, Hoàn tiền), bộ câu hỏi thường gặp (FAQs) và các hoạt động cộng đồng, tài nguyên chia sẻ miễn phí của công ty SEOViP.
 
-I. CHƯƠNG TRÌNH TUYỂN DỤNG & THỰC TẬP SINH CỦA SEOVIP (INTERNSHIP PROGRAM)
-SEOViP là một trong những đơn vị tiếp nhận và đào tạo thực tập sinh (TTS) khối ngành Công nghệ thông tin (CNTT) và Marketing uy tín hàng đầu tại Đà Nẵng.
+================================================================================
+I. CHƯƠNG TRÌNH TUYỂN DỤNG, THỰC TẬP SINH & CỘNG TÁC VIÊN CỦA SEOVIP
+================================================================================
+SEOViP liên tục chiêu mộ nhân tài và tiếp nhận đào tạo thực tập sinh (TTS) khối ngành Công nghệ thông tin (CNTT), Thương mại điện tử (TMĐT), Thiết kế đồ họa và Marketing tại Đà Nẵng. Dưới đây là thông tin chi tiết các vị trí:
 
-1. Chương trình thực tập tốt nghiệp SEO & Content Marketing tại SEOViP:
-* Số lượng tuyển dụng định kỳ: 5 Thực tập sinh / đợt.
-* Đối tượng tuyển dụng: Sinh viên năm cuối hoặc năm 3 các trường Đại học/Cao đẳng tại Đà Nẵng (đặc biệt phù hợp cho sinh viên chuyên ngành CNTT, Thương mại điện tử, Marketing, Quản trị kinh doanh của các trường như VKU, Bách Khoa, Kinh Tế, Duy Tân...).
-* Yêu cầu đầu vào cơ bản:
-  - Không yêu cầu kinh nghiệm chuyên môn trước đó (được đào tạo từ đầu).
-  - Có đam mê lớn với lĩnh vực Marketing Online, SEO, viết lách hoặc quản trị website.
-  - Chủ động, có tinh thần tự học hỏi cao, kiên trì và chịu khó.
+1. NHÂN VIÊN SEO - MARKETING ONLINE
+* Số lượng tuyển dụng: 02 nhân sự (Làm việc tại văn phòng Đà Nẵng).
+* Thời gian làm việc: Giờ hành chính (Thứ 2 đến Thứ 7).
+* Thu nhập: Lương cứng 7.000.000 - 10.000.000 VNĐ/tháng (tùy năng lực) + thưởng KPI + thưởng % doanh số dự án + thưởng lễ tết + thưởng thâm niên.
+* Mô tả công việc:
+  - Trực tiếp triển khai các dự án SEO tổng thể cho khách hàng của công ty.
+  - Thực hiện tối ưu hóa Onpage, viết bài/kiểm soát bài chuẩn SEO, tối ưu Offpage, đi link và Social Entity.
+  - Đưa danh sách từ khóa của nhóm ngành phụ trách đạt thứ hạng TOP theo cam kết hợp đồng.
+  - Báo cáo tiến độ và hiệu quả công việc hàng tuần/tháng cho Leader.
+* Yêu cầu công việc:
+  - Đã có kinh nghiệm làm SEO thực tế từ 1 năm trở lên.
+  - Có kiến thức chuyên sâu về SEO Onpage, SEO Offpage, Technical SEO.
+  - Thành thạo các công cụ: Google Analytics 4, Search Console, Ahrefs, Screaming Frog, Semrush.
   - Có laptop cá nhân phục vụ công việc.
-* Nội dung đào tạo thực tế trong kỳ thực tập:
-  - Đào tạo tư duy cốt lõi về Digital Marketing và SEO bài bản từ CEO Lê Đình Thanh và đội ngũ chuyên gia kỹ thuật.
-  - Học cách nghiên cứu từ khóa nâng cao, phân tích cấu trúc đối thủ cạnh tranh.
-  - Thực hành viết bài chuẩn SEO, viết nội dung thu hút trên website và fanpage.
-  - Thực hành tối ưu hóa SEO Onpage (hình ảnh, heading, mật độ từ khóa) và SEO Offpage (Social Entity, đi liên kết chất lượng).
-  - Sử dụng thành thạo các công cụ hỗ trợ SEO hàng đầu như Google Analytics 4, Search Console, Ahrefs, Screaming Frog.
-* Quyền lợi dành cho thực tập sinh tại SEOViP:
-  - Được hỗ trợ số liệu, tài liệu đóng dấu xác nhận báo cáo thực tập tốt nghiệp.
-  - Được tham gia các buổi offline, teambuilding và sự kiện cộng đồng của công ty.
-  - Cơ hội được giữ lại làm nhân viên chính thức hoặc Cộng tác viên (CTV) có thu nhập sau kỳ thực tập nếu đạt kết quả tốt.
+  - Trung thực, chủ động, ham học hỏi và chịu được áp lực tiến độ dự án.
+* Quyền lợi được hưởng:
+  - Được hưởng đầy đủ các chế độ bảo hiểm (BHXH, BHYT, BHTN) theo quy định pháp luật sau thử việc.
+  - Chế độ nghỉ phép năm (12 ngày phép), thưởng lễ tết, lương tháng 13.
+  - Du lịch, teambuilding hàng năm cùng công ty.
+  - Tham gia miễn phí các khóa học nâng cao tại SEOViP Academy để phát triển bản thân.
 
-2. Cách thức ứng tuyển thực tập sinh tại SEOViP:
-* Ứng viên gửi CV về địa chỉ email: info@seovip.vn
-* Tiêu đề email ghi rõ theo định dạng: Tên Ứng viên _ SĐT _ Vị trí ứng tuyển (Ví dụ: Nguyen Van A _ 0905xxxxxx _ Thực tập sinh SEO).
+2. NHÂN VIÊN KINH DOANH (SALES REPRESENTATIVE)
+* Số lượng tuyển dụng: 02 nhân sự (Đà Nẵng).
+* Trình độ yêu cầu: Cao đẳng, Đại học chuyên ngành Kinh tế, QTKD, Marketing, CNTT.
+* Thu nhập: 8.000.000 - 30.000.000 VNĐ/tháng (Lương cứng + thưởng KPI + % hoa hồng doanh số cực cao).
+* Mô tả công việc:
+  - Chủ động tìm kiếm, tiếp cận các khách hàng doanh nghiệp có nhu cầu thiết kế website, dịch vụ SEO, quảng cáo Google/Facebook, Booking bài PR báo chí.
+  - Tiếp nhận nguồn khách hàng tiềm năng do công ty bàn giao để tư vấn giải pháp phù hợp.
+  - Đàm phán, thương lượng điều khoản và ký kết hợp đồng dịch vụ.
+  - Phối hợp với bộ phận kỹ thuật để bàn giao dự án, theo dõi tiến độ thanh toán và chăm sóc khách hàng sau bán hàng.
+* Yêu cầu công việc:
+  - Có kiến thức cơ bản về website, Digital Marketing và quảng cáo trực tuyến.
+  - Khả năng giao tiếp, đàm phán tốt; nhạy bén xử lý tình huống phát sinh.
+  - Đam mê kinh doanh, chịu khó, chủ động bám đuổi mục tiêu doanh số.
+* Quyền lợi được hưởng:
+  - Đóng bảo hiểm đầy đủ, thưởng lễ tết, thưởng thâm niên, nghỉ phép năm.
+  - Hưởng % hoa hồng lũy tiến theo doanh thu ký kết hợp đồng.
+  - Được đào tạo kỹ năng bán hàng và kiến thức chuyên môn Digital Marketing thực chiến.
 
-II. HỆ THỐNG CHÍNH SÁCH & QUY ĐỊNH CHUNG CỦA SEOVIP
+3. NHÂN VIÊN TƯ VẤN BOOKING BÁO & DỊCH VỤ PR
+* Số lượng tuyển dụng: 02 nhân sự (Đà Nẵng).
+* Thu nhập: 8.000.000 - 30.000.000 VNĐ/tháng (Lương cứng + thưởng doanh số + thưởng lễ tết).
+* Mô tả công việc:
+  - Tư vấn gói dịch vụ quảng bá thương hiệu, viết bài PR, Booking báo điện tử (Dân Trí, VnExpress, 24h...), Guest Post, bài viết Toplist.
+  - Tìm kiếm và tiếp cận khách hàng tiềm năng qua telesale, chat online, mạng xã hội.
+  - Chăm sóc và duy trì mối quan hệ tốt đẹp với hệ thống khách hàng cũ và đại lý liên kết.
+  - Lập báo cáo doanh số định kỳ hàng tuần, hàng tháng.
+* Yêu cầu công việc:
+  - Giọng nói chuẩn, giao tiếp lưu loát, thuyết phục khách hàng tốt.
+  - Hiểu biết về ngành báo chí truyền thông, dịch vụ SEO là lợi thế lớn.
+  - Có tinh thần trách nhiệm cao, năng động, kiên trì.
 
-1. Quy định & Hình thức thanh toán tại SEOViP:
-Khách hàng sử dụng dịch vụ của SEOViP thực hiện thanh toán tạm ứng hoặc thanh toán trọn gói theo các hình thức sau:
-* Thanh toán trực tiếp bằng tiền mặt: Tại trụ sở công ty - Số 181 Nguyễn Tri Phương, Phường Thạc Gián, Quận Thanh Khê, Đà Nẵng.
-* Thanh toán qua chuyển khoản ngân hàng:
-  - Ngân hàng: Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank) - Chi nhánh Ngũ Hành Sơn, Đà Nẵng.
+4. NHÂN VIÊN CONTENT MARKETING
+* Số lượng tuyển dụng: 02 nhân sự (Đà Nẵng).
+* Thu nhập: 6.000.000 - 10.000.000 VNĐ/tháng + thưởng KPI + thưởng dự án.
+* Yêu cầu kinh nghiệm: Tối thiểu 1 năm kinh nghiệm viết content thương mại.
+* Mô tả công việc:
+  - Lập kế hoạch nội dung chi tiết theo tuần/tháng cho website, Fanpage Facebook, Blog vệ tinh của khách hàng.
+  - Biên soạn bài viết chuẩn SEO, bài PR báo chí, bài đăng mạng xã hội, kịch bản video ngắn.
+  - Tối ưu hóa SEO Onpage cho bài viết (thẻ Heading, thẻ Alt hình ảnh, link nội bộ).
+  - Phối hợp với bộ phận thiết kế hình ảnh/video để hoàn thiện bài đăng chất lượng cao.
+* Yêu cầu công việc:
+  - Có khả năng viết lách tốt, hành văn lưu loát, đa dạng phong cách viết.
+  - Sáng tạo, nhạy bén bắt trend và thấu hiểu tâm lý khách hàng.
+  - Sử dụng cơ bản các công cụ chỉnh sửa hình ảnh (Canva, Photoshop) là một lợi thế lớn.
+
+5. THỰC TẬP SINH CONTENT MARKETING (INTERN CONTENT)
+* Số lượng: 05 thực tập sinh mỗi đợt.
+* Đối tượng: Sinh viên năm 2, 3, 4 chuyên ngành Marketing, Báo chí, Ngôn ngữ học, QTKD tại Đà Nẵng.
+* Lương hỗ trợ: Thỏa thuận tùy theo hiệu quả bài viết thực tế.
+* Mô tả công việc:
+  - Tham gia lên ý tưởng nội dung cho các dự án thực tế của doanh nghiệp đối tác.
+  - Viết bài chuẩn SEO, bài đăng Fanpage Facebook, hỗ trợ edit bài viết chuẩn SEO Onpage dưới sự chỉ dẫn của Content Leader.
+  - Hỗ trợ xây dựng kế hoạch nội dung tuần/tháng.
+* Quyền lợi:
+  - Được đào tạo miễn phí từ đầu về Content chuẩn SEO, tư duy Marketing đa kênh.
+  - Hỗ trợ số liệu, đóng dấu mộc đỏ báo cáo thực tập tốt nghiệp.
+  - Cơ hội làm việc chính thức tại công ty sau kỳ thực tập.
+
+6. THỰC TẬP SINH SEO (INTERN SEO SPECIALIST)
+* Số lượng: 05 thực tập sinh mỗi đợt.
+* Đối tượng: Sinh viên năm 3, 4 ngành CNTT, Thương mại điện tử, Marketing của các trường ĐH/CĐ.
+* Mô tả công việc:
+  - Nghiên cứu từ khóa, phân tích đối thủ cạnh tranh dưới sự hướng dẫn của SEO Specialist.
+  - Thực hành tối ưu Onsite SEO cho website (cấu trúc link, sitemap, robot.txt).
+  - Triển khai tối ưu Onpage SEO bài viết và xây dựng Offsite SEO (Social Entity, Link building an toàn).
+* Quyền lợi:
+  - Được đào tạo theo lộ trình bài bản từ lý thuyết đến thực hành dự án thực tế.
+  - Hỗ trợ tài liệu đóng dấu xác nhận báo cáo thực tập tốt nghiệp.
+  - Được giữ lại làm CTV hoặc nhân viên chính thức nếu hoàn thành xuất sắc kỳ thực tập.
+
+7. NHÂN VIÊN LẬP TRÌNH WEB (PHP, WORDPRESS DEVELOPER)
+* Số lượng tuyển dụng: 02 nhân sự (Đà Nẵng).
+* Thu nhập: Thỏa thuận theo năng lực chuyên môn.
+* Mô tả công việc:
+  - Thiết kế và lập trình website chuẩn SEO trên nền tảng WordPress.
+  - Thiết lập giao diện (Theme) và cài đặt/tối biến mã nguồn (Plugin) đáp ứng yêu cầu kỹ thuật.
+  - Chuyển giao diện từ định dạng PSD sang HTML/CSS/JS.
+  - Tối ưu hóa code web nhằm tăng tốc độ tải trang và độ bảo mật của website.
+* Yêu cầu công việc:
+  - Tốt nghiệp chuyên ngành CNTT. Thành thạo PHP, MySQL, Javascript, HTML, CSS.
+  - Kinh nghiệm phát triển website WordPress thực tế.
+  - Ưu tiên ứng viên đã có sản phẩm chạy online.
+
+8. NHÂN VIÊN THIẾT KẾ ĐỒ HỌA & VIDEO (GRAPHIC DESIGNER)
+* Số lượng: 02 nhân sự (Đà Nẵng).
+* Thu nhập: Thỏa thuận tùy năng lực.
+* Mô tả công việc:
+  - Thiết kế banner, hình ảnh quảng cáo cho website, Facebook Ads, Google Ads.
+  - Chụp ảnh sản phẩm, quay và dựng video ngắn phục vụ các kênh Tiktok, Youtube.
+  - Xử lý hậu kỳ hình ảnh và video chuyên nghiệp.
+* Yêu cầu: Sử dụng tốt Adobe Photoshop, Illustrator, Premiere, After Effects hoặc CapCut chuyên sâu.
+
+9. CỘNG TÁC VIÊN CONTENT MARKETING (CTV ONLINE)
+* Số lượng tuyển dụng: 02 nhân sự (Làm việc online tự do).
+* Mức lương: Chi trả theo nhuận bút bài viết thực tế (Chuyển khoản hàng tháng).
+* Yêu cầu: Tối thiểu 1 năm kinh nghiệm viết content thực chiến, cam kết đúng tiến độ deadline bài viết.
+
+================================================================================
+II. HỆ THỐNG CHÍNH SÁCH & QUY ĐỊNH PHÁP LÝ CHUNG CỦA SEOVIP
+================================================================================
+
+1. QUY ĐỊNH & HÌNH THỨC THANH TOÁN CHI TIẾT
+Khách hàng sử dụng dịch vụ tại SEOViP thực hiện thanh toán qua 2 phương thức sau:
+* Phương thức 1: Thanh toán trực tiếp bằng tiền mặt
+  - Địa chỉ: Trụ sở công ty SEOViP - Số 181 Nguyễn Tri Phương, Phường Thạc Gián, Quận Thanh Khê, Thành phố Đà Nẵng.
+* Phương thức 2: Chuyển khoản ngân hàng trực tiếp
+  - Ngân hàng thụ hưởng: Ngân hàng TMCP Ngoại thương Việt Nam (Vietcombank) - Chi nhánh Ngũ Hành Sơn, Đà Nẵng.
   - Số tài khoản: 0041000259041
-  - Chủ tài khoản: Công Ty TNHH MTV Truyền Thông & Thương Mại SEOVIP
-  - Nội dung chuyển khoản: [Tên khách hàng/Tên doanh nghiệp] + [Tên dịch vụ đăng ký]
+  - Tên chủ tài khoản: Công Ty TNHH MTV Truyền Thông & Thương Mại SEOVIP.
+  - Nội dung chuyển khoản ghi rõ: [Tên khách hàng/Doanh nghiệp] + [Tên dịch vụ đăng ký].
 
-2. Chính sách bảo mật thông tin khách hàng tại SEOViP:
-* Phạm vi thu thập: Tên khách hàng, số điện thoại, email, địa chỉ, địa chỉ IP truy cập website nhằm mục đích gửi báo giá, tư vấn và hỗ trợ tài liệu học tập.
-* Cam kết bảo mật: SEOViP cam kết bảo mật tuyệt đối dữ liệu khách hàng trên máy chủ hệ thống, không chia sẻ cho bất kỳ bên thứ ba nào trừ khi có yêu cầu pháp lý từ cơ quan nhà nước có thẩm quyền.
-* Thời gian lưu trữ: Thông tin được lưu giữ bảo mật và chỉ bị hủy bỏ khi có yêu cầu trực tiếp từ phía khách hàng.
+* Tiến độ thanh toán theo từng loại dịch vụ:
+  - Dịch vụ Thiết kế Website: Thanh toán tạm ứng trước 50% tổng giá trị hợp đồng ngay sau khi hai bên ký kết hợp đồng chính thức để triển khai thiết kế giao diện demo; thanh toán 50% còn lại ngay sau khi hoàn tất nghiệm thu hệ thống, cấu hình lên tên miền chính và bàn giao thông tin quản trị.
+  - Dịch vụ SEO tổng thể: Khách hàng thanh toán chi phí khởi tạo ban đầu và thanh toán phí triển khai hàng tháng hoặc theo từng quý dựa trên tiến độ nghiệm thu kết quả hiển thị của từ khóa đã ký kết trong phụ lục hợp đồng.
+  - Đào tạo tại SEOViP Academy: Học viên hoàn thành 100% học phí trước khi bắt đầu buổi học đầu tiên của khóa học để được xếp lớp, cấp giáo trình và cấp tài khoản công cụ thực hành chuyên dụng.
 
-3. Chính sách bảo hành dịch vụ của SEOViP:
-* SEOViP cam kết bảo hành chất lượng sản phẩm (website thiết kế, từ khóa lên top theo cam kết) lâu dài và trọn đời theo đúng các điều khoản quy định cụ thể trong hợp đồng đã ký kết.
-* Lưu ý miễn trừ bảo hành: SEOViP từ chối trách nhiệm bảo hành nếu khách hàng tự ý thay đổi cấu trúc mã nguồn web làm hỏng giao diện mà không báo trước, hoặc các sự cố do thiên tai, hỏa hoạn, lỗi hạ tầng tên miền/hosting không do SEOViP quản trị.
+2. CHÍNH SÁCH BẢO HÀNH DỊCH VỤ & SẢN PHẨM
+* Đối với sản phẩm Thiết kế Website:
+  - Bảo hành lỗi kỹ thuật, lỗi giao diện trọn đời (Lifetime Warranty) hoàn toàn miễn phí nếu khách hàng sử dụng dịch vụ Hosting tại máy chủ của SEOViP quản trị.
+  - Bảo hành 12 tháng kể từ ngày bàn giao nếu khách hàng sử dụng dịch vụ hosting của nhà cung cấp bên thứ ba.
+  - Hỗ trợ sao lưu dữ liệu (backup) website định kỳ hàng tuần đề phòng sự cố mất dữ liệu.
+  - Miễn trừ trách nhiệm bảo hành: Website bị thay đổi cấu trúc mã nguồn bởi bên thứ 3 mà không do SEOViP thực hiện; tên miền/hosting của khách hàng tự mua hết hạn không gia hạn kịp thời dẫn đến mất dữ liệu; website bị tấn công do lộ mật khẩu quản trị từ phía khách hàng.
+* Đối với dịch vụ SEO tổng thể:
+  - Cam kết bảo hành duy trì thứ hạng từ khóa trong TOP theo đúng thời gian cam kết trong hợp đồng (từ 1 đến 2 tháng sau khi bàn giao nghiệm thu dự án).
+  - Trong thời hạn bảo hành, nếu từ khóa rớt khỏi TOP cam kết (không do sự cố thay đổi thuật toán cốt lõi đột ngột của Google), SEOViP sẽ chịu trách nhiệm tối ưu lại hoàn toàn miễn phí.
 
-4. Chính sách hoàn tiền của SEOViP:
-* SEOViP cam kết hoàn trả chi phí dịch vụ cho khách hàng nếu dự án không thể triển khai hoặc gặp sự cố hoàn toàn xuất phát từ lỗi kỹ thuật hoặc lỗi vận hành của đội ngũ SEOViP.
+3. CHÍNH SÁCH HOÀN TIỀN DỊCH VỤ
+* Điều kiện được hoàn tiền:
+  - SEOViP cam kết hoàn trả 100% chi phí tạm ứng nếu dự án không thể bắt đầu triển khai hoặc website không thể thiết kế do lỗi chủ quan xuất phát từ năng lực kỹ thuật hoặc vận hành của SEOViP.
+  - Đối với hợp đồng SEO: Nếu kết thúc thời gian triển khai mà tỉ lệ từ khóa đạt top không đạt ngưỡng tối thiểu theo cam kết phạt trong hợp đồng (thường là dưới 50% KPI cam kết), SEOViP sẽ thực hiện giảm trừ chi phí hoặc hoàn trả lại một phần chi phí tương ứng với phần KPI không đạt được theo đúng điều khoản hợp đồng.
+* Các trường hợp không được hoàn tiền:
+  - Khách hàng tự ý đơn phương chấm dứt hợp đồng khi dự án đang triển khai đúng tiến độ và đúng các cam kết kỹ thuật.
+  - Dự án bị ảnh hưởng chậm trễ bởi các yếu tố bất khả kháng (Thiên tai, dịch bệnh, chính sách thay đổi pháp luật quốc gia).
+  - Khách hàng không cung cấp thông tin, hình ảnh, tài liệu hoặc tài khoản quản trị cần thiết như thỏa thuận dẫn đến dự án không thể triển khai đúng tiến độ.
+  - Đối với học viên Academy: Không hoàn lại học phí sau khi lớp học đã chính thức khai giảng buổi đầu tiên. Học viên bận việc đột xuất được hỗ trợ bảo lưu học phí tối đa 6 tháng để chuyển sang khóa học tiếp theo.
 
-III. CÁC CÂU HỎI THƯỜNG GẶP (FAQS) VỀ DỊCH VỤ SEO CỦA SEOVIP
+4. CHÍNH SÁCH BẢO MẬT THÔNG TIN CÁ NHÂN KHÁCH HÀNG
+* Thông tin thu thập: Họ tên, email, số điện thoại, địa chỉ, thông tin website cần tối ưu.
+* Mục đích sử dụng: Gửi báo giá, liên hệ tư vấn lộ trình học/dịch vụ, giải quyết các khiếu nại phát sinh và cung cấp thông tin ưu đãi mới.
+* Thời gian lưu trữ: Dữ liệu cá nhân khách hàng được bảo mật tuyệt đối trên hệ thống máy chủ và chỉ bị hủy bỏ khi có yêu cầu hủy trực tiếp từ chủ sở hữu.
+* Cam kết: Tuyệt đối không bán hoặc cung cấp thông tin khách hàng cho bên thứ ba vì bất kỳ mục đích thương mại nào. Trong trường hợp máy chủ bị tấn công dẫn đến rò rỉ thông tin, SEOViP có trách nhiệm trình báo cơ quan chức năng điều tra xử lý kịp thời và thông báo ngay cho khách hàng.
 
-* Câu hỏi 1: Làm SEO tổng thể mang lại lợi ích gì lâu dài so với chạy quảng cáo Google Ads?
-  - Trả lời: Quảng cáo Google Ads mang lại lượng khách hàng ngay lập tức nhưng sẽ mất truy cập khi ngừng nạp ngân sách. SEO tổng thể giúp tối ưu hóa toàn diện website chuẩn hóa cấu trúc dữ liệu, mang lại nguồn truy cập tự nhiên (Organic Traffic) tăng dần đều, ổn định và hoàn toàn miễn phí lâu dài. Chi phí đầu tư cho SEO tính trên mỗi khách hàng tiềm năng về lâu dài rẻ hơn Ads từ 3 đến 5 lần.
+================================================================================
+III. BỘ CÂU HỎI THƯỜNG GẶP (FAQS) VỀ DỊCH VỤ & KHÓA HỌC TẠI SEOVIP
+================================================================================
 
-* Câu hỏi 2: Các chỉ số KPI chính nào được sử dụng để đo lường hiệu quả một chiến dịch SEO tại SEOViP?
-  - Trả lời: SEOViP cam kết đo lường dựa trên các chỉ số rõ ràng bao gồm:
-    1. Tỷ lệ phần trăm từ khóa lọt vào TOP 1, TOP 3, TOP 5 và TOP 10 Google.
-    2. Số lượng Organic Traffic (lượng truy cập tự nhiên từ công cụ tìm kiếm) tăng trưởng hàng tháng.
-    3. Số lượng khách hàng điền form đăng ký, cuộc gọi trực tiếp từ web (tối ưu tỷ lệ chuyển đổi).
-    4. Điểm sức khỏe website (Website Health) và tốc độ tải trang.
+* Câu hỏi 1: Lợi ích lâu dài của dịch vụ SEO tổng thể so với quảng cáo Google Ads là gì?
+  - Trả lời: Quảng cáo Google Ads mang lại khách hàng lập tức nhưng chi phí cao và lượng truy cập sẽ dừng ngay khi tài khoản hết tiền. SEO tổng thể tối ưu hóa toàn diện website, xây dựng nội dung chất lượng cao giúp tăng trưởng lượng truy cập tự nhiên (Organic Traffic) bền vững, ổn định và hoàn toàn miễn phí. Về lâu dài, chi phí đầu tư cho SEO tính trên mỗi khách hàng tiềm năng rẻ hơn Google Ads từ 3 đến 5 lần.
 
-* Câu hỏi 3: Thời gian tối thiểu để một chiến dịch SEO tổng thể đạt kết quả tốt là bao lâu?
-  - Trả lời: Thông thường, thời gian cần thiết để Google cập nhật, đánh giá nội dung và xếp hạng từ khóa bền vững dao động từ 6 đến 8 tháng (đối với ngành có cạnh tranh trung bình) và từ 8 đến 12 tháng (đối với ngành cạnh tranh cao). Kết quả tối ưu bắt đầu xuất hiện rõ rệt sau 2 tháng đầu triển khai dự án.
+* Câu hỏi 2: Các chỉ số KPI chính nào được cam kết trong hợp đồng SEO của SEOViP?
+  - Trả lời: SEOViP cam kết rõ ràng bằng số liệu trong hợp đồng bao gồm:
+    1. Số lượng và tỉ lệ từ khóa mục tiêu lọt TOP 1-3, TOP 5, TOP 10 Google Search.
+    2. Chỉ số tăng trưởng Organic Traffic (lượng truy cập tự nhiên từ Google) hàng tháng.
+    3. Tối ưu Onpage SEO và sửa toàn bộ lỗi kỹ thuật website.
+    4. Chỉ số chuyển đổi thực tế (cuộc gọi, số lượt điền form đăng ký tư vấn trên web).
 
-* Câu hỏi 4: Điểm khác biệt lớn nhất giữa dịch vụ SEO tổng thể của SEOViP so với các đơn vị khác?
-  - Trả lời: SEOViP không đi theo hướng đẩy top một vài từ khóa ngắn có lượt tìm kiếm cao nhưng ít tỷ lệ mua hàng. Chúng tôi thực hiện SEO tổng thể phủ rộng ngành, tối ưu hàng ngàn từ khóa ngách sát với hành vi mua sắm thực tế của khách hàng tiềm năng, từ đó gia tăng tỷ lệ chuyển đổi đơn hàng cao gấp 4 lần so với phương pháp SEO truyền thống.
+* Câu hỏi 3: Triển khai một dự án SEO tổng thể mất bao lâu để thấy kết quả rõ rệt?
+  - Trả lời: SEO là quá trình tích lũy độ uy tín cho website nên cần thời gian để Google đánh giá. Kết quả bắt đầu xuất hiện sau 2 - 3 tháng triển khai tối ưu cơ bản. Thời gian hoàn thành một chiến dịch SEO đạt độ phủ tối đa thường kéo dài từ 6 - 8 tháng đối với ngành cạnh tranh trung bình và 8 - 12 tháng đối với ngành có mức độ cạnh tranh cao.
 
+* Câu hỏi 4: Website của tôi đã cũ và chưa chuẩn SEO thì SEOViP có hỗ trợ tối ưu lại không?
+  - Trả lời: Có. Khi ký hợp đồng SEO tổng thể, đội ngũ kỹ thuật của SEOViP sẽ tiến hành kiểm tra (Audit) toàn bộ hệ thống code, cấu trúc trang web hiện tại để chỉnh sửa, tối ưu chuẩn SEO miễn phí. Trong trường hợp website quá cũ kỹ không thể nâng cấp, chúng tôi sẽ tư vấn thiết kế lại website mới chuẩn SEO với chính sách chiết khấu giá tốt nhất cho doanh nghiệp.
+
+* Câu hỏi 5: Lớp học tại SEOViP Academy dạy theo hình thức nào? Có hỗ trợ sau khóa học không?
+  - Trả lời: SEOViP Academy triển khai cả lớp học trực tiếp (Offline tại Đà Nẵng) và trực tuyến (Online qua Zoom/Google Meet) tương tác trực tiếp 1-kèm-1 hoặc nhóm nhỏ. Học viên được thực hành 100% trên dự án thực tế của mình. SEOViP cam kết hỗ trợ giải đáp thắc mắc chuyên môn trọn đời hoàn toàn miễn phí sau khi hoàn thành khóa học.
+
+================================================================================
 IV. HOẠT ĐỘNG CỘNG ĐỒNG & TÀI NGUYÊN CHIA SẺ MIỄN PHÍ CỦA SEOVIP
+================================================================================
 
-1. Đồng hành cùng Cộng đồng Marketing & Công nghệ tại Đà Nẵng:
-* SEOViP là đơn vị tích cực đồng tổ chức và tài trợ cho các sự kiện chuyên ngành lớn dành cho cộng đồng nhân sự thiết kế, lập trình và marketing tại Đà Nẵng và miền Trung.
-* Tiêu biểu là chuỗi sự kiện thường niên "Martech Đà Nẵng" (Ví dụ: sự kiện "Quản trị - Marketing - SEO Update" thu hút đông đảo chủ doanh nghiệp và nhân sự tham dự chia sẻ kiến thức thực chiến vượt qua giai đoạn biến động thị trường).
+1. CÁC HOẠT ĐỘNG VÌ CỘNG ĐỒNG MARKETING & CNTT
+* SEOViP thường xuyên đồng tổ chức và tài trợ cho các diễn đàn, workshop chuyên ngành lớn tại Đà Nẵng và miền Trung nhằm kết nối doanh nghiệp và hỗ trợ nhân sự trẻ.
+* Nổi bật là chuỗi sự kiện thường niên "Martech Đà Nẵng" và các chương trình cập nhật kiến thức: "Quản trị - Marketing - SEO Update" thu hút hàng trăm chủ doanh nghiệp, nhà quản lý và lập trình viên tham dự.
+* Đồng hành cùng các trường đại học lớn tại Đà Nẵng (Đại học CNTT & TT Việt - Hàn (VKU), Đại học Bách Khoa, Đại học Kinh tế...) tổ chức các buổi định hướng nghề nghiệp, nhận sinh viên thực tập và hỗ trợ các đề tài nghiên cứu khoa học thực tiễn.
 
-2. Tài nguyên tự học & Hỗ trợ doanh nghiệp miễn phí của SEOViP:
-* Cẩm nang tự học: Biên soạn các tài liệu hướng dẫn miễn phí về hướng dẫn làm web WordPress cơ bản, quy trình viết bài chuẩn SEO cho người mới bắt đầu đăng tải công khai trên blog.
-* Hỗ trợ Check Audit Website miễn phí: Hỗ trợ quét lỗi kỹ thuật và tư vấn định hướng SEO miễn phí 100% cho bất kỳ doanh nghiệp nào có nhu cầu đánh giá sức khỏe trang web hiện tại thông qua cổng đăng ký trên website seovip.vn.
+2. TÀI NGUYÊN CHIA SẺ MIỄN PHÍ
+* Hỗ trợ Check Audit Website Miễn Phí: Nhằm giúp doanh nghiệp nhận biết thực trạng website của mình, SEOViP cung cấp công cụ và chuyên viên hỗ trợ quét lỗi Onpage, phân tích tốc độ load trang, bảo mật và đề xuất giải pháp tối ưu hoàn toàn miễn phí qua cổng đăng ký trên website seovip.vn.
+* Thư viện Ebook Marketing & SEO: SEOViP biên soạn và chia sẻ miễn phí hơn 100 Ebook chất lượng cao về cẩm nang tự học SEO từ A-Z, cẩm nang viết bài chuẩn SEO Content, tài liệu hướng dẫn quảng cáo Google Ads thực chiến, giúp người mới bắt đầu dễ dàng tiếp cận kiến thức.
+* Video bài giảng thực hành: Cung cấp hàng loạt video hướng dẫn chi tiết về quản trị website WordPress, tối ưu hóa giao diện và cấu hình SEO trên kênh Youtube chính thức của SEOViP.
