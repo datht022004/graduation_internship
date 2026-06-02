@@ -96,7 +96,7 @@ class TestAppAssembly:
         assert "/api/auth/google" in paths
         assert "/api/admin/blog/posts" in paths
         assert "/api/chat" in paths
-        assert "/api/chat/sessions" in paths
+        assert "/api/chat/sessions/{session_id}" in paths
         assert "/api/documents" in paths
         assert "/api/documents/upload" in paths
         assert "/api/user/home" in paths

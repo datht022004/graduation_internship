@@ -129,9 +129,6 @@ export default function WebDesignTabPage({ onChatClick }) {
             <section className="float-in stagger-3 px-4">
                 <div className="mx-auto grid max-w-310 gap-8 lg:grid-cols-[1.1fr_0.9fr]">
                     <article className="rounded-[28px] border border-slate-200 bg-white p-5 shadow-[0_10px_40px_-20px_rgba(0,0,0,0.1)] sm:p-8 md:rounded-[36px] md:p-12">
-                        <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-50 text-3xl text-sky-500 shadow-inner">
-                            🎯
-                        </div>
                         <h3 className="text-3xl font-black uppercase text-slate-900">Chuẩn mực cốt lõi</h3>
                         <ul className="mt-8 space-y-4">
                             {highlights.map((item) => (

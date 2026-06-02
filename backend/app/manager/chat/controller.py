@@ -63,12 +63,6 @@ async def chat(
     )
 
 
-# List records with pagination and filtering.
-@router.get("/sessions")
-async def list_chat_sessions(user: UserInfo = Depends(get_current_user)):
-    return {"sessions": chat_usecase.list_sessions(user.email)}
-
-
 # Handle API request and call corresponding usecase.
 @router.get("/sessions/{session_id}")
 async def get_chat_session(

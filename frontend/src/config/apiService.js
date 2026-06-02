@@ -24,11 +24,9 @@ export const API_ENDPOINTS = {
         webDesign: `${API_URL}/user/web-design`,
         ads: `${API_URL}/user/ads`,
         blog: `${API_URL}/user/blog`,
-        servicePackages: `${API_URL}/user/service-packages`,
     },
     chat: {
         stream: `${API_URL}/chat`,
-        sessions: `${API_URL}/chat/sessions`,
         sessionById: (id) => `${API_URL}/chat/sessions/${id}`,
     },
     documents: {
@@ -50,12 +48,6 @@ export const API_ENDPOINTS = {
         companyProfileById: (id) => `${API_URL}/admin/company-profile/${id}`,
         servicePackages: `${API_URL}/admin/service-packages`,
         servicePackageById: (id) => `${API_URL}/admin/service-packages/${id}`,
-        caseStudies: `${API_URL}/admin/case-studies`,
-        caseStudyById: (id) => `${API_URL}/admin/case-studies/${id}`,
-        testimonials: `${API_URL}/admin/testimonials`,
-        testimonialById: (id) => `${API_URL}/admin/testimonials/${id}`,
-        contactRequests: `${API_URL}/admin/contact-requests`,
-        contactRequestById: (id) => `${API_URL}/admin/contact-requests/${id}`,
     },
 }
 
@@ -207,20 +199,11 @@ export async function userGetBlogContent() {
     return data
 }
 
-// GET /user/service-packages - User module: lấy bảng giá/gói dịch vụ public.
-export async function userGetServicePackages() {
-    const { data } = await axios.get(API_ENDPOINTS.user.servicePackages)
-    return data || []
-}
-
 // GET /documents - Document module: lấy danh sách tài liệu admin.
 export async function documentGetAdminPage(params = {}) {
     const { data } = await axios.get(API_ENDPOINTS.documents.list, { params })
     return data
 }
-
-// GET /documents - Document module: lấy mảng tài liệu admin.
-export const documentGetAdminList = async (params = {}) => (await documentGetAdminPage(params)).documents || []
 
 // POST /documents/upload - Document module: upload và index tài liệu RAG.
 export async function documentUploadAdminFile(file) {
@@ -245,9 +228,6 @@ export async function adminBlogGetPostPage(params = {}) {
     const { data } = await axios.get(API_ENDPOINTS.admin.blogPosts, { params })
     return data
 }
-
-// GET /admin/blog/posts - Admin blog module: lấy mảng bài viết.
-export const adminBlogGetPosts = async (params = {}) => (await adminBlogGetPostPage({ pageSize: 100, ...params })).items || []
 
 // POST /admin/blog/posts - Admin blog module: tạo bài viết.
 export async function adminBlogCreatePost(payload) {
@@ -351,12 +331,6 @@ export function chatStreamMessage({ message, sessionId, signal }) {
     })
 }
 
-// GET /chat/sessions - Chat module: lấy danh sách session chat.
-export async function chatGetSessions() {
-    const { data } = await axios.get(API_ENDPOINTS.chat.sessions)
-    return data.sessions || []
-}
-
 // GET /chat/sessions/{id} - Chat module: lấy chi tiết một session chat.
 export async function chatGetSessionById(sessionId) {
     const { data } = await axios.get(API_ENDPOINTS.chat.sessionById(sessionId))
@@ -399,48 +373,6 @@ export async function adminServicePackagesDeleteById(id) {
     return data
 }
 
-// CMS Admin: Case Studies
-export async function adminCaseStudiesGetList() {
-    const { data } = await axios.get(API_ENDPOINTS.admin.caseStudies)
-    return data
-}
-export async function adminCaseStudiesCreate(payload) {
-    const { data } = await axios.post(API_ENDPOINTS.admin.caseStudies, payload)
-    return data
-}
-export async function adminCaseStudiesUpdateById(id, payload) {
-    const { data } = await axios.put(API_ENDPOINTS.admin.caseStudyById(id), payload)
-    return data
-}
-export async function adminCaseStudiesDeleteById(id) {
-    const { data } = await axios.delete(API_ENDPOINTS.admin.caseStudyById(id))
-    return data
-}
-
-// ----------------------------------------------------------------------
-// ADMIN: TESTIMONIALS (CMS)
-// ----------------------------------------------------------------------
-
-export async function adminTestimonialsGetList() {
-    const { data } = await axios.get(API_ENDPOINTS.admin.testimonials)
-    return data
-}
-
-export async function adminTestimonialsCreate(payload) {
-    const { data } = await axios.post(API_ENDPOINTS.admin.testimonials, payload)
-    return data
-}
-
-export async function adminTestimonialsUpdateById(id, payload) {
-    const { data } = await axios.put(API_ENDPOINTS.admin.testimonialById(id), payload)
-    return data
-}
-
-export async function adminTestimonialsDeleteById(id) {
-    const { data } = await axios.delete(API_ENDPOINTS.admin.testimonialById(id))
-    return data
-}
-
 // ----------------------------------------------------------------------
 // ADMIN: CHAT HISTORY (Replaces Contact Requests purpose)
 // ----------------------------------------------------------------------
@@ -457,23 +389,5 @@ export const adminChatGetUserSessions = async (email) => {
 
 export const adminChatGetSessionDetail = async (sessionId) => {
     const { data } = await axios.get(`${API_URL}/admin/chat/sessions/${sessionId}`)
-    return data
-}
-
-// CMS Admin: Contact Requests
-export async function adminContactRequestsGetList() {
-    const { data } = await axios.get(API_ENDPOINTS.admin.contactRequests)
-    return data
-}
-export async function adminContactRequestsCreate(payload) {
-    const { data } = await axios.post(API_ENDPOINTS.admin.contactRequests, payload)
-    return data
-}
-export async function adminContactRequestsUpdateById(id, payload) {
-    const { data } = await axios.put(API_ENDPOINTS.admin.contactRequestById(id), payload)
-    return data
-}
-export async function adminContactRequestsDeleteById(id) {
-    const { data } = await axios.delete(API_ENDPOINTS.admin.contactRequestById(id))
     return data
 }

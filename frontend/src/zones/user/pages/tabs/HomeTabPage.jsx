@@ -203,9 +203,6 @@ export default function HomeTabPage({ onSelectTab }) {
             <section className="float-in stagger-3 px-4">
                 <div className="mx-auto grid max-w-310 gap-8 lg:grid-cols-2">
                     <article className="flex flex-col justify-center rounded-[36px] bg-[#fdf2ee] p-8 md:p-12">
-                        <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-3xl shadow-sm">
-                            🤔
-                        </div>
                         <h3 className="text-3xl font-bold uppercase leading-tight text-[#13283c]">Bạn đang gặp<br/>những điểm nghẽn này?</h3>
                         <ul className="mt-8 space-y-4">
                             {painPoints.map((point, idx) => (
@@ -221,9 +218,6 @@ export default function HomeTabPage({ onSelectTab }) {
 
                     <article className="flex flex-col justify-center rounded-[36px] bg-[#13283c] p-8 text-white md:p-12 relative overflow-hidden shadow-2xl">
                         <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-[#f2682a]/20 blur-3xl mix-blend-screen" />
-                        <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f2682a] text-3xl shadow-[0_0_20px_rgba(242,104,42,0.4)]">
-                            💡
-                        </div>
                         <h3 className="text-3xl font-bold uppercase leading-tight">Tại sao khách hàng<br/>chọn SEO VIP?</h3>
                         <ul className="mt-8 space-y-5">
                             {strengths.map((strength, index) => (

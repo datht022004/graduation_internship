@@ -9,12 +9,6 @@ from app.manager.service_packages.usecase import (
 )
 
 admin_router = APIRouter(prefix="/admin/service-packages", tags=["Admin - ServicePackage"])
-public_router = APIRouter(prefix="/user/service-packages", tags=["User - ServicePackage"])
-
-# Lấy toàn bộ bản ghi cho module hiện tại.
-@public_router.get("", response_model=list[ServicePackage])
-async def get_all_public():
-    return service_package_usecase.get_all()
 
 # Lấy toàn bộ bản ghi cho module hiện tại.
 @admin_router.get("", response_model=list[ServicePackage])
