@@ -28,7 +28,7 @@ def _normalize_message(message: str) -> str:
 def _get_quick_answer(question: str) -> str | None:
     normalized = _normalize_message(question).strip("!?. ")
     if normalized in SIMPLE_GREETING_ANSWERS:
-        return "Xin chào! Tôi có thể hỗ trợ bạn tư vấn SEO, thiết kế website, quảng cáo hoặc đào tạo SEO."
+        return "Xin chào! Mình có thể tư vấn cho bạn về SEO, thiết kế website, quảng cáo hoặc đào tạo SEO. Bạn đang quan tâm dịch vụ nào?"
     return None
 
 

@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { chatGetSessionById, chatStreamMessage } from '../../../config/apiService'
 
+const TYPEWRITER_DELAY_MS = 12
+const TYPEWRITER_MAX_STEP = 4
+
 function buildInitialMessages(userName) {
     return [
         {
             id: 'welcome-1',
             role: 'bot',
-            text: `Xin chào ${userName}, mình là trợ lý AI của Nova Business. Bạn muốn tư vấn gói dịch vụ nào?`,
+            text: `Chào ${userName}, mình là trợ lý AI của SEOViP. Bạn đang cần tư vấn SEO, thiết kế website hay quảng cáo?`,
             sources: [],
         },
     ]
@@ -33,6 +36,10 @@ function parseSources(value) {
     }
 }
 
+function wait(ms) {
+    return new Promise((resolve) => window.setTimeout(resolve, ms))
+}
+
 async function readChatStream(response, { sessionId, onSessionChange, onTextChange }) {
     if (!response.ok) {
         throw new Error(response.status === 401 ? 'Phiên đăng nhập hết hạn' : `Lỗi server: ${response.status}`)
@@ -41,11 +48,22 @@ async function readChatStream(response, { sessionId, onSessionChange, onTextChan
     const reader = response.body.getReader()
     const decoder = new TextDecoder()
     let fullText = ''
+    let visibleText = ''
     let sources = []
     let buffer = ''
     let nextIsSessionId = false
     let nextIsSources = false
     let activeSessionId = sessionId
+
+    async function revealPendingText() {
+        while (visibleText.length < fullText.length) {
+            const remaining = fullText.length - visibleText.length
+            const step = Math.min(TYPEWRITER_MAX_STEP, remaining)
+            visibleText = fullText.slice(0, visibleText.length + step)
+            onTextChange?.(visibleText)
+            await wait(TYPEWRITER_DELAY_MS)
+        }
+    }
 
     while (true) {
         const { done, value } = await reader.read()
@@ -90,12 +108,12 @@ async function readChatStream(response, { sessionId, onSessionChange, onTextChan
             }
 
             fullText += payload
-            onTextChange?.(fullText)
+            await revealPendingText()
         }
     }
 
     return {
-        text: fullText || 'Xin lỗi, tôi không thể trả lời lúc này.',
+        text: fullText || 'Xin lỗi, mình chưa thể trả lời lúc này.',
         sources,
         sessionId: activeSessionId,
     }
