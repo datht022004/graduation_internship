@@ -13,6 +13,10 @@ _vector_store = None
 
 # Create MongoDB Atlas Vector Search index if it doesn't exist.
 def ensure_vector_search_index(collection):
+    db = collection.database
+    if collection.name not in db.list_collection_names():
+        db.create_collection(collection.name)
+
     existing_indexes = list(collection.list_search_indexes())
     for index in existing_indexes:
         if index.get("name") == settings.VECTOR_INDEX_NAME:
