@@ -11,7 +11,7 @@ from app.core.vector_store import get_vector_store
 
 SOURCES_MARKER = "__SOURCES__:"
 
-SYSTEM_PROMPT = """Bạn là trợ lý tư vấn AI của Nova Digital Marketing Agency.
+SYSTEM_PROMPT = """Bạn là trợ lý tư vấn AI của SEOViP Digital Marketing Agency.
 Hãy trả lời dựa trên tài liệu được cung cấp.
 Nếu không tìm thấy thông tin trong tài liệu, hãy nói rõ là chưa tìm thấy dữ liệu phù hợp trong kho tri thức.
 Không bịa nguồn và không tự suy diễn ngoài tài liệu nếu câu hỏi cần thông tin cụ thể.
@@ -21,13 +21,13 @@ Tài liệu tham khảo:
 """
 
 
-# Đảm bảo provider LLM đã cấu hình API key trước khi gọi.
+# Ensure LLM provider has configured API key before calling.
 def _require_api_key(provider: str, api_key: str):
     if not api_key:
         raise ValueError(f"{provider} API key is required for RAG chat.")
 
 
-# Khởi tạo LLM theo provider đang cấu hình.
+# Initialize LLM based on configured provider.
 def _get_llm():
     provider = settings.LLM_PROVIDER.lower()
 
@@ -50,7 +50,7 @@ def _get_llm():
     raise ValueError(f"Unsupported LLM_PROVIDER: {settings.LLM_PROVIDER}")
 
 
-# Stream câu trả lời RAG dựa trên tài liệu liên quan và lịch sử chat.
+# Stream RAG response based on relevant documents and chat history.
 async def stream_rag_response(
     question: str,
     chat_history: list[BaseMessage],

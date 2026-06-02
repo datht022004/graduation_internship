@@ -12,13 +12,13 @@ admin_router = APIRouter(prefix="/admin/chat", tags=["Admin - Chat History"])
 
 
 class ChatRequest(BaseModel):
-    """Payload gui cau hoi chat, co the tiep tuc mot session cu."""
+    """Payload for sending chat questions, can continue an existing session."""
 
     message: str
     session_id: str | None = None
 
 
-# Định dạng payload thành Server-Sent Events cho stream chat.
+# Format payload to Server-Sent Events for chat streaming.
 def _format_sse(data: str, event: str | None = None) -> str:
     lines = []
     if event:
@@ -28,7 +28,7 @@ def _format_sse(data: str, event: str | None = None) -> str:
     return "\n".join(lines) + "\n\n"
 
 
-# Endpoint chat RAG, trả response dạng SSE stream.
+# RAG chat endpoint, returns response as SSE stream.
 @router.post("")
 async def chat(
     request: ChatRequest,
@@ -42,7 +42,7 @@ async def chat(
 
     session_id = chat_usecase.get_or_create_session(request.session_id, user.email)
 
-    # Generator stream từng chunk trả lời về client.
+    # Generator streaming each response chunk to the client.
     async def event_stream():
         async for chunk in chat_usecase.stream_chat(request.message, session_id, user.email):
             if chunk.startswith(SOURCES_MARKER):
@@ -63,13 +63,13 @@ async def chat(
     )
 
 
-# Lấy danh sách bản ghi có phân trang/lọc khi cần.
+# List records with pagination and filtering.
 @router.get("/sessions")
 async def list_chat_sessions(user: UserInfo = Depends(get_current_user)):
     return {"sessions": chat_usecase.list_sessions(user.email)}
 
 
-# Xử lý request API và gọi usecase tương ứng.
+# Handle API request and call corresponding usecase.
 @router.get("/sessions/{session_id}")
 async def get_chat_session(
     session_id: str,
@@ -83,17 +83,17 @@ async def get_chat_session(
         )
     return session
 
-# Xử lý request API và gọi usecase tương ứng.
+# Handle API request and call corresponding usecase.
 @admin_router.get("/users")
 async def admin_get_users_with_chats(admin: UserInfo = Depends(require_admin)):
     return chat_repository.get_users_with_chats()
 
-# Xử lý request API và gọi usecase tương ứng.
+# Handle API request and call corresponding usecase.
 @admin_router.get("/users/{user_email}/sessions")
 async def admin_get_user_sessions(user_email: str, admin: UserInfo = Depends(require_admin)):
     return {"sessions": chat_repository.list_sessions_for_admin(user_email)}
 
-# Xử lý request API và gọi usecase tương ứng.
+# Handle API request and call corresponding usecase.
 @admin_router.get("/sessions/{session_id}")
 async def admin_get_session_detail(session_id: str, admin: UserInfo = Depends(require_admin)):
     session = chat_repository.get_session_messages_admin(session_id)

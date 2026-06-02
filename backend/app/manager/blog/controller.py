@@ -6,7 +6,7 @@ from app.manager.blog.usecase import BlogPost, BlogPostCreate, BlogPostListRespo
 router = APIRouter(prefix="/admin/blog", tags=["Admin - Blog"])
 
 
-# Lấy danh sách bản ghi có phân trang/lọc khi cần.
+# List records with pagination and filtering.
 @router.get("/posts", response_model=BlogPostListResponse)
 async def list_blog_posts(
     category: str = "",
@@ -18,7 +18,7 @@ async def list_blog_posts(
     return blog_usecase.list_posts(category=category, search=q, page=page, page_size=page_size)
 
 
-# Tạo bản ghi mới sau khi validate payload.
+# Create a new record after validating the payload.
 @router.post("/posts", response_model=BlogPost, status_code=status.HTTP_201_CREATED)
 async def create_blog_post(
     body: BlogPostCreate,
@@ -27,7 +27,7 @@ async def create_blog_post(
     return blog_usecase.create_post(body)
 
 
-# Cập nhật bản ghi hiện có theo id/khóa chính.
+# Update an existing record by ID.
 @router.put("/posts/{post_id}", response_model=BlogPost)
 async def update_blog_post(
     post_id: str,
@@ -43,7 +43,7 @@ async def update_blog_post(
     return post
 
 
-# Xóa bản ghi/tài nguyên theo id/khóa chính.
+# Delete a record/resource by ID.
 @router.delete("/posts/{post_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_blog_post(
     post_id: str,
@@ -57,7 +57,7 @@ async def delete_blog_post(
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-# Bật/tắt trạng thái nổi bật của bài viết.
+# Toggle featured status of the post.
 @router.patch("/posts/{post_id}/toggle-featured", response_model=BlogPost)
 async def toggle_featured_blog_post(
     post_id: str,

@@ -8,12 +8,12 @@ from app.models import ChatSessionDocument
 CHAT_COLLECTION = "chat_sessions"
 
 
-# Tạo timestamp hiện tại dùng cho dữ liệu lưu DB.
+# Generate current timestamp for database storage.
 def _now():
     return datetime.now(timezone.utc)
 
 
-# Chuyển LangChain message thành item lưu được trong MongoDB.
+# Convert LangChain message to a dict format suitable for MongoDB.
 def _message_to_item(message):
     role = "user" if message.get("type") == "human" else "assistant"
     return {
@@ -23,25 +23,25 @@ def _message_to_item(message):
 
 
 class ChatRepository:
-    # Lấy Mongo collection tương ứng với repository hiện tại.
+    # Get the MongoDB collection for the current repository.
     def get_collection(self):
         return get_db()[CHAT_COLLECTION]
 
-    # Tạo filter MongoDB theo session và user hiện tại.
+    # Build MongoDB query filter based on session and user.
     def _query(self, session_id: str, user_email: str | None = None):
         query = {"session_id": session_id}
         if user_email:
             query["user_email"] = user_email
         return query
 
-    # Thao tác trực tiếp với MongoDB cho module hiện tại.
+    # Retrieve chat session history from MongoDB.
     def get_session_history(self, session_id: str, user_email: str | None = None) -> list:
         session = self.get_collection().find_one(self._query(session_id, user_email))
         if session and "history" in session:
             return messages_from_dict(session["history"])
         return []
 
-    # Ghi lại lịch sử chat của một session.
+    # Save chat session history to MongoDB.
     def save_session_history(self, session_id: str, history: list, user_email: str | None = None):
         history_dicts = messages_to_dict(history)
         update = {
@@ -56,7 +56,7 @@ class ChatRepository:
             upsert=True
         )
 
-    # Tạo session chat rỗng nếu chưa tồn tại.
+    # Initialize an empty chat session if it does not exist.
     def init_session(self, session_id: str, user_email: str | None = None, title: str = ""):
         query = self._query(session_id, user_email)
         session = self.get_collection().find_one(query)
@@ -75,7 +75,7 @@ class ChatRepository:
             session_doc.model_dump(by_alias=True, exclude_none=True)
         )
 
-    # Đặt tiêu đề session từ câu hỏi đầu tiên nếu chưa có.
+    # Set session title from the first question if empty.
     def set_title_if_empty(self, session_id: str, user_email: str | None, title: str):
         self.get_collection().update_one(
             {
@@ -85,7 +85,7 @@ class ChatRepository:
             {"$set": {"title": title[:80], "updated_at": _now()}},
         )
 
-    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
+    # List chat sessions for a specific user.
     def list_sessions(self, user_email: str, limit: int = 20):
         sessions = self.get_collection().find(
             {"user_email": user_email},
@@ -93,7 +93,7 @@ class ChatRepository:
         ).sort("updated_at", -1).limit(limit)
         return list(sessions)
 
-    # Thao tác trực tiếp với MongoDB cho module hiện tại.
+    # Get messages for a chat session.
     def get_session_messages(self, session_id: str, user_email: str):
         session = self.get_collection().find_one(
             self._query(session_id, user_email),
@@ -107,7 +107,7 @@ class ChatRepository:
             "messages": [_message_to_item(message) for message in session.get("history", [])],
         }
 
-    # Thao tác trực tiếp với MongoDB cho module hiện tại.
+    # Get list of users who have chat sessions.
     def get_users_with_chats(self):
         pipeline = [
             {"$match": {"user_email": {"$ne": None, "$ne": ""}}},
@@ -128,7 +128,7 @@ class ChatRepository:
             for r in results
         ]
 
-    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
+    # List chat sessions for admin.
     def list_sessions_for_admin(self, user_email: str):
         sessions = self.get_collection().find(
             {"user_email": user_email},
@@ -136,7 +136,7 @@ class ChatRepository:
         ).sort("updated_at", -1)
         return list(sessions)
 
-    # Thao tác trực tiếp với MongoDB cho module hiện tại.
+    # Get chat session messages for admin.
     def get_session_messages_admin(self, session_id: str):
         session = self.get_collection().find_one(
             {"session_id": session_id},

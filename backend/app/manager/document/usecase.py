@@ -18,7 +18,7 @@ from app.models import DocumentDocument
 
 
 class DocumentInfo(BaseModel):
-    """Thong tin mot tai lieu da upload vao kho RAG."""
+    """Information of an uploaded document in the RAG store."""
 
     id: str
     filename: str
@@ -29,7 +29,7 @@ class DocumentInfo(BaseModel):
 
 
 class DocumentListResponse(BaseModel):
-    """Response danh sach tai lieu co phan trang."""
+    """Response list of documents with pagination."""
 
     documents: list[DocumentInfo]
     total: int
@@ -39,12 +39,12 @@ class DocumentListResponse(BaseModel):
 
 
 class DocumentUseCase:
-    # Lấy toàn bộ bản ghi cho module hiện tại.
+    # Get all records for the current module.
     def get_all_documents(self) -> list[DocumentInfo]:
         docs = document_repository.get_all_documents()
         return [DocumentInfo(**doc) for doc in docs]
 
-    # Lấy danh sách bản ghi có phân trang/lọc khi cần.
+    # List records with pagination and filtering.
     def list_documents(self, page: int = 1, page_size: int = 10) -> DocumentListResponse:
         page = max(page, 1)
         page_size = min(max(page_size, 1), 100)
@@ -61,7 +61,7 @@ class DocumentUseCase:
             totalPages=total_pages,
         )
 
-    # Chọn loader phù hợp với loại file upload.
+    # Get appropriate loader based on file type.
     def _get_loader(self, file_path: str, file_type: str):
         if file_type == "pdf":
             return PyPDFLoader(file_path)
@@ -72,7 +72,7 @@ class DocumentUseCase:
         else:
             raise ValueError(f"Unsupported file type: {file_type}")
 
-    # Nhận diện loại file từ phần mở rộng filename.
+    # Detect file type from the file extension.
     def _detect_file_type(self, filename: str) -> str:
         ext = filename.rsplit(".", 1)[-1].lower() if "." in filename else ""
         type_map = {
@@ -88,7 +88,7 @@ class DocumentUseCase:
             )
         return type_map[ext]
 
-    # Nhận file upload, tách chunk và index vào vector store.
+    # Accept uploaded file, split into chunks, and index in the vector store.
     async def upload_and_index_document(
         self,
         file_content: bytes,
@@ -115,13 +115,15 @@ class DocumentUseCase:
             chunks = text_splitter.split_documents(raw_documents)
 
             for chunk in chunks:
-                chunk.metadata.update(
-                    {
-                        "doc_id": doc_id,
-                        "filename": filename,
-                        "file_type": file_type,
-                    }
-                )
+                # Keep only essential metadata fields (doc_id, filename, file_type, and page number)
+                page = chunk.metadata.get("page")
+                chunk.metadata = {
+                    "doc_id": doc_id,
+                    "filename": filename,
+                    "file_type": file_type,
+                }
+                if page is not None:
+                    chunk.metadata["page"] = page
 
             add_documents_to_store(chunks)
 
@@ -145,7 +147,7 @@ class DocumentUseCase:
                 os.remove(file_path)
             raise e
 
-    # Xóa bản ghi/tài nguyên theo id/khóa chính.
+    # Delete a record/resource by ID.
     def delete_document(self, doc_id: str) -> bool:
         doc_entry = document_repository.get_document_by_id(doc_id)
 
